@@ -13,21 +13,22 @@ class All_bottombar_user extends StatefulWidget {
   State<All_bottombar_user> createState() => _All_bottombar_userState();
 }
 
-int _currenIndex = 0;
-final List<Widget> _children = [
-  User_main(),
-  User_search(),
-  User_calenda(),
-  User_chat()
-];
-
-void dd(int index) {
-  setState() {
-    _currenIndex = index;
-  }
-}
-
 class _All_bottombar_userState extends State<All_bottombar_user> {
+  int _currenIndex = 0;
+
+  final List<Widget> _children = [
+    User_main(),
+    User_search(),
+    User_calenda(),
+    User_chat()
+  ];
+
+  void dd(int index) {
+    setState(() {
+      _currenIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
