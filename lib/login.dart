@@ -1,8 +1,10 @@
 import 'package:agriser_work/pages/user/all_bottombar_user.dart';
+import 'package:agriser_work/register.dart';
 import 'package:agriser_work/utility/allmethod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/widgets.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -28,53 +30,54 @@ class _LoginState extends State<Login> {
               Allmethod().Space(),
               Passwordform(),
               Loginbutton(),
-              Container(
-                width: 250.0,
-                child: RaisedButton(
-                  color: Allmethod().dartcolor,
-                  onPressed: () {
-                    // MaterialPageRoute route =
-                    //     MaterialPageRoute(builder: (value) => Thome());
-                    // Navigator.push(context, route);
-
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) {
-                    //   return Register();
-                    // }));
-                  },
-                  child: Text(
-                    "ลงทะเบียน",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
+              regisbutton()
             ],
           ),
         ),
       ),
     );
   }
-}
 
-Widget Loginbutton() => Container(
-      width: 250.0,
-      child: RaisedButton(
-        color: Allmethod().dartcolor,
-        onPressed: () {
-          MaterialPageRoute route =
-              MaterialPageRoute(builder: (context) => All_bottombar_user());
-          // if (tel == null || tel.isEmpty || pass == null || pass.isEmpty) {
-          //   dialong(context, "กรุณากรอกให้ครบทุกช่อง");
-          // } else {
-          //   checktel();
-          // }
-        },
-        child: Text(
-          "เข้าสู่ระบบ",
-          style: TextStyle(color: Colors.white),
+  ////////////////////////////////////////////////////////////////////
+
+  Widget Loginbutton() => Container(
+        width: 250.0,
+        child: RaisedButton(
+          color: Allmethod().dartcolor,
+          onPressed: () {
+            MaterialPageRoute route =
+                MaterialPageRoute(builder: (value) => All_bottombar_user());
+            Navigator.push(context, route);
+            // Navigator.of(context).push(route)
+            // if (tel == null || tel.isEmpty || pass == null || pass.isEmpty) {
+            //   dialong(context, "กรุณากรอกให้ครบทุกช่อง");
+            // } else {
+            //   checktel();
+            // }
+          },
+          child: Text(
+            "เข้าสู่ระบบ",
+            style: TextStyle(color: Colors.white),
+          ),
         ),
-      ),
-    );
+      );
+
+  Widget regisbutton() => Container(
+        width: 250.0,
+        child: RaisedButton(
+          color: Allmethod().dartcolor,
+          onPressed: () {
+            MaterialPageRoute route =
+                MaterialPageRoute(builder: (value) => Register());
+            Navigator.push(context, route);
+          },
+          child: Text(
+            "ลงทะเบียน",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
+}
 
 // void checktel() async {
 //   var dio = Dio();
@@ -108,18 +111,6 @@ Widget Loginbutton() => Container(
 //     print("เข้าสู่ระบบ");
 //   }
 // }
-
-Widget regisbutton() => Container(
-      width: 250.0,
-      child: RaisedButton(
-        color: Allmethod().dartcolor,
-        onPressed: () {},
-        child: Text(
-          "ลงทะเบียน",
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-    );
 
 Widget Userform() => Container(
       width: 250.0,
