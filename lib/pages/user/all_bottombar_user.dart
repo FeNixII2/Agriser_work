@@ -45,19 +45,19 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
-                  // title: Text("หน้าหลัก"),
+                  label: 'หน้าหลัก',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.search),
-                  // title: Text("ค้นหา"),
+                  label: 'ค้นหา',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.calendar_today),
-                  // title: Text("ตารางงาน"),
+                  label: 'ตารางงาน',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.chat_bubble),
-                  // title: Text("แชท"),
+                  label: 'แชท',
                 ),
               ]),
         ));
