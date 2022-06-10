@@ -6,28 +6,24 @@ String welcomeToJson(Welcome data) => json.encode(data.toJson());
 
 class Welcome {
   Welcome({
-    required this.id,
-    required this.tel,
-    required this.pass,
-    required this.name,
+    required this.phone_user,
+    required this.name_user,
+    required this.password_user,
   });
 
-  String id;
-  String tel;
-  String pass;
-  String name;
+  String phone_user;
+  String name_user;
+  String password_user;
 
   factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
-        id: json["id"],
-        tel: json["tel"],
-        pass: json["pass"],
-        name: json["name"],
+        phone_user: json["phone_user"],
+        name_user: json["name_user"],
+        password_user: json["password_user"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "tel": tel,
-        "pass": pass,
-        "name": name,
+        "phone_user": phone_user,
+        "name_user": name_user,
+        "password_user": password_user,
       };
 }

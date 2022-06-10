@@ -2,7 +2,7 @@
 header("content-type:text/javascript;charset=utf-8");
 error_reporting(0);
 error_reporting(E_ERROR | E_PARSE);
-$link = mysqli_connect('localhost', 'root', '', "Agriser");
+$link = mysqli_connect('103.212.181.59', 'adminkaiser', 'a4521050001', "agriser_data","3888");
 
 if (!$link) {
     echo "Error: Unable to connect to MySQL." . PHP_EOL;
@@ -20,9 +20,9 @@ if (!$link->set_charset("utf8")) {
 if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
 				
-		$tel_p = $_GET['tel_p'];
+		$phone_provider = $_GET['phone_provider'];
 
-		$result = mysqli_query($link, "SELECT * FROM provider WHERE tel_p = '$tel_p'");
+		$result = mysqli_query($link, "SELECT * FROM tb_provider WHERE phone_provider = '$phone_provider'");
 
 		if ($result) {
 

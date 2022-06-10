@@ -20,8 +20,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  late String tel = "";
-  late String pass = "";
+  late String phone_user = "";
+  late String password_user = "";
   bool _securetext = true;
   late String usernamelogin;
 
@@ -78,15 +78,14 @@ class _LoginState extends State<Login> {
         child: RaisedButton(
           color: Allmethod().dartcolor,
           onPressed: () {
-            MaterialPageRoute route =
-                MaterialPageRoute(builder: (value) => All_bottombar_user());
-            Navigator.push(context, route);
-            // Navigator.of(context).push(route)
-            // if (tel == null || tel.isEmpty || pass == null || pass.isEmpty) {
-            //   dialong(context, "กรุณากรอกให้ครบทุกช่อง");
-            // } else {
-            //   checktel();
-            // }
+            if (phone_user == null ||
+                phone_user.isEmpty ||
+                password_user == null ||
+                password_user.isEmpty) {
+              dialong(context, "กรุณากรอกให้ครบทุกช่อง");
+            } else {
+              checktel();
+            }
           },
           child: Text(
             "เข้าสู่ระบบ",
@@ -112,43 +111,43 @@ class _LoginState extends State<Login> {
       );
 
   void checktel() async {
+    print("เช็คเบอร์");
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.3/agriser_work/getUserWhereUser.php?isAdd=true&tel=$tel");
-    print(response.data);
-
+        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user");
+    print("หาเบอร์แล้วเจอ:   " + response.data);
     if (response.data == "null") {
-      dialong(context, "ไม่มีเบอร์ $tel ในระบบ");
+      dialong(context, "ไม่มีเบอร์ $phone_user ในระบบ");
     } else {
+      print("1");
       var result = json.decode(response.data);
-
       print(result);
+      print("2");
+      // print("ได้ข้อมูลจากเบอร์:  " + result);
       for (var map in result) {
         Welcome datauser = Welcome.fromJson(map);
 
         SharedPreferences preferences = await SharedPreferences.getInstance();
-        preferences.setString("id", datauser.id);
-        preferences.setString("tel", datauser.tel);
-        preferences.setString("name", datauser.name);
+        preferences.setString("phone_user", datauser.phone_user);
+        preferences.setString("name_user", datauser.name_user);
 
-        if (pass == datauser.pass) {
+        if (password_user == datauser.password_user) {
           print("ไปหน้าหลัก");
           MaterialPageRoute route =
               MaterialPageRoute(builder: (context) => All_bottombar_user());
           Navigator.pushAndRemoveUntil(context, route, (route) => false);
+          print("เข้าสู่ระบบ");
         } else {
           dialong(context, "รหัสผ่านไม่ถูกต้อง");
         }
       }
-      print("เข้าสู่ระบบ");
     }
   }
 
   Widget Userform() => Container(
         width: 250.0,
         child: TextField(
-          // onChanged:
-          // (value) => tel = value.trim(),
+          onChanged: (value) => phone_user = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.account_box),
             labelStyle: TextStyle(color: Allmethod().dartcolor),
@@ -165,7 +164,7 @@ class _LoginState extends State<Login> {
         width: 250.0,
         child: TextField(
           obscureText: _securetext,
-          onChanged: (value) => pass = value.trim(),
+          onChanged: (value) => password_user = value.trim(),
           decoration: InputDecoration(
             suffixIcon: IconButton(
               icon: Icon(_securetext ? Icons.remove_red_eye : Icons.security),
