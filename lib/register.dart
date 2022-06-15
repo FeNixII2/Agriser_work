@@ -4,8 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'login.dart';
+import 'package:intl/intl.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -24,8 +25,44 @@ class _RegisterState extends State<Register> {
   late String address_user = "";
   late String province_user = "";
   late String district_user = "";
+  late String pickedDate = "";
+  bool isChecked_b = false;
+  bool isChecked_g = false;
+  // DateTime selectedDate = DateTime.now();
+  TextEditingController dateinput = TextEditingController();
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //       context: context,
+  //       initialDate: selectedDate,
+  //       firstDate: DateTime(2015, 8),
+  //       lastDate: DateTime(2101));
+  //   if (picked != null && picked != selectedDate) {
+  //     setState(() {
+  //       selectedDate = picked;
+  //     });
+  //   }
+  // }
+
+  @override
+  void initState() {
+    dateinput.text = ""; //set the initial value of text field
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.blue;
+      }
+      return Color.fromARGB(255, 229, 160, 10);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("ลงทะเบียน"),
@@ -47,6 +84,15 @@ class _RegisterState extends State<Register> {
               Allmethod().Space(),
               Emailform(),
               Allmethod().Space(),
+              Addressform(),
+              Allmethod().Space(),
+              Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Sexform_male(),
+                    Sexform_frmale(),
+                  ]),
               Dateform(),
               Allmethod().Space(),
               Comfirmbutton(),
@@ -182,18 +228,89 @@ class _RegisterState extends State<Register> {
       );
 
   Widget Dateform() => Container(
-        width: 300.0,
-        child: TextFormField(),
+      padding: EdgeInsets.all(15),
+      height: 150,
+      width: 300.0,
+      child: TextField(
+        controller: dateinput, //editing controller of this TextField
+        decoration: InputDecoration(
+            icon: Icon(Icons.calendar_today), //icon of text field
+            labelText: "Enter Date" //label text of field
+            ),
+        readOnly: true, //set it true, so that user will not able to edit text
+        onTap: () async {
+          var dateTime = DateTime.now();
+          DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: dateTime,
+              firstDate: DateTime(
+                  2000), //DateTime.now() - not to allow to choose before today.
+              lastDate: DateTime(2101));
+
+          if (pickedDate != null) {
+            print(
+                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+            String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+            print(
+                formattedDate); //formatted date output using intl package =>  2021-03-16
+            //you can implement different kind of Date Format here according to your requirement
+
+            setState(() {
+              dateinput.text =
+                  formattedDate; //set output date to TextField value.
+            });
+          } else {
+            print("Date is not selected");
+          }
+        },
+      ));
+
+  Widget Sexform_male() => Container(
+        width: 140.0,
+        child: CheckboxListTile(
+          title: Text("Male"),
+          checkColor: Colors.white,
+          // fillColor: MaterialStateProperty.resolveWith(getColor),
+          value: isChecked_b,
+          onChanged: (bool? value) {
+            setState(() {
+              isChecked_b = value!;
+            });
+          },
+          controlAffinity: ListTileControlAffinity.leading,
+        ),
       );
 
-  Widget Sexform() => Container(
-        width: 300.0,
-        child: TextFormField(),
+  Widget Sexform_frmale() => Container(
+        width: 140.0,
+        child: CheckboxListTile(
+          title: Text("Female"),
+          checkColor: Colors.white,
+          // fillColor: MaterialStateProperty.resolveWith(getColor),
+          value: isChecked_g,
+          onChanged: (bool? value) {
+            setState(() {
+              isChecked_g = value!;
+            });
+          },
+          controlAffinity: ListTileControlAffinity.leading,
+        ),
       );
 
   Widget Addressform() => Container(
         width: 300.0,
-        child: TextFormField(),
+        child: TextField(
+          onChanged: (value) => address_user = value.trim(),
+          decoration: InputDecoration(
+            prefixIcon: Icon(Icons.account_box),
+            labelStyle: TextStyle(color: Allmethod().dartcolor),
+            labelText: "ที่อยู่ปัจจุบัน",
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Allmethod().dartcolor)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Allmethod().dartcolor)),
+          ),
+        ),
       );
   Widget Provinceform() => Container(
         width: 300.0,
