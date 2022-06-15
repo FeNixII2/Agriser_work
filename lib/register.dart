@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'login.dart';
 
 class Register extends StatefulWidget {
