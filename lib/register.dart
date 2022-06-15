@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:agriser_work/utility/allmethod.dart';
 import 'package:agriser_work/utility/dialog.dart';
 import 'package:dio/dio.dart';
@@ -28,25 +30,36 @@ class _RegisterState extends State<Register> {
   late String pickedDate = "";
   bool isChecked_b = false;
   bool isChecked_g = false;
-  // DateTime selectedDate = DateTime.now();
+
   TextEditingController dateinput = TextEditingController();
-  // Future<void> _selectDate(BuildContext context) async {
-  //   final DateTime? picked = await showDatePicker(
-  //       context: context,
-  //       initialDate: selectedDate,
-  //       firstDate: DateTime(2015, 8),
-  //       lastDate: DateTime(2101));
-  //   if (picked != null && picked != selectedDate) {
-  //     setState(() {
-  //       selectedDate = picked;
-  //     });
-  //   }
-  // }
+
+  //// จังหวัด
+  late String selectprovince;
+  List data = [];
+
+  Future getAllprovince() async {
+    print("เข้าแล้วเน้อ");
+    var dio = Dio();
+    final response = await dio
+        .get("http://192.168.1.8/Agriser_work/getProvince.php?isAdd=true");
+    var result = json.decode(response.data);
+
+    if (response.statusCode == 200) {
+      setState(() {
+        result = json.decode(response.data);
+        data = result;
+      });
+      print(result);
+      return result;
+    }
+    // return "success";
+  }
 
   @override
   void initState() {
     dateinput.text = ""; //set the initial value of text field
     super.initState();
+    getAllprovince();
   }
 
   @override
@@ -94,6 +107,33 @@ class _RegisterState extends State<Register> {
                     Sexform_frmale(),
                   ]),
               Dateform(),
+              Allmethod().Space(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Text(
+                    'จังหวัด',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20, color: Colors.orange),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              // Center(
+              //   child: DropdownButton(
+              //       value: selectprovince,
+              //       hint: Text("Select Provines"),
+              //       items: data.map((output) {
+              //           return DropdownMenuItem(child: null);
+              //         },),
+              //       onChanged: (value) {
+              //         setState(() {
+              //           selectprovince = value;
+              //         });
+              //       }),
+              // ),
               Allmethod().Space(),
               Comfirmbutton(),
             ],
@@ -312,10 +352,17 @@ class _RegisterState extends State<Register> {
           ),
         ),
       );
-  Widget Provinceform() => Container(
-        width: 300.0,
-        child: TextFormField(),
+  Widget Provinceform() => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Text(
+            'จังหวัด',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20, color: Colors.orange),
+          ),
+        ),
       );
+
   Widget Destrictform() => Container(
         width: 300.0,
         child: TextFormField(),
