@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -14,8 +12,6 @@ class Add_provider_service extends StatefulWidget {
 }
 
 class _Add_provider_serviceState extends State<Add_provider_service> {
-  late File _iamge;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

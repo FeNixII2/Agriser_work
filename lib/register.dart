@@ -41,7 +41,7 @@ class _RegisterState extends State<Register> {
     print("เข้าแล้วเน้อ");
     var dio = Dio();
     final response = await dio
-        .get("http://192.168.1.8/Agriser_work/getProvince.php?isAdd=true");
+        .get("http://192.168.1.3/Agriser_work/getProvince.php?isAdd=true");
     var result = json.decode(response.data);
 
     if (response.statusCode == 200) {
