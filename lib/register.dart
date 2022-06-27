@@ -354,8 +354,8 @@ class _RegisterState extends State<Register> {
               context: context,
               initialDate: dateTime,
               firstDate: DateTime(
-                  2000), //DateTime.now() - not to allow to choose before today.
-              lastDate: DateTime(2101));
+                  1950), //DateTime.now() - not to allow to choose before today.
+              lastDate: DateTime.now());
 
           if (pickedDate != null) {
             print(
