@@ -20,9 +20,9 @@ if (!$link->set_charset("utf8")) {
 if (isset($_GET)) {
     if ($_GET['isAdd'] == 'true') {
 
+        $idprovince = $_GET['idprovince'];
 
-
-        $result = mysqli_query($link, "SELECT * FROM provinces ");
+        $result = mysqli_query($link, "SELECT * FROM amphures where province_id = '$idprovince' ");
         // WHERE phone_user = '$phone_user'
 
         if ($result) {
