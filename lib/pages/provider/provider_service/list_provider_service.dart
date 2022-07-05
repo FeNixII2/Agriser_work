@@ -57,7 +57,7 @@ class _List_provider_serviceState extends State<List_provider_service> {
   Loadservice() async {
     var dio = Dio();
     final response = await dio
-        .get("http://192.168.1.4/agriser_work/search_service.php?isAdd=true");
+        .get("http://192.168.1.3/agriser_work/search_service.php?isAdd=true");
     if (response.statusCode == 200) {
       setState(() {
         search_service = json.decode(response.data);

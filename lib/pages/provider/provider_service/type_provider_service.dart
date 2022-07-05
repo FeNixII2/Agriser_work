@@ -1,7 +1,9 @@
 import 'package:agriser_work/pages/provider/provider_service/add_provider_service.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utility/allmethod.dart';
 
@@ -13,6 +15,16 @@ class Type_provider_service extends StatefulWidget {
 }
 
 class _Type_provider_serviceState extends State<Type_provider_service> {
+  @override
+  void initState() {
+    super.initState();
+    getpermission();
+  }
+
+  getpermission() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +40,11 @@ class _Type_provider_serviceState extends State<Type_provider_service> {
                   height: 120,
                   child: RaisedButton(
                     child: Text("รถเกี่ยวข้าว"),
-                    onPressed: () {
+                    onPressed: () async {
+                      SharedPreferences preferences =
+                          await SharedPreferences.getInstance();
+                      preferences.setString(
+                          "choose_type_service", "รถเกี่ยวข้าว");
                       MaterialPageRoute route = MaterialPageRoute(
                           builder: (context) => Add_provider_service());
                       Navigator.push(context, route);
