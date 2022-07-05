@@ -21,8 +21,9 @@ if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
 				
 		$phone_user = $_GET['phone_user'];
+		$id_provider = $_GET['id_provider'];
 
-		$result = mysqli_query($link, "SELECT * FROM tb_user ");
+		$result = mysqli_query($link, "SELECT * FROM tb_service_provider_car where id_provider = '$id_provider' ");
 		// WHERE phone_user = '$phone_user'
 
 		if ($result) {

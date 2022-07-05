@@ -9,6 +9,7 @@ import 'package:flutter/src/widgets/framework.dart';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'login.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -21,38 +22,56 @@ class _RegisterState extends State<Register> {
   late String name_user = "";
   late String phone_user = "";
   late String password_user = "";
+  late String password_user_a = "";
   late String email_user = "";
   late String date_user = "";
   late String sex_user = "";
   late String address_user = "";
-  late String province_user = "";
-  late String district_user = "";
+  // late String province_user = "";
+  // late String district_user = "";
   late String pickedDate = "";
+  late String formattedDate = "";
   bool isChecked_b = false;
   bool isChecked_g = false;
 
   TextEditingController dateinput = TextEditingController();
 
   //// จังหวัด
-  late String selectprovince;
-  List data = [];
+  var selectProvince;
+  var selectAmphure;
+  List dataProvince = [];
+  List dataAmphure = [];
 
   Future getAllprovince() async {
-    print("เข้าแล้วเน้อ");
-    var dio = Dio();
-    final response = await dio
-        .get("http://192.168.1.3/Agriser_work/getProvince.php?isAdd=true");
-    var result = json.decode(response.data);
-
+    // print("เข้าแล้วเน้อ");
+    var url = "http://192.168.1.3/Agriser_work/getProvince.php?isAdd=true";
+    var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
       setState(() {
-        result = json.decode(response.data);
-        data = result;
+        dataProvince = jsonData;
+        // data = jsonData;
       });
-      print(result);
-      return result;
+      // print(dataProvince);
+      // return dataProvince;
     }
-    // return "success";
+  }
+
+  Future getSelectAmphures() async {
+    // print("มาอำเภอ");
+    var url =
+        "http://192.168.1.3/Agriser_work/getSelectAmphures.php?isAdd=true&&idprovince=$selectProvince";
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      setState(() {
+        dataAmphure = jsonData;
+        // data = jsonData;
+      });
+
+      // print(dataAmphure);
+      // return dataAmphure;
+    }
   }
 
   @override
@@ -82,7 +101,7 @@ class _RegisterState extends State<Register> {
         backgroundColor: Allmethod().dartcolor,
       ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(45, 20, 0, 0),
+        padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -92,6 +111,7 @@ class _RegisterState extends State<Register> {
               Telform(),
               Allmethod().Space(),
               Passwordform(),
+              Passwordform_a(),
               Allmethod().Space(),
               Nameform(),
               Allmethod().Space(),
@@ -103,37 +123,50 @@ class _RegisterState extends State<Register> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DropdownButton(
+                          hint: Text("Select Provines"),
+                          value: selectProvince,
+                          items: dataProvince.map((provinces) {
+                            return DropdownMenuItem(
+                                value: provinces['id'],
+                                child: Text(provinces['name_th']));
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectProvince = value;
+                              // print(selectProvince);
+                              getSelectAmphures();
+                            });
+                          }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DropdownButton(
+                          hint: Text("Select Amphure"),
+                          value: selectAmphure,
+                          items: dataAmphure.map((amphures) {
+                            return DropdownMenuItem(
+                                value: amphures['id'],
+                                child: Text(amphures['name_th']));
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectAmphure = value;
+                              // print(selectAmphure);
+                            });
+                          }),
+                    ),
+                  ]),
+              Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     Sexform_male(),
                     Sexform_frmale(),
                   ]),
               Dateform(),
-              Allmethod().Space(),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Text(
-                    'จังหวัด',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 20, color: Colors.orange),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              // Center(
-              //   child: DropdownButton(
-              //       value: selectprovince,
-              //       hint: Text("Select Provines"),
-              //       items: data.map((output) {
-              //           return DropdownMenuItem(child: null);
-              //         },),
-              //       onChanged: (value) {
-              //         setState(() {
-              //           selectprovince = value;
-              //         });
-              //       }),
-              // ),
               Allmethod().Space(),
               Comfirmbutton(),
             ],
@@ -152,18 +185,35 @@ class _RegisterState extends State<Register> {
           onPressed: () {
             print("กดยืนยัน");
             print(
-              "ชื่อ = $name_user, เบอร์โทร - $phone_user, รหัสผ่าน = $password_user",
+              "ชื่อ = $name_user, เบอร์โทร - $phone_user, รหัสผ่าน = $password_user, อีเมล = $email_user, ที่อยู่ = $address_user, เพศ = $sex_user, วันเกิด = $formattedDate, จังหวัด = $selectProvince, อำเภอ = $selectAmphure",
             );
             if (phone_user == null ||
                 phone_user.isEmpty ||
                 name_user == null ||
                 name_user.isEmpty ||
                 password_user == null ||
-                password_user.isEmpty) {
+                password_user.isEmpty ||
+                password_user_a == null ||
+                password_user_a.isEmpty ||
+                sex_user == null ||
+                sex_user.isEmpty ||
+                address_user == null ||
+                address_user.isEmpty ||
+                formattedDate == null ||
+                formattedDate.isEmpty ||
+                selectProvince == null ||
+                selectProvince.isEmpty ||
+                selectAmphure == null ||
+                selectAmphure.isEmpty) {
               dialong(context, "กรุณากรอกข้อมูลให้ครบทุกช่อง");
               print("กรอกข้อมูลไม่ครบ");
             } else {
-              checktel();
+              if (password_user == password_user_a) {
+                checktel();
+              } else {
+                dialong(
+                    context, "รหัสผ่านของคุณไม่ตรงกัน กรุณาลองใหม่อีกครั้ง");
+              }
             }
           },
           child: Text(
@@ -186,9 +236,12 @@ class _RegisterState extends State<Register> {
   }
 
   void registhread() async {
+    if (email_user == null || email_user.isEmpty) {
+      email_user = '-';
+    }
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.3/agriser_work/addUser.php?isAdd=true&tel=$phone_user&pass=$password_user&name=$name_user");
+        "http://192.168.1.3/agriser_work/addUser.php?isAdd=true&tel=$phone_user&pass=$password_user&name=$name_user&date=$formattedDate&sex=$sex_user&address=$address_user&province=$selectProvince&amphures=$selectAmphure&email=$email_user");
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
@@ -251,6 +304,23 @@ class _RegisterState extends State<Register> {
         ),
       );
 
+  Widget Passwordform_a() => Container(
+        width: 300.0,
+        child: TextField(
+          obscureText: true,
+          onChanged: (value) => password_user_a = value.trim(),
+          decoration: InputDecoration(
+            prefixIcon: Icon(Icons.lock),
+            labelStyle: TextStyle(color: Allmethod().dartcolor),
+            labelText: "ยืนยันรหัสผ่าน",
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Allmethod().dartcolor)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Allmethod().dartcolor)),
+          ),
+        ),
+      );
+
   Widget Emailform() => Container(
         width: 300.0,
         child: TextField(
@@ -269,7 +339,7 @@ class _RegisterState extends State<Register> {
 
   Widget Dateform() => Container(
       padding: EdgeInsets.all(15),
-      height: 150,
+      height: 100,
       width: 300.0,
       child: TextField(
         controller: dateinput, //editing controller of this TextField
@@ -284,13 +354,13 @@ class _RegisterState extends State<Register> {
               context: context,
               initialDate: dateTime,
               firstDate: DateTime(
-                  2000), //DateTime.now() - not to allow to choose before today.
-              lastDate: DateTime(2101));
+                  1950), //DateTime.now() - not to allow to choose before today.
+              lastDate: DateTime.now());
 
           if (pickedDate != null) {
             print(
                 pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-            String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+            formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
             print(
                 formattedDate); //formatted date output using intl package =>  2021-03-16
             //you can implement different kind of Date Format here according to your requirement
@@ -315,6 +385,8 @@ class _RegisterState extends State<Register> {
           onChanged: (bool? value) {
             setState(() {
               isChecked_b = value!;
+              isChecked_g = false;
+              sex_user = '1';
             });
           },
           controlAffinity: ListTileControlAffinity.leading,
@@ -322,7 +394,7 @@ class _RegisterState extends State<Register> {
       );
 
   Widget Sexform_frmale() => Container(
-        width: 140.0,
+        width: 150.0,
         child: CheckboxListTile(
           title: Text("Female"),
           checkColor: Colors.white,
@@ -331,6 +403,8 @@ class _RegisterState extends State<Register> {
           onChanged: (bool? value) {
             setState(() {
               isChecked_g = value!;
+              isChecked_b = false;
+              sex_user = '2';
             });
           },
           controlAffinity: ListTileControlAffinity.leading,

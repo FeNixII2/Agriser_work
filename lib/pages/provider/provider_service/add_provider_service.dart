@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:agriser_work/pages/provider/provider_service/list_provider_service.dart';
 import 'package:agriser_work/utility/dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -265,6 +266,10 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
     print(response.data);
     if (response.data == "true") {
       dialong(context, "ลงทะเบียนสำเร็จ");
+
+      MaterialPageRoute route =
+          MaterialPageRoute(builder: (value) => List_provider_service());
+      Navigator.pushAndRemoveUntil(context, route, (route) => false);
     } else {
       dialong(context, "ไม่สามารถสมัครได้ กรุณาลองใหม่");
     }
