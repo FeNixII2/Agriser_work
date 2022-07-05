@@ -24,16 +24,17 @@ if (isset($_GET)) {
 		// $pass = $_GET['pass'];
 		$name_provider = $_GET['name_provider'];
 
-		// $nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
-		// $selectdatabooking = "SELECT * From tb_povider where id_provider = '$nums'  ";
-		// $objselect = mysqli_query($link, $selectdatabooking);
-		// $Resultselect = mysqli_fetch_array($objselect ,MYSQLI_ASSOC);
-		// while (!is_null($Resultselect)) {
-  //   	$nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
-		// }
-		
+		$nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+    $selectdatabooking = "SELECT * from tb_provider where id_provider = '" . $num . "' ";
+    $objselect = mysqli_query($link, $selectdatabooking);
+    $Resultselect = mysqli_fetch_array($objselect ,MYSQLI_ASSOC);
+    while (!is_null($Resultselect)) {
+    $nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+
+    }
+    $num = "P".$nums."";
 							
-		$sql = "INSERT INTO `tb_provider`(`phone_provider`, `name_provider`) VALUES ('$phone_provider','$name_provider')";
+		$sql = "INSERT INTO `tb_provider`(`phone_provider`, `name_provider`,`id_provider`) VALUES ('$phone_provider','$name_provider','$num')";
 
 		$result = mysqli_query($link, $sql);
 

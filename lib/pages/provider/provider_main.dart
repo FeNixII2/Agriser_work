@@ -2,6 +2,7 @@ import 'package:agriser_work/pages/provider/provider_service/list_provider_servi
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Provider_main extends StatefulWidget {
   const Provider_main({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class _Provider_mainState extends State<Provider_main> {
       body: Center(
         child: Container(
           child: RaisedButton(
-            onPressed: () {
+            onPressed: () async {
               print("คลิกเพิ่ม/แก้ไขข้อมูลการให้บริการ");
               MaterialPageRoute route = MaterialPageRoute(
                   builder: (value) => List_provider_service());
