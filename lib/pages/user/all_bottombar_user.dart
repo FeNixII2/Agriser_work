@@ -25,6 +25,7 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
   late String phone_user;
   late String name_provider;
   late String phone_provider;
+  late String id_provider;
   @override
   void initState() {
     super.initState();
@@ -162,11 +163,13 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
   void check_data_provider() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/getProviderWhereUser.php?isAdd=true&phone_provider=$phone_provider");
+        "http://192.168.1.3/agriser_work/getProviderWhereUser.php?isAdd=true&phone_provider=$phone_provider");
     print(response.data);
     if (response.data == "null") {
+      print("ไม่มีเบอร์นี้ในระบบผู้ให้บริการ");
       Alert_regis_provider();
     } else {
+      print("มีเบอร์นี้ในระบบผู้ให้บริการ");
       MaterialPageRoute route =
           MaterialPageRoute(builder: (value) => All_bottombar_provider());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
@@ -176,7 +179,7 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
   void regis_provider() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/addProvider.php?isAdd=true&phone_provider=$phone_provider&name_provider=$name_provider");
+        "http://192.168.1.3/agriser_work/addProvider.php?isAdd=true&phone_provider=$phone_provider&name_provider=$name_provider");
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
@@ -221,9 +224,9 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
       child: Text('ตกลง'),
       onPressed: () {
         regis_provider();
-        MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => All_bottombar_provider());
-        Navigator.pushAndRemoveUntil(context, route, (route) => false);
+        // MaterialPageRoute route =
+        //     MaterialPageRoute(builder: (value) => All_bottombar_provider());
+        // Navigator.pushAndRemoveUntil(context, route, (route) => false);
       },
     );
   }

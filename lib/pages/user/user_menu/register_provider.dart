@@ -97,9 +97,9 @@ class _Register_providerState extends State<Register_provider> {
         "http://192.168.1.4/agriser_work/addProvider.php?isAdd=true&tel_p=$tel_p&name_p=$name_p");
     print(response.data);
     if (response.data == "true") {
-      MaterialPageRoute route =
-          MaterialPageRoute(builder: (value) => All_bottombar_provider());
-      Navigator.pushAndRemoveUntil(context, route, (route) => false);
+      // MaterialPageRoute route =
+      //     MaterialPageRoute(builder: (value) => All_bottombar_provider());
+      // Navigator.pushAndRemoveUntil(context, route, (route) => false);
       dialong(context, "ลงทะเบียนสำเร็จ");
     } else {
       dialong(context, "ไม่สามารถสมัครได้ กรุณาลองใหม่");

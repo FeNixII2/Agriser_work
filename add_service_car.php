@@ -20,26 +20,27 @@ if (!$link->set_charset("utf8")) {
 if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
 				
-		$phone_provider = $_GET['phone_provider'];
+		$type = $_GET['type'];
+		$brand = $_GET['brand'];
+		$model = $_GET['model'];
+		$date_buy = $_GET['date_buy'];
+		$prices = $_GET['prices'];
+		
+							// INSERT INTO `tb_service_provider_car`( `type`, `brand`, `model`, `date_buy`, `prices`) VALUES ('$type','$brand','$model','$date_buy','$prices')
 
-		$result = mysqli_query($link, "SELECT * FROM tb_provider WHERE phone_provider = '$phone_provider'");
+
+		$sql = "UPDATE tb_service_provider_car SET type = '$type' , brand = '$brand' , model = '$model', date_buy = '$date_buy', prices = '$prices' WHERE id_provider = '556' ";
+
+		$result = mysqli_query($link, $sql);
 
 		if ($result) {
+			echo "true";
+		} else {
+			echo "false";
+		}
 
-			while($row=mysqli_fetch_assoc($result)){
-			$output[]=$row;
-
-			}	// while
-
-			echo json_encode($output);
-
-		} //if
-
-	}
-	 else echo "Welcome Master UNG";	// if2
+	} else echo "Welcome Master UNG";
    
-}	// if1
-
-
+}
 	mysqli_close($link);
 ?>

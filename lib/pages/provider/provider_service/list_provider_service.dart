@@ -16,6 +16,7 @@ class List_provider_service extends StatefulWidget {
 
 class _List_provider_serviceState extends State<List_provider_service> {
   List search_service = [];
+  late String id_provider = '512';
 
   @override
   void initState() {
@@ -33,9 +34,9 @@ class _List_provider_serviceState extends State<List_provider_service> {
           itemCount: search_service.length,
           itemBuilder: (context, index) {
             return ListTile(
-              leading: Text(search_service[index]["name_user"]),
-              title: Text(search_service[index]["phone_user"]),
-              subtitle: Text(search_service[index]["password_user"]),
+              leading: Text(search_service[index]["type"]),
+              title: Text(search_service[index]["brand"]),
+              subtitle: Text(search_service[index]["prices"]),
               trailing: RaisedButton(
                 onPressed: () {},
                 child: Text("แก้ไข"),
@@ -56,8 +57,8 @@ class _List_provider_serviceState extends State<List_provider_service> {
 
   Loadservice() async {
     var dio = Dio();
-    final response = await dio
-        .get("http://192.168.1.4/agriser_work/search_service.php?isAdd=true");
+    final response = await dio.get(
+        "http://192.168.1.3/agriser_work/search_service.php?isAdd=true&id_provider=$id_provider");
     if (response.statusCode == 200) {
       setState(() {
         search_service = json.decode(response.data);

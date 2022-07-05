@@ -23,6 +23,14 @@ if (isset($_GET)) {
 		$phone_provider = $_GET['phone_provider'];
 		// $pass = $_GET['pass'];
 		$name_provider = $_GET['name_provider'];
+
+		// $nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+		// $selectdatabooking = "SELECT * From tb_povider where id_provider = '$nums'  ";
+		// $objselect = mysqli_query($link, $selectdatabooking);
+		// $Resultselect = mysqli_fetch_array($objselect ,MYSQLI_ASSOC);
+		// while (!is_null($Resultselect)) {
+  //   	$nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+		// }
 		
 							
 		$sql = "INSERT INTO `tb_provider`(`phone_provider`, `name_provider`) VALUES ('$phone_provider','$name_provider')";
@@ -35,7 +43,8 @@ if (isset($_GET)) {
 			echo "false";
 		}
 
-	} else echo "Welcome Master UNG";
+	}
+	 else echo "Welcome Master UNG";
    
 }
 	mysqli_close($link);
