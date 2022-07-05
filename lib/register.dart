@@ -226,7 +226,7 @@ class _RegisterState extends State<Register> {
   void checktel() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.3/agriser_work/getUserWhereUser.php?isAdd=true&tel=$phone_user");
+        "http://192.168.1.3/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user");
     print(response.data);
     if (response.data == "null") {
       registhread();

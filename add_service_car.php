@@ -25,11 +25,12 @@ if (isset($_GET)) {
 		$model = $_GET['model'];
 		$date_buy = $_GET['date_buy'];
 		$prices = $_GET['prices'];
+		$phone_provider = $_GET['phone_provider'];
 		
 							// INSERT INTO `tb_service_provider_car`( `type`, `brand`, `model`, `date_buy`, `prices`) VALUES ('$type','$brand','$model','$date_buy','$prices')
 
 
-		$sql = "UPDATE tb_service_provider_car SET type = '$type' , brand = '$brand' , model = '$model', date_buy = '$date_buy', prices = '$prices' WHERE id_provider = '556' ";
+		$sql = "UPDATE tb_service_provider_car SET type = '$type' , brand = '$brand' , model = '$model', date_buy = '$date_buy', prices = '$prices' , status = '1' WHERE phone_provider = '$phone_provider' and status = '0' ";
 
 		$result = mysqli_query($link, $sql);
 

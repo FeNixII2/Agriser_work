@@ -32,6 +32,9 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
   String image_car = "";
   String image_license_plate = "";
 
+  late String name_provider;
+  late String phone_provider;
+
   @override
   void initState() {
     super.initState();
@@ -42,6 +45,12 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       type = preferences.getString("choose_type_service")!;
+      name_provider = preferences.getString('name_provider')!;
+      phone_provider = preferences.getString('phone_provider')!;
+      print("------------ Provider - Mode ------------");
+      print("--- Get type provider State :     " + type);
+      print("--- Get name provider State :     " + name_provider);
+      print("--- Get phone provider State :     " + phone_provider);
     });
   }
 
@@ -66,7 +75,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
   Future uploadImage() async {
     final uri = Uri.parse("http://192.168.1.3/agriser_work/up_img_p.php");
     var request = http.MultipartRequest("POST", uri);
-    request.fields["name"] = "UPLOAD";
+    request.fields["phone_provider"] = phone_provider;
     var pic_car =
         await http.MultipartFile.fromPath("image_car", _image_car.path);
     var pic_license =
@@ -262,14 +271,13 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
   void regisservice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.3/agriser_work/add_service_car.php?isAdd=true&type=$type&brand=$brand&model=$model&date_buy=$date_buy&prices=$prices");
+        "http://192.168.1.3/agriser_work/add_service_car.php?isAdd=true&type=$type&brand=$brand&model=$model&date_buy=$date_buy&prices=$prices&phone_provider=$phone_provider");
     print(response.data);
     if (response.data == "true") {
-      dialong(context, "ลงทะเบียนสำเร็จ");
-
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (value) => List_provider_service());
+          MaterialPageRoute(builder: (context) => List_provider_service());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
+      dialong(context, "ลงทะเบียนสำเร็จ");
     } else {
       dialong(context, "ไม่สามารถสมัครได้ กรุณาลองใหม่");
     }
