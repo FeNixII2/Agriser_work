@@ -8,6 +8,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class List_provider_service extends StatefulWidget {
   const List_provider_service({Key? key}) : super(key: key);
@@ -31,13 +32,18 @@ class _List_provider_serviceState extends State<List_provider_service> {
   Future<Null> findUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      name_provider = preferences.getString('name_provider')!;
-      phone_provider = preferences.getString('phone_provider')!;
+      phone_provider = preferences.getString('phone_user')!;
       print("------------ Provider - Mode ------------");
-      print("--- Get name provider State :     " + name_provider);
+
       print("--- Get phone provider State :     " + phone_provider);
     });
     Loadservice();
+  }
+
+  Future getinfo_service() async {
+    var url = "http://192.168.1.4/agriser_work/get_img.php";
+    var response = await http.get(Uri.parse(url));
+    return json.decode(response.body);
   }
 
   @override
@@ -52,19 +58,24 @@ class _List_provider_serviceState extends State<List_provider_service> {
                 builder: (context) => const All_bottombar_provider()),
           ),
         ),
-        title: Text("Sample"),
-        centerTitle: true,
+        title: Text("ข้อมูลการให้บริการ"),
+        // centerTitle: true,
       ),
       body: ListView.builder(
           itemCount: search_service.length,
           itemBuilder: (context, index) {
-            return ListTile(
-              leading: Text(search_service[index]["type"]),
-              title: Text(search_service[index]["brand"]),
-              subtitle: Text(search_service[index]["prices"]),
-              trailing: RaisedButton(
-                onPressed: () {},
-                child: Text("แก้ไข"),
+            return Card(
+              child: ListTile(
+                leading: Container(
+                  child: Image.network(
+                      "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['image_car']}"),
+                ),
+                title: Text(search_service[index]["brand"]),
+                subtitle: Text(search_service[index]["prices"]),
+                trailing: RaisedButton(
+                  onPressed: () {},
+                  child: Text("แก้ไข"),
+                ),
               ),
             );
           }),
@@ -83,7 +94,7 @@ class _List_provider_serviceState extends State<List_provider_service> {
   Loadservice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.3/agriser_work/search_service.php?isAdd=true&phone_provider=$phone_provider");
+        "http://192.168.1.4/agriser_work/search_service.php?isAdd=true&phone_provider=$phone_provider");
     if (response.statusCode == 200) {
       setState(() {
         search_service = json.decode(response.data);

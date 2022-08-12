@@ -23,20 +23,21 @@ class _LoginState extends State<Login> {
   late String phone_user = "";
   late String password_user = "";
   bool _securetext = true;
-  late String usernamelogin;
+  late String phonelogin;
 
   @override
   void initState() {
     super.initState();
+
     checklogin();
   }
 
   Future<Null> checklogin() async {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
-      usernamelogin = preferences.getString("name")!;
-      print("usernamelogin = $usernamelogin");
-      if (usernamelogin == null) {
+      phonelogin = preferences.getString("phone_user")!;
+      print("usernamelogin = $phonelogin");
+      if (phonelogin == null) {
         print("not login ready");
       } else {
         print("login ready");
@@ -114,7 +115,7 @@ class _LoginState extends State<Login> {
     print("เช็คเบอร์");
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.3/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user");
+        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user");
     print("หาเบอร์แล้วเจอ:   " + response.data);
     if (response.data == "null") {
       dialong(context, "ไม่มีเบอร์ $phone_user ในระบบ");
@@ -129,7 +130,7 @@ class _LoginState extends State<Login> {
 
         SharedPreferences preferences = await SharedPreferences.getInstance();
         preferences.setString("phone_user", datauser.phone_user);
-        preferences.setString("name_user", datauser.name_user);
+        // preferences.setString("name_user", datauser.name_user);
 
         if (password_user == datauser.password_user) {
           print("ไปหน้าหลัก");

@@ -45,11 +45,11 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       type = preferences.getString("choose_type_service")!;
-      name_provider = preferences.getString('name_provider')!;
-      phone_provider = preferences.getString('phone_provider')!;
+
+      phone_provider = preferences.getString('phone_user')!;
       print("------------ Provider - Mode ------------");
       print("--- Get type provider State :     " + type);
-      print("--- Get name provider State :     " + name_provider);
+
       print("--- Get phone provider State :     " + phone_provider);
     });
   }
@@ -73,7 +73,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
   }
 
   Future uploadImage() async {
-    final uri = Uri.parse("http://192.168.1.3/agriser_work/up_img_p.php");
+    final uri = Uri.parse("http://192.168.1.4/agriser_work/up_img_p.php");
     var request = http.MultipartRequest("POST", uri);
     request.fields["phone_provider"] = phone_provider;
     var pic_car =
@@ -118,7 +118,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
                 Container(
                     width: 120,
                     height: 120,
-                    child: Image.asset("assets/images/add.png")),
+                    child: Image.asset("assets/images/tractors.png")),
                 SizedBox(width: 1),
                 display_image_car(),
               ],
@@ -196,7 +196,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
           onChanged: (value) => date_buy = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.timer),
-            hintText: "ตัวอย่าง 2560",
+            hintText: "ปีพ.ศ.ที่ซื้อ ตัวอย่าง 2560",
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -210,7 +210,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
           onChanged: (value) => prices = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.price_change_rounded),
-            hintText: "ตัวอย่าง 800",
+            hintText: "ราคา/ไร่ ตัวอย่าง 800",
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -238,7 +238,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
                   chooseImage1();
                 },
                 color: Color.fromARGB(255, 242, 238, 238),
-                icon: Image.asset("assets/images/icon_photo.png"),
+                icon: Image.asset("assets/images/gallery.png"),
               )
             : IconButton(
                 iconSize: 160,
@@ -257,7 +257,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
                   chooseImage2();
                 },
                 color: Color.fromARGB(255, 242, 238, 238),
-                icon: Image.asset("assets/images/icon_photo.png"),
+                icon: Image.asset("assets/images/gallery.png"),
               )
             : IconButton(
                 iconSize: 160,
@@ -271,7 +271,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
   void regisservice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.3/agriser_work/add_service_car.php?isAdd=true&type=$type&brand=$brand&model=$model&date_buy=$date_buy&prices=$prices&phone_provider=$phone_provider");
+        "http://192.168.1.4/agriser_work/add_service_car.php?isAdd=true&type=$type&brand=$brand&model=$model&date_buy=$date_buy&prices=$prices&phone_provider=$phone_provider");
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =

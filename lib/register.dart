@@ -44,7 +44,7 @@ class _RegisterState extends State<Register> {
 
   Future getAllprovince() async {
     // print("เข้าแล้วเน้อ");
-    var url = "http://192.168.1.3/Agriser_work/getProvince.php?isAdd=true";
+    var url = "http://192.168.1.4/Agriser_work/getProvince.php?isAdd=true";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -60,7 +60,7 @@ class _RegisterState extends State<Register> {
   Future getSelectAmphures() async {
     // print("มาอำเภอ");
     var url =
-        "http://192.168.1.3/Agriser_work/getSelectAmphures.php?isAdd=true&&idprovince=$selectProvince";
+        "http://192.168.1.4/Agriser_work/getSelectAmphures.php?isAdd=true&&idprovince=$selectProvince";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -101,16 +101,17 @@ class _RegisterState extends State<Register> {
         backgroundColor: Allmethod().dartcolor,
       ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            // mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Allmethod().Showlogo(),
               Allmethod().Space(),
               Telform(),
               Allmethod().Space(),
               Passwordform(),
+              Allmethod().Space(),
               Passwordform_a(),
               Allmethod().Space(),
               Nameform(),
@@ -126,7 +127,7 @@ class _RegisterState extends State<Register> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: DropdownButton(
-                          hint: Text("Select Provines"),
+                          hint: Text("เลือกจังหวัด"),
                           value: selectProvince,
                           items: dataProvince.map((provinces) {
                             return DropdownMenuItem(
@@ -144,7 +145,7 @@ class _RegisterState extends State<Register> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: DropdownButton(
-                          hint: Text("Select Amphure"),
+                          hint: Text("เลือกอำเภอ"),
                           value: selectAmphure,
                           items: dataAmphure.map((amphures) {
                             return DropdownMenuItem(
@@ -226,7 +227,7 @@ class _RegisterState extends State<Register> {
   void checktel() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.3/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user");
+        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user");
     print(response.data);
     if (response.data == "null") {
       registhread();
@@ -241,7 +242,7 @@ class _RegisterState extends State<Register> {
     }
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.3/agriser_work/addUser.php?isAdd=true&tel=$phone_user&pass=$password_user&name=$name_user&date=$formattedDate&sex=$sex_user&address=$address_user&province=$selectProvince&amphures=$selectAmphure&email=$email_user");
+        "http://192.168.1.4/agriser_work/addUser.php?isAdd=true&tel=$phone_user&pass=$password_user&name=$name_user&date=$formattedDate&sex=$sex_user&address=$address_user&province=$selectProvince&amphures=$selectAmphure&email=$email_user");
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
@@ -345,7 +346,7 @@ class _RegisterState extends State<Register> {
         controller: dateinput, //editing controller of this TextField
         decoration: InputDecoration(
             icon: Icon(Icons.calendar_today), //icon of text field
-            labelText: "Enter Date" //label text of field
+            labelText: "เลือกวันเกิด" //label text of field
             ),
         readOnly: true, //set it true, so that user will not able to edit text
         onTap: () async {
@@ -378,7 +379,7 @@ class _RegisterState extends State<Register> {
   Widget Sexform_male() => Container(
         width: 140.0,
         child: CheckboxListTile(
-          title: Text("Male"),
+          title: Text("ชาย"),
           checkColor: Colors.white,
           // fillColor: MaterialStateProperty.resolveWith(getColor),
           value: isChecked_b,
@@ -396,7 +397,7 @@ class _RegisterState extends State<Register> {
   Widget Sexform_frmale() => Container(
         width: 150.0,
         child: CheckboxListTile(
-          title: Text("Female"),
+          title: Text("หญิง"),
           checkColor: Colors.white,
           // fillColor: MaterialStateProperty.resolveWith(getColor),
           value: isChecked_g,
