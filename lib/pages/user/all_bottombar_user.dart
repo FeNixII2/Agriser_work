@@ -163,7 +163,7 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
   void check_data_provider() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.3/agriser_work/getProviderWhereUser.php?isAdd=true&phone_provider=$phone_provider");
+        "http://192.168.88.213/agriser_work/getProviderWhereUser.php?isAdd=true&phone_provider=$phone_provider");
     print(response.data);
     if (response.data == "null") {
       print("ไม่มีเบอร์นี้ในระบบผู้ให้บริการ");
@@ -179,7 +179,7 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
   void regis_provider() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.3/agriser_work/addProvider.php?isAdd=true&phone_provider=$phone_provider&name_provider=$name_provider");
+        "http://192.168.88.213/agriser_work/addProvider.php?isAdd=true&phone_provider=$phone_provider&name_provider=$name_provider");
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
