@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:agriser_work/pages/user/user_menu/list_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -84,36 +85,11 @@ class _User_searchState extends State<User_search> {
 
   void search_1() async {
     print("เข้าหารถเกียวข้าว");
-    var dio = Dio();
-    final response = await dio.get(
-        "http://192.168.88.213/agriser_work/search_by_user.php?isAdd=true&function=1");
-    // print("หารถแล้วเจอ:   " + response.data);
-    if (response.data == "null") {
-      dialong(context, "ไม่มีรถในระบบ");
-    } else {
-      // print("1");
-      var result = json.decode(response.data);
-      print(result);
-      // print("2");
-      // print("ได้ข้อมูลจากเบอร์:  " + result);
-      // for (var map in result) {
-      //   Welcome datauser = Welcome.fromJson(map);
-
-      //   SharedPreferences preferences = await SharedPreferences.getInstance();
-      //   preferences.setString("phone_user", datauser.phone_user);
-      //   preferences.setString("name_user", datauser.name_user);
-
-      //   if (password_user == datauser.password_user) {
-      //     print("ไปหน้าหลัก");
-      //     MaterialPageRoute route =
-      //         MaterialPageRoute(builder: (context) => All_bottombar_user());
-      //     Navigator.pushAndRemoveUntil(context, route, (route) => false);
-      //     print("เข้าสู่ระบบ");
-      //   } else {
-      //     dialong(context, "รหัสผ่านไม่ถูกต้อง");
-      //   }
-      // }
-    }
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("function", "1");
+    MaterialPageRoute route =
+        MaterialPageRoute(builder: (context) => List_service());
+    Navigator.pushAndRemoveUntil(context, route, (route) => false);
   }
 
   Widget ImageButton2() => Container(
@@ -147,36 +123,11 @@ class _User_searchState extends State<User_search> {
 
   void search_2() async {
     print("เข้าหารถไถนา");
-    var dio = Dio();
-    final response = await dio.get(
-        "http://192.168.88.213/agriser_work/search_by_user.php?isAdd=true&function=2");
-    print("หารถแล้วเจอ:   " + response.data);
-    if (response.data == "null") {
-      dialong(context, "ไม่มีรถในระบบ");
-    } else {
-      print("1");
-      var result = json.decode(response.data);
-      print(result);
-      // print("2");
-      // print("ได้ข้อมูลจากเบอร์:  " + result);
-      // for (var map in result) {
-      //   Welcome datauser = Welcome.fromJson(map);
-
-      //   SharedPreferences preferences = await SharedPreferences.getInstance();
-      //   preferences.setString("phone_user", datauser.phone_user);
-      //   preferences.setString("name_user", datauser.name_user);
-
-      //   if (password_user == datauser.password_user) {
-      //     print("ไปหน้าหลัก");
-      //     MaterialPageRoute route =
-      //         MaterialPageRoute(builder: (context) => All_bottombar_user());
-      //     Navigator.pushAndRemoveUntil(context, route, (route) => false);
-      //     print("เข้าสู่ระบบ");
-      //   } else {
-      //     dialong(context, "รหัสผ่านไม่ถูกต้อง");
-      //   }
-      // }
-    }
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("function", "2");
+    MaterialPageRoute route =
+        MaterialPageRoute(builder: (context) => List_service());
+    Navigator.pushAndRemoveUntil(context, route, (route) => false);
   }
 
   Widget ImageButton3() => Container(
@@ -210,36 +161,11 @@ class _User_searchState extends State<User_search> {
 
   void search_3() async {
     print("เข้าหารถปลูกข้าว");
-    var dio = Dio();
-    final response = await dio.get(
-        "http://192.168.88.213/agriser_work/search_by_user.php?isAdd=true&function=3");
-    print("หารถแล้วเจอ:   " + response.data);
-    if (response.data == "null") {
-      dialong(context, "ไม่มีรถในระบบ");
-    } else {
-      print("1");
-      var result = json.decode(response.data);
-      print(result);
-      // print("2");
-      // print("ได้ข้อมูลจากเบอร์:  " + result);
-      // for (var map in result) {
-      //   Welcome datauser = Welcome.fromJson(map);
-
-      //   SharedPreferences preferences = await SharedPreferences.getInstance();
-      //   preferences.setString("phone_user", datauser.phone_user);
-      //   preferences.setString("name_user", datauser.name_user);
-
-      //   if (password_user == datauser.password_user) {
-      //     print("ไปหน้าหลัก");
-      //     MaterialPageRoute route =
-      //         MaterialPageRoute(builder: (context) => All_bottombar_user());
-      //     Navigator.pushAndRemoveUntil(context, route, (route) => false);
-      //     print("เข้าสู่ระบบ");
-      //   } else {
-      //     dialong(context, "รหัสผ่านไม่ถูกต้อง");
-      //   }
-      // }
-    }
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("function", "3");
+    MaterialPageRoute route =
+        MaterialPageRoute(builder: (context) => List_service());
+    Navigator.pushAndRemoveUntil(context, route, (route) => false);
   }
 
   Widget ImageButton4() => Container(
@@ -273,36 +199,11 @@ class _User_searchState extends State<User_search> {
 
   void search_4() async {
     print("เข้าหาโดรน");
-    var dio = Dio();
-    final response = await dio.get(
-        "http://192.168.88.213/agriser_work/search_by_user.php?isAdd=true&function=4");
-    print("หารถแล้วเจอ:   " + response.data);
-    if (response.data == "null") {
-      dialong(context, "ไม่มีรถในระบบ");
-    } else {
-      print("1");
-      var result = json.decode(response.data);
-      print(result);
-      // print("2");
-      // print("ได้ข้อมูลจากเบอร์:  " + result);
-      // for (var map in result) {
-      //   Welcome datauser = Welcome.fromJson(map);
-
-      //   SharedPreferences preferences = await SharedPreferences.getInstance();
-      //   preferences.setString("phone_user", datauser.phone_user);
-      //   preferences.setString("name_user", datauser.name_user);
-
-      //   if (password_user == datauser.password_user) {
-      //     print("ไปหน้าหลัก");
-      //     MaterialPageRoute route =
-      //         MaterialPageRoute(builder: (context) => All_bottombar_user());
-      //     Navigator.pushAndRemoveUntil(context, route, (route) => false);
-      //     print("เข้าสู่ระบบ");
-      //   } else {
-      //     dialong(context, "รหัสผ่านไม่ถูกต้อง");
-      //   }
-      // }
-    }
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("function", "4");
+    MaterialPageRoute route =
+        MaterialPageRoute(builder: (context) => List_service());
+    Navigator.pushAndRemoveUntil(context, route, (route) => false);
   }
 
   Widget ImageButton5() => Container(
@@ -338,7 +239,12 @@ class _User_searchState extends State<User_search> {
       );
 
   void search_5() async {
-    print("เช็คเบอร์");
+    print("แรงงานทางการเกษตร");
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("function", "5");
+    MaterialPageRoute route =
+        MaterialPageRoute(builder: (context) => List_service());
+    Navigator.pushAndRemoveUntil(context, route, (route) => false);
   }
 }
 

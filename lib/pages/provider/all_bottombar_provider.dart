@@ -56,7 +56,7 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
 
   Future getinfo_user() async {
     var url =
-        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_provider";
+        "http://192.168.88.213/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_provider";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
