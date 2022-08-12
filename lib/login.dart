@@ -115,12 +115,8 @@ class _LoginState extends State<Login> {
     print("เช็คเบอร์");
     var dio = Dio();
     final response = await dio.get(
-<<<<<<< HEAD
-        "http://192.168.88.213/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user");
-=======
         "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user");
 
->>>>>>> 50f514e85813b2ab864c6261dbf4f066b60e84d2
     print("หาเบอร์แล้วเจอ:   " + response.data);
     if (response.data == "null") {
       dialong(context, "ไม่มีเบอร์ $phone_user ในระบบ");

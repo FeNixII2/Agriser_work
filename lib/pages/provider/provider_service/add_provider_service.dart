@@ -73,11 +73,8 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
   }
 
   Future uploadImage() async {
-<<<<<<< HEAD
-    final uri = Uri.parse("http://192.168.88.213/agriser_work/up_img_p.php");
-=======
     final uri = Uri.parse("http://192.168.1.4/agriser_work/up_img_p.php");
->>>>>>> 50f514e85813b2ab864c6261dbf4f066b60e84d2
+
     var request = http.MultipartRequest("POST", uri);
     request.fields["phone_provider"] = phone_provider;
     var pic_car =
@@ -275,11 +272,8 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
   void regisservice() async {
     var dio = Dio();
     final response = await dio.get(
-<<<<<<< HEAD
-        "http://192.168.88.213/agriser_work/add_service_car.php?isAdd=true&type=$type&brand=$brand&model=$model&date_buy=$date_buy&prices=$prices&phone_provider=$phone_provider");
-=======
         "http://192.168.1.4/agriser_work/add_service_car.php?isAdd=true&type=$type&brand=$brand&model=$model&date_buy=$date_buy&prices=$prices&phone_provider=$phone_provider");
->>>>>>> 50f514e85813b2ab864c6261dbf4f066b60e84d2
+
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
