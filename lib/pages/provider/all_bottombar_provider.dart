@@ -4,6 +4,7 @@ import 'package:agriser_work/login.dart';
 import 'package:agriser_work/pages/provider/provider_calenda.dart';
 import 'package:agriser_work/pages/provider/provider_chat.dart';
 import 'package:agriser_work/pages/provider/provider_main.dart';
+import 'package:agriser_work/pages/provider/provider_menu/edit_provider_data.dart';
 import 'package:agriser_work/pages/provider/provider_search.dart';
 import 'package:agriser_work/pages/user/all_bottombar_user.dart';
 import 'package:agriser_work/utility/dialog.dart';
@@ -172,7 +173,7 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
         title: Text("ข้อมูลส่วนตัว"),
         onTap: () {
           MaterialPageRoute route =
-              MaterialPageRoute(builder: (value) => Edit_user_data());
+              MaterialPageRoute(builder: (value) => Edit_provider_data());
           Navigator.push(context, route);
         },
       );

@@ -67,6 +67,11 @@ class _Type_provider_serviceState extends State<Type_provider_service> {
                     },
                   ),
                 ),
+              ],
+            ),
+            Allmethod().Space(),
+            Row(
+              children: [
                 Container(
                   width: 120,
                   height: 120,
