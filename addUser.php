@@ -33,8 +33,19 @@ if (isset($_GET)) {
 		$province = $_GET['province'];
 		$amphures = $_GET['amphures'];
 		$email = $_GET['email'];
+
+	$nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+	$selectdatabooking = "SELECT * from tb_user where id_user = '" . $num . "' ";
+	$objselect = mysqli_query($link, $selectdatabooking);
+	$Resultselect = mysqli_fetch_array($objselect ,MYSQLI_ASSOC);
+	while (!is_null($Resultselect)) {
+    $nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+	
+	}
+	$num = "U".$nums."";
+	// printf($num);
 							
-		$sql = "INSERT INTO `tb_user`( `phone_user`, `password_user`, `name_user`,`email_user`,`date_user`,`sex_user`,`address_user`,`province_user`,`district_user`,`id_user`) VALUES ('$tel','$pass','$name','$email','$b_date','$sex','$address','$province','$amphures','$id_number')";
+		$sql = "INSERT INTO `tb_user`( `phone_user`, `password_user`, `name_user`,`email_user`,`date_user`,`sex_user`,`address_user`,`province_user`,`district_user`,`id_user`) VALUES ('$tel','$pass','$name','$email','$b_date','$sex','$address','$province','$amphures','$num')";
 
 		$result = mysqli_query($link, $sql);
 
@@ -48,4 +59,3 @@ if (isset($_GET)) {
    
 }
 	mysqli_close($link);
-?>

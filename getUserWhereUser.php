@@ -21,7 +21,7 @@ if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
 				
 		$phone_user = $_GET['phone_user'];
-
+// printf($phone_user);
 		$result = mysqli_query($link, "SELECT * FROM tb_user WHERE phone_user = '$phone_user'");
 
 		if ($result) {
