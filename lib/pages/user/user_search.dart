@@ -1,8 +1,14 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../model/usermodel.dart';
 import '../../utility/allmethod.dart';
+import '../../utility/dialog.dart';
 
 class User_search extends StatefulWidget {
   const User_search({Key? key}) : super(key: key);
@@ -54,7 +60,7 @@ class _User_searchState extends State<User_search> {
           borderRadius: BorderRadius.circular(28),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: InkWell(
-            onTap: () {},
+            onTap: (() => search_1()),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -76,6 +82,40 @@ class _User_searchState extends State<User_search> {
         ),
       );
 
+  void search_1() async {
+    print("เข้าหารถเกียวข้าว");
+    var dio = Dio();
+    final response = await dio.get(
+        "http://192.168.88.213/agriser_work/search_by_user.php?isAdd=true&function=1");
+    // print("หารถแล้วเจอ:   " + response.data);
+    if (response.data == "null") {
+      dialong(context, "ไม่มีรถในระบบ");
+    } else {
+      // print("1");
+      var result = json.decode(response.data);
+      print(result);
+      // print("2");
+      // print("ได้ข้อมูลจากเบอร์:  " + result);
+      // for (var map in result) {
+      //   Welcome datauser = Welcome.fromJson(map);
+
+      //   SharedPreferences preferences = await SharedPreferences.getInstance();
+      //   preferences.setString("phone_user", datauser.phone_user);
+      //   preferences.setString("name_user", datauser.name_user);
+
+      //   if (password_user == datauser.password_user) {
+      //     print("ไปหน้าหลัก");
+      //     MaterialPageRoute route =
+      //         MaterialPageRoute(builder: (context) => All_bottombar_user());
+      //     Navigator.pushAndRemoveUntil(context, route, (route) => false);
+      //     print("เข้าสู่ระบบ");
+      //   } else {
+      //     dialong(context, "รหัสผ่านไม่ถูกต้อง");
+      //   }
+      // }
+    }
+  }
+
   Widget ImageButton2() => Container(
         child: Material(
           color: Color.fromARGB(255, 152, 252, 156),
@@ -83,7 +123,7 @@ class _User_searchState extends State<User_search> {
           borderRadius: BorderRadius.circular(28),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: InkWell(
-            onTap: () {},
+            onTap: ((() => search_2())),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -105,6 +145,40 @@ class _User_searchState extends State<User_search> {
         ),
       );
 
+  void search_2() async {
+    print("เข้าหารถไถนา");
+    var dio = Dio();
+    final response = await dio.get(
+        "http://192.168.88.213/agriser_work/search_by_user.php?isAdd=true&function=2");
+    print("หารถแล้วเจอ:   " + response.data);
+    if (response.data == "null") {
+      dialong(context, "ไม่มีรถในระบบ");
+    } else {
+      print("1");
+      var result = json.decode(response.data);
+      print(result);
+      // print("2");
+      // print("ได้ข้อมูลจากเบอร์:  " + result);
+      // for (var map in result) {
+      //   Welcome datauser = Welcome.fromJson(map);
+
+      //   SharedPreferences preferences = await SharedPreferences.getInstance();
+      //   preferences.setString("phone_user", datauser.phone_user);
+      //   preferences.setString("name_user", datauser.name_user);
+
+      //   if (password_user == datauser.password_user) {
+      //     print("ไปหน้าหลัก");
+      //     MaterialPageRoute route =
+      //         MaterialPageRoute(builder: (context) => All_bottombar_user());
+      //     Navigator.pushAndRemoveUntil(context, route, (route) => false);
+      //     print("เข้าสู่ระบบ");
+      //   } else {
+      //     dialong(context, "รหัสผ่านไม่ถูกต้อง");
+      //   }
+      // }
+    }
+  }
+
   Widget ImageButton3() => Container(
         child: Material(
           color: Color.fromARGB(255, 152, 252, 156),
@@ -112,7 +186,7 @@ class _User_searchState extends State<User_search> {
           borderRadius: BorderRadius.circular(28),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: InkWell(
-            onTap: () {},
+            onTap: ((() => search_3())),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -134,6 +208,40 @@ class _User_searchState extends State<User_search> {
         ),
       );
 
+  void search_3() async {
+    print("เข้าหารถปลูกข้าว");
+    var dio = Dio();
+    final response = await dio.get(
+        "http://192.168.88.213/agriser_work/search_by_user.php?isAdd=true&function=3");
+    print("หารถแล้วเจอ:   " + response.data);
+    if (response.data == "null") {
+      dialong(context, "ไม่มีรถในระบบ");
+    } else {
+      print("1");
+      var result = json.decode(response.data);
+      print(result);
+      // print("2");
+      // print("ได้ข้อมูลจากเบอร์:  " + result);
+      // for (var map in result) {
+      //   Welcome datauser = Welcome.fromJson(map);
+
+      //   SharedPreferences preferences = await SharedPreferences.getInstance();
+      //   preferences.setString("phone_user", datauser.phone_user);
+      //   preferences.setString("name_user", datauser.name_user);
+
+      //   if (password_user == datauser.password_user) {
+      //     print("ไปหน้าหลัก");
+      //     MaterialPageRoute route =
+      //         MaterialPageRoute(builder: (context) => All_bottombar_user());
+      //     Navigator.pushAndRemoveUntil(context, route, (route) => false);
+      //     print("เข้าสู่ระบบ");
+      //   } else {
+      //     dialong(context, "รหัสผ่านไม่ถูกต้อง");
+      //   }
+      // }
+    }
+  }
+
   Widget ImageButton4() => Container(
         child: Material(
           color: Color.fromARGB(255, 152, 252, 156),
@@ -141,7 +249,7 @@ class _User_searchState extends State<User_search> {
           borderRadius: BorderRadius.circular(28),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: InkWell(
-            onTap: () {},
+            onTap: ((() => search_4())),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -163,6 +271,40 @@ class _User_searchState extends State<User_search> {
         ),
       );
 
+  void search_4() async {
+    print("เข้าหาโดรน");
+    var dio = Dio();
+    final response = await dio.get(
+        "http://192.168.88.213/agriser_work/search_by_user.php?isAdd=true&function=4");
+    print("หารถแล้วเจอ:   " + response.data);
+    if (response.data == "null") {
+      dialong(context, "ไม่มีรถในระบบ");
+    } else {
+      print("1");
+      var result = json.decode(response.data);
+      print(result);
+      // print("2");
+      // print("ได้ข้อมูลจากเบอร์:  " + result);
+      // for (var map in result) {
+      //   Welcome datauser = Welcome.fromJson(map);
+
+      //   SharedPreferences preferences = await SharedPreferences.getInstance();
+      //   preferences.setString("phone_user", datauser.phone_user);
+      //   preferences.setString("name_user", datauser.name_user);
+
+      //   if (password_user == datauser.password_user) {
+      //     print("ไปหน้าหลัก");
+      //     MaterialPageRoute route =
+      //         MaterialPageRoute(builder: (context) => All_bottombar_user());
+      //     Navigator.pushAndRemoveUntil(context, route, (route) => false);
+      //     print("เข้าสู่ระบบ");
+      //   } else {
+      //     dialong(context, "รหัสผ่านไม่ถูกต้อง");
+      //   }
+      // }
+    }
+  }
+
   Widget ImageButton5() => Container(
         child: Material(
           color: Color.fromARGB(255, 152, 252, 156),
@@ -170,7 +312,7 @@ class _User_searchState extends State<User_search> {
           borderRadius: BorderRadius.circular(28),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: InkWell(
-            onTap: () {},
+            onTap: ((() => search_5())),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -194,6 +336,10 @@ class _User_searchState extends State<User_search> {
           ),
         ),
       );
+
+  void search_5() async {
+    print("เช็คเบอร์");
+  }
 }
 
 // child: InkWell(
