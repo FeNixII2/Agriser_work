@@ -51,6 +51,52 @@ class _Type_provider_serviceState extends State<Type_provider_service> {
                     },
                   ),
                 ),
+                Container(
+                  width: 120,
+                  height: 120,
+                  child: RaisedButton(
+                    child: Text("รถแทรกเตอร์"),
+                    onPressed: () async {
+                      SharedPreferences preferences =
+                          await SharedPreferences.getInstance();
+                      preferences.setString(
+                          "choose_type_service", "รถแทรกเตอร์");
+                      MaterialPageRoute route = MaterialPageRoute(
+                          builder: (context) => Add_provider_service());
+                      Navigator.push(context, route);
+                    },
+                  ),
+                ),
+                Container(
+                  width: 120,
+                  height: 120,
+                  child: RaisedButton(
+                    child: Text("รถขนข้าว"),
+                    onPressed: () async {
+                      SharedPreferences preferences =
+                          await SharedPreferences.getInstance();
+                      preferences.setString("choose_type_service", "รถขนข้าว");
+                      MaterialPageRoute route = MaterialPageRoute(
+                          builder: (context) => Add_provider_service());
+                      Navigator.push(context, route);
+                    },
+                  ),
+                ),
+                Container(
+                  width: 120,
+                  height: 120,
+                  child: RaisedButton(
+                    child: Text("โดรน"),
+                    onPressed: () async {
+                      SharedPreferences preferences =
+                          await SharedPreferences.getInstance();
+                      preferences.setString("choose_type_service", "โดรน");
+                      MaterialPageRoute route = MaterialPageRoute(
+                          builder: (context) => Add_provider_service());
+                      Navigator.push(context, route);
+                    },
+                  ),
+                ),
               ],
             ),
             Allmethod().Space(),

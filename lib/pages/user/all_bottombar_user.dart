@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:agriser_work/utility/modeluser.dart';
+
 import 'package:agriser_work/login.dart';
 import 'package:agriser_work/pages/provider/all_bottombar_provider.dart';
 import 'package:agriser_work/pages/user/user_calenda.dart';
@@ -12,6 +16,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class All_bottombar_user extends StatefulWidget {
   const All_bottombar_user({Key? key}) : super(key: key);
@@ -21,35 +26,50 @@ class All_bottombar_user extends StatefulWidget {
 }
 
 class _All_bottombar_userState extends State<All_bottombar_user> {
-  late String name_user;
-  late String phone_user;
-  late String name_provider;
-  late String phone_provider;
+  late String name_user = "";
+  late String phone_user = "";
+
   late String id_provider;
+  var name_provider = "";
+  late String phone_provider = "";
+  late String email_provider = "",
+      date_provider = "",
+      sex_provider = "",
+      address_provider = "",
+      province_provider = "",
+      district_provider = "";
+
+  List info_user = [];
+
   @override
   void initState() {
     super.initState();
+    print(name_user);
     findUser();
   }
 
   Future<Null> findUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      name_user = preferences.getString('name_user')!;
+      // name_user = preferences.getString('name_user')!;
       phone_user = preferences.getString('phone_user')!;
-      name_provider = preferences.getString('name_user')!;
+      // name_provider = preferences.getString('name_user')!;
       phone_provider = preferences.getString('phone_user')!;
-      preferences.setString("phone_provider", phone_provider);
-      preferences.setString("name_provider", name_provider);
+      // preferences.setString("phone_provider", phone_provider);
+      // preferences.setString("name_provider", name_provider);
       print("------------ User - Mode ------------");
-      print("--- Get name user State :     " + name_user);
+      // print("--- Get name user State :     " + name_user);
       print("--- Get phone user State :     " + phone_user);
     });
+
+    getinfo_user();
   }
 
   Future<Null> checklogout() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.clear();
+    MaterialPageRoute route = MaterialPageRoute(builder: (value) => Login());
+    Navigator.pushAndRemoveUntil(context, route, (route) => false);
   }
 
   int _currenIndex = 0;
@@ -65,6 +85,40 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
     setState(() {
       _currenIndex = index;
     });
+  }
+
+  Future getinfo_user() async {
+    var url =
+        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user";
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      for (var map in jsonData) {
+        Modeluser datauser = Modeluser.fromJson(map);
+        setState(() {
+          phone_provider = datauser.phone;
+          name_provider = datauser.name;
+          email_provider = datauser.email;
+          date_provider = datauser.date;
+          sex_provider = datauser.sex;
+          address_provider = datauser.address;
+          province_provider = datauser.province;
+          district_provider = datauser.district;
+        });
+
+        // map_provider = datauser.map;
+
+      }
+    }
+
+    print(phone_provider);
+    print(name_provider);
+    print(email_provider);
+    print(date_provider);
+    print(sex_provider);
+    print(address_provider);
+    print(province_provider);
+    print(district_provider);
   }
 
   @override
@@ -125,7 +179,7 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
       decoration: BoxDecoration(
         color: Colors.green.shade400,
       ),
-      accountName: Text(name_user == null ? 'Main User' : "$name_user"),
+      accountName: Text(name_user == null ? 'Main User' : "$name_provider"),
       accountEmail: Text(phone_user == null ? 'Main Tel' : "$phone_user"),
       currentAccountPicture: CircleAvatar(
         backgroundColor: Colors.white,
@@ -163,7 +217,11 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
   void check_data_provider() async {
     var dio = Dio();
     final response = await dio.get(
+<<<<<<< HEAD
         "http://192.168.88.213/agriser_work/getProviderWhereUser.php?isAdd=true&phone_provider=$phone_provider");
+=======
+        "http://192.168.1.4/agriser_work/getProviderWhereUser.php?isAdd=true&phone_provider=$phone_provider");
+>>>>>>> 50f514e85813b2ab864c6261dbf4f066b60e84d2
     print(response.data);
     if (response.data == "null") {
       print("ไม่มีเบอร์นี้ในระบบผู้ให้บริการ");
@@ -179,7 +237,11 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
   void regis_provider() async {
     var dio = Dio();
     final response = await dio.get(
+<<<<<<< HEAD
         "http://192.168.88.213/agriser_work/addProvider.php?isAdd=true&phone_provider=$phone_provider&name_provider=$name_provider");
+=======
+        "http://192.168.1.4/agriser_work/addProvider.php?isAdd=true&phone_provider=$phone_provider&name_provider=$name_provider&email_provider=$email_provider&date_provider=$date_provider&sex_provider=$sex_provider&address_provider=$address_provider&province_provider=$province_provider&district_provider=$district_provider");
+>>>>>>> 50f514e85813b2ab864c6261dbf4f066b60e84d2
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
@@ -235,9 +297,7 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
     return FlatButton(
       child: Text('ตกลง'),
       onPressed: () {
-        MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => Login());
-        Navigator.pushAndRemoveUntil(context, route, (route) => false);
+        checklogout();
       },
     );
   }

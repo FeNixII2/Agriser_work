@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:agriser_work/login.dart';
 import 'package:agriser_work/pages/provider/provider_calenda.dart';
 import 'package:agriser_work/pages/provider/provider_chat.dart';
@@ -11,6 +13,9 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
+import '../../utility/modeluser.dart';
 
 class All_bottombar_provider extends StatefulWidget {
   const All_bottombar_provider({Key? key}) : super(key: key);
@@ -20,8 +25,15 @@ class All_bottombar_provider extends StatefulWidget {
 }
 
 class _All_bottombar_providerState extends State<All_bottombar_provider> {
-  late String name_provider;
-  late String phone_provider;
+  late String id_provider;
+  late String phone_provider = "";
+  late String name_provider = "";
+  late String email_provider = "",
+      date_provider = "",
+      sex_provider = "",
+      address_provider = "",
+      province_provider = "",
+      district_provider = "";
 
   @override
   void initState() {
@@ -32,12 +44,47 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
   Future<Null> findUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      name_provider = preferences.getString('name_provider')!;
-      phone_provider = preferences.getString('phone_provider')!;
-      print("------------ Provider - Mode ------------");
-      print("--- Get name provider State :     " + name_provider);
+      phone_provider = preferences.getString('phone_user')!;
+      print("------------ User - Mode ------------");
+      // print("--- Get name user State :     " + name_user);
       print("--- Get phone provider State :     " + phone_provider);
     });
+
+    getinfo_user();
+  }
+
+  Future getinfo_user() async {
+    var url =
+        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_provider";
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      for (var map in jsonData) {
+        Modeluser datauser = Modeluser.fromJson(map);
+        setState(() {
+          phone_provider = datauser.phone;
+          name_provider = datauser.name;
+          email_provider = datauser.email;
+          date_provider = datauser.date;
+          sex_provider = datauser.sex;
+          address_provider = datauser.address;
+          province_provider = datauser.province;
+          district_provider = datauser.district;
+        });
+
+        // map_provider = datauser.map;
+
+      }
+    }
+
+    print(phone_provider);
+    print(name_provider);
+    print(email_provider);
+    print(date_provider);
+    print(sex_provider);
+    print(address_provider);
+    print(province_provider);
+    print(district_provider);
   }
 
   Future<Null> checklogout() async {
