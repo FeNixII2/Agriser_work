@@ -1,4 +1,5 @@
-import 'package:agriser_work/pages/provider/provider_service/list_provider_service.dart';
+import 'package:agriser_work/pages/provider/provider_service/list_provider_service_car.dart';
+import 'package:agriser_work/pages/provider/provider_service/select_provider_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -19,13 +20,13 @@ class _Provider_mainState extends State<Provider_main> {
         child: Container(
           child: RaisedButton(
             onPressed: () async {
-              print("คลิกเพิ่ม/แก้ไขข้อมูลการให้บริการ");
-              MaterialPageRoute route = MaterialPageRoute(
-                  builder: (value) => List_provider_service());
+              print("คลิกเพิ่มข้อมูลการให้บริการ");
+              MaterialPageRoute route =
+                  MaterialPageRoute(builder: (value) => Select_provider_type());
               Navigator.push(context, route);
             },
             child: Text(
-              "เพิ่ม/แก้ไขข้อมูลการให้บริการ",
+              "เพิ่มข้อมูลการให้บริการ",
               style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
             ),
           ),

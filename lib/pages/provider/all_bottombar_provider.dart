@@ -56,13 +56,13 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
 
   Future getinfo_user() async {
     var url =
-        "http://192.168.88.213/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_provider";
+        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_provider";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
       for (var map in jsonData) {
         Modeluser datauser = Modeluser.fromJson(map);
-        setState(() {
+        setState(() async {
           phone_provider = datauser.phone;
           name_provider = datauser.name;
           email_provider = datauser.email;
@@ -71,6 +71,13 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
           address_provider = datauser.address;
           province_provider = datauser.province;
           district_provider = datauser.district;
+
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          preferences.setString("name_provider", name_provider);
+          preferences.setString("email_provider", email_provider);
+          preferences.setString("address_provider", address_provider);
+          preferences.setString("province_provider", province_provider);
+          preferences.setString("district_provider", district_provider);
         });
 
         // map_provider = datauser.map;
@@ -86,11 +93,6 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
     print(address_provider);
     print(province_provider);
     print(district_provider);
-  }
-
-  Future<Null> checklogout() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.clear();
   }
 
   int _currenIndex = 0;
@@ -210,13 +212,18 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
         });
   }
 
+  Future<Null> checklogout() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.clear();
+    MaterialPageRoute route = MaterialPageRoute(builder: (value) => Login());
+    Navigator.pushAndRemoveUntil(context, route, (route) => false);
+  }
+
   Widget okButton_logout() {
     return FlatButton(
       child: Text('ตกลง'),
       onPressed: () {
-        MaterialPageRoute route =
-            MaterialPageRoute(builder: (value) => Login());
-        Navigator.pushAndRemoveUntil(context, route, (route) => false);
+        checklogout();
       },
     );
   }

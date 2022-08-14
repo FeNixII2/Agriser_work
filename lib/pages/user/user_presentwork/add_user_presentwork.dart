@@ -10,14 +10,14 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../utility/allmethod.dart';
 
-class Add_provider_service extends StatefulWidget {
-  const Add_provider_service({Key? key}) : super(key: key);
+class Add_user_presentwork extends StatefulWidget {
+  const Add_user_presentwork({Key? key}) : super(key: key);
 
   @override
-  State<Add_provider_service> createState() => _Add_provider_serviceState();
+  State<Add_user_presentwork> createState() => _Add_user_presentworkState();
 }
 
-class _Add_provider_serviceState extends State<Add_provider_service> {
+class _Add_user_presentworkState extends State<Add_user_presentwork> {
   late File _image_car;
   late File _image_license;
   final picker1 = ImagePicker();
@@ -31,12 +31,6 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
   String prices = "";
   String image_car = "";
   String image_license_plate = "";
-
-  String email_provider = "";
-  String address_provider = "";
-  String province_provider = "";
-  String district_provider = "";
-  String map_provider = "";
 
   late String name_provider;
   late String phone_provider;
@@ -53,21 +47,10 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
       type = preferences.getString("choose_type_service")!;
 
       phone_provider = preferences.getString('phone_user')!;
-      name_provider = preferences.getString('name_provider')!;
-      email_provider = preferences.getString('email_provider')!;
-      address_provider = preferences.getString('address_provider')!;
-      province_provider = preferences.getString('province_provider')!;
-      district_provider = preferences.getString('district_provider')!;
-
       print("------------ Provider - Mode ------------");
       print("--- Get type provider State :     " + type);
 
       print("--- Get phone provider State :     " + phone_provider);
-      print("--- Get name_provider State :     " + name_provider);
-      print("--- Get email_provider State :     " + email_provider);
-      print("--- Get address_provider State :     " + address_provider);
-      print("--- Get province_provider State :     " + province_provider);
-      print("--- Get district_provider State :     " + district_provider);
     });
   }
 
@@ -115,7 +98,8 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("รายละเอียดให้บริการ"),
+        title: Text("รายละเอียดจ้างงาน"),
+        backgroundColor: Colors.green.shade400,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -138,7 +122,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
                 Container(
                     width: 120,
                     height: 120,
-                    child: Image.asset("assets/images/tractors.png")),
+                    child: Image.asset("assets/images/field.png")),
                 SizedBox(width: 1),
                 display_image_car(),
               ],
@@ -149,7 +133,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
                 Container(
                     width: 120,
                     height: 120,
-                    child: Image.asset("assets/images/license-plate.png")),
+                    child: Image.asset("assets/images/field.png")),
                 SizedBox(width: 1),
                 display_image_license_plate(),
               ],
@@ -175,7 +159,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
         readOnly: true,
         onChanged: (value) => type = value.trim(),
         decoration: InputDecoration(
-            prefixIcon: Icon(Icons.time_to_leave),
+            prefixIcon: Icon(Icons.type_specimen_outlined),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
             hintStyle: TextStyle(color: Colors.grey[800]),
@@ -189,7 +173,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
           onChanged: (value) => brand = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.abc),
-            hintText: "ยี่ห้อ",
+            hintText: "จำนวนไร่",
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -202,7 +186,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
           onChanged: (value) => model = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.developer_mode_outlined),
-            hintText: "รุ่นรถ",
+            hintText: "ราคา",
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -216,7 +200,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
           onChanged: (value) => date_buy = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.timer),
-            hintText: "ปีพ.ศ.ที่ซื้อ ตัวอย่าง 2560",
+            hintText: "วันที่ดำเนินงาน",
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -230,10 +214,12 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
           onChanged: (value) => prices = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.price_change_rounded),
-            hintText: "ราคา/ไร่ ตัวอย่าง 800",
+            hintText: "รายละเอียดเพิ่มเติม",
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
+          maxLines: 5,
+          minLines: 1,
         ),
       );
 
@@ -291,7 +277,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
   void regisservice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/add_service_car.php?isAdd=true&type=$type&brand=$brand&model=$model&date_buy=$date_buy&prices=$prices&phone_provider=$phone_provider&name_provider=$name_provider&email_provider=$email_provider&address_provider=$address_provider&province_provider=$province_provider&district_provider=$district_provider");
+        "http://192.168.1.4/agriser_work/add_service_car.php?isAdd=true&type=$type&brand=$brand&model=$model&date_buy=$date_buy&prices=$prices&phone_provider=$phone_provider");
 
     print(response.data);
     if (response.data == "true") {

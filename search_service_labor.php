@@ -24,8 +24,9 @@ if (isset($_GET)) {
 				
 		$phone_provider = $_GET['phone_provider'];
 		$id_provider = $_GET['id_provider'];
+		
 
-		$result = mysqli_query($link, "SELECT * FROM tb_service_provider_car where phone_provider = '$phone_provider' ");
+		$result = mysqli_query($link, "SELECT * FROM tb_service_provider_labor where phone_provider = '$phone_provider' ");
 
 		
 
