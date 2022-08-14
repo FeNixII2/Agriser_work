@@ -1,4 +1,5 @@
 import 'package:agriser_work/pages/provider/provider_service/add_provider_service.dart';
+import 'package:agriser_work/pages/provider/provider_service/add_provider_service_labor.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -7,14 +8,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utility/allmethod.dart';
 
-class Type_provider_service extends StatefulWidget {
-  const Type_provider_service({Key? key}) : super(key: key);
+class Type_provider_service_car extends StatefulWidget {
+  const Type_provider_service_car({Key? key}) : super(key: key);
 
   @override
-  State<Type_provider_service> createState() => _Type_provider_serviceState();
+  State<Type_provider_service_car> createState() =>
+      _Type_provider_service_carState();
 }
 
-class _Type_provider_serviceState extends State<Type_provider_service> {
+class _Type_provider_service_carState extends State<Type_provider_service_car> {
+  late String select_type_service;
+
   @override
   void initState() {
     super.initState();
@@ -23,21 +27,31 @@ class _Type_provider_serviceState extends State<Type_provider_service> {
 
   getpermission() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      select_type_service = preferences.getString("select_type_service")!;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("เลือกประเภทงานให้บริการ"),
+      ),
       body: Container(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
+            Allmethod().Space(),
+            Text("รถทางการเกษตร"),
+            Allmethod().Space(),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 120,
-                  height: 120,
+                  width: 140,
+                  height: 140,
                   child: RaisedButton(
                     child: Text("รถเกี่ยวข้าว"),
                     onPressed: () async {
@@ -51,11 +65,18 @@ class _Type_provider_serviceState extends State<Type_provider_service> {
                     },
                   ),
                 ),
+                Allmethod().Space(),
+                Allmethod().Space(),
+                Allmethod().Space(),
+                Allmethod().Space(),
                 Container(
-                  width: 120,
-                  height: 120,
+                  width: 140,
+                  height: 140,
                   child: RaisedButton(
-                    child: Text("รถแทรกเตอร์"),
+                    child: Text(
+                      "รถแทรกเตอร์",
+                      textAlign: TextAlign.center,
+                    ),
                     onPressed: () async {
                       SharedPreferences preferences =
                           await SharedPreferences.getInstance();
@@ -71,10 +92,12 @@ class _Type_provider_serviceState extends State<Type_provider_service> {
             ),
             Allmethod().Space(),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 120,
-                  height: 120,
+                  width: 140,
+                  height: 140,
                   child: RaisedButton(
                     child: Text("รถขนข้าว"),
                     onPressed: () async {
@@ -87,9 +110,13 @@ class _Type_provider_serviceState extends State<Type_provider_service> {
                     },
                   ),
                 ),
+                Allmethod().Space(),
+                Allmethod().Space(),
+                Allmethod().Space(),
+                Allmethod().Space(),
                 Container(
-                  width: 120,
-                  height: 120,
+                  width: 140,
+                  height: 140,
                   child: RaisedButton(
                     child: Text("โดรน"),
                     onPressed: () async {
@@ -104,7 +131,6 @@ class _Type_provider_serviceState extends State<Type_provider_service> {
                 ),
               ],
             ),
-            Allmethod().Space(),
           ],
         ),
       ),

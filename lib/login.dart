@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
@@ -25,11 +26,38 @@ class _LoginState extends State<Login> {
   bool _securetext = true;
   late String phonelogin;
 
+  late double lat;
+  late double long;
+
   @override
   void initState() {
     super.initState();
 
     checklogin();
+    // findLocation();
+  }
+
+  Future<Null> findLocation() async {
+    LocationData? locationData = await findLocationData();
+
+    setState(() async {
+      lat = locationData!.latitude!;
+      long = locationData.longitude!;
+      print("lat = $lat , long = $long");
+
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setDouble("lat", lat);
+      preferences.setDouble("long", long);
+    });
+  }
+
+  Future<LocationData?> findLocationData() async {
+    Location location = Location();
+    try {
+      return location.getLocation();
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<Null> checklogin() async {
@@ -131,6 +159,7 @@ class _LoginState extends State<Login> {
 
         SharedPreferences preferences = await SharedPreferences.getInstance();
         preferences.setString("phone_user", datauser.phone_user);
+
         // preferences.setString("name_user", datauser.name_user);
 
         if (password_user == datauser.password_user) {

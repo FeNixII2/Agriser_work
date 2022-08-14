@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:agriser_work/setmap.dart';
 import 'package:agriser_work/utility/allmethod.dart';
 import 'package:agriser_work/utility/dialog.dart';
 import 'package:dio/dio.dart';
@@ -102,6 +103,13 @@ class _RegisterState extends State<Register> {
       appBar: AppBar(
         title: Text("ลงทะเบียน"),
         backgroundColor: Allmethod().dartcolor,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              MaterialPageRoute route =
+                  MaterialPageRoute(builder: (context) => Login());
+              Navigator.pushAndRemoveUntil(context, route, (route) => false);
+            }),
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -172,6 +180,8 @@ class _RegisterState extends State<Register> {
                   ]),
               Dateform(),
               Allmethod().Space(),
+              Setmap_user(),
+              Allmethod().Space(),
               Comfirmbutton(),
             ],
           ),
@@ -181,6 +191,18 @@ class _RegisterState extends State<Register> {
   }
 
   //////////////////////////////////////////////////////////////////////
+
+  Widget Setmap_user() => Container(
+        width: 300,
+        child: RaisedButton(
+          onPressed: () {
+            MaterialPageRoute route =
+                MaterialPageRoute(builder: (context) => Setmap());
+            Navigator.push(context, route);
+          },
+          child: Text("ตั้งค่าแผนที่"),
+        ),
+      );
 
   Widget Comfirmbutton() => Container(
         width: 300.0,

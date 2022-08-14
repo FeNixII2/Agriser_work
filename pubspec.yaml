@@ -37,6 +37,9 @@ dependencies:
   json_annotation: ^4.5.0
   shared_preferences: ^2.0.15
   google_fonts: ^3.0.1
+  google_maps_flutter: ^2.1.10
+  location: ^4.4.0
+  geolocator: ^9.0.1
   # google_maps_flutter: ^2.1.7
   # location: ^4.4.0
   

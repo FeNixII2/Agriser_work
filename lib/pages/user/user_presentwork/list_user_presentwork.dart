@@ -1,22 +1,25 @@
 import 'dart:convert';
 
 import 'package:agriser_work/pages/provider/all_bottombar_provider.dart';
-import 'package:agriser_work/pages/provider/provider_service/type_provider_service.dart';
+import 'package:agriser_work/pages/provider/provider_service/type_provider_service_car.dart';
+import 'package:agriser_work/pages/user/all_bottombar_user.dart';
+import 'package:agriser_work/pages/user/user_presentwork/type_user_presentwork.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
-class List_provider_service extends StatefulWidget {
-  const List_provider_service({Key? key}) : super(key: key);
+class List_user_presentwork extends StatefulWidget {
+  const List_user_presentwork({Key? key}) : super(key: key);
 
   @override
-  State<List_provider_service> createState() => _List_provider_serviceState();
+  State<List_user_presentwork> createState() => _List_user_presentworkState();
 }
 
-class _List_provider_serviceState extends State<List_provider_service> {
+class _List_user_presentworkState extends State<List_user_presentwork> {
   List search_service = [];
 
   late String name_provider;
@@ -31,50 +34,62 @@ class _List_provider_serviceState extends State<List_provider_service> {
   Future<Null> findUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      name_provider = preferences.getString('name_provider')!;
-      phone_provider = preferences.getString('phone_provider')!;
+      phone_provider = preferences.getString('phone_user')!;
       print("------------ Provider - Mode ------------");
-      print("--- Get name provider State :     " + name_provider);
+
       print("--- Get phone provider State :     " + phone_provider);
     });
     Loadservice();
+  }
+
+  Future getinfo_service() async {
+    var url = "http://192.168.1.4/agriser_work/get_img.php";
+    var response = await http.get(Uri.parse(url));
+    return json.decode(response.body);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.green.shade400,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => const All_bottombar_provider()),
+            MaterialPageRoute(builder: (context) => const All_bottombar_user()),
           ),
         ),
-        title: Text("Sample"),
-        centerTitle: true,
+        title: Text("ข้อมูลประกาศจ้างงาน"),
+        // centerTitle: true,
       ),
       body: ListView.builder(
           itemCount: search_service.length,
           itemBuilder: (context, index) {
-            return ListTile(
-              leading: Text(search_service[index]["type"]),
-              title: Text(search_service[index]["brand"]),
-              subtitle: Text(search_service[index]["prices"]),
-              trailing: RaisedButton(
-                onPressed: () {},
-                child: Text("แก้ไข"),
+            return Card(
+              child: ListTile(
+                leading: Container(
+                  child: Image.network(
+                      width: 100,
+                      height: 100,
+                      "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['image_car']}"),
+                ),
+                title: Text(search_service[index]["brand"]),
+                subtitle: Text(search_service[index]["prices"]),
+                trailing: RaisedButton(
+                  onPressed: () {},
+                  child: Text("แก้ไข"),
+                ),
               ),
             );
           }),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.green.shade400,
           child: Icon(Icons.edit),
           onPressed: () {
             print("คลิกเพิ่มรายการ");
             MaterialPageRoute route = MaterialPageRoute(
-                builder: (context) => Type_provider_service());
+                builder: (context) => Type_user_presentwork());
             Navigator.push(context, route);
           }),
     );
@@ -83,7 +98,7 @@ class _List_provider_serviceState extends State<List_provider_service> {
   Loadservice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.88.213/agriser_work/search_service.php?isAdd=true&phone_provider=$phone_provider");
+        "http://192.168.1.4/agriser_work/search_service.php?isAdd=true&phone_provider=$phone_provider");
     if (response.statusCode == 200) {
       setState(() {
         search_service = json.decode(response.data);
