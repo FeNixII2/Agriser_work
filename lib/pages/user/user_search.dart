@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:agriser_work/pages/user/user_menu/list_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -86,7 +87,7 @@ class _User_searchState extends State<User_search> {
     print("เข้าหารถเกียวข้าว");
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_by_user.php?isAdd=true&function=1");
+        "http://192.168.88.213/agriser_work/search_by_user.php?isAdd=true&function=1");
     // print("หารถแล้วเจอ:   " + response.data);
     if (response.data == "null") {
       dialong(context, "ไม่มีรถในระบบ");
@@ -149,7 +150,7 @@ class _User_searchState extends State<User_search> {
     print("เข้าหารถไถนา");
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_by_user.php?isAdd=true&function=2");
+        "http://192.168.88.213/agriser_work/search_by_user.php?isAdd=true&function=2");
     print("หารถแล้วเจอ:   " + response.data);
     if (response.data == "null") {
       dialong(context, "ไม่มีรถในระบบ");
@@ -212,7 +213,7 @@ class _User_searchState extends State<User_search> {
     print("เข้าหารถปลูกข้าว");
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_by_user.php?isAdd=true&function=3");
+        "http://192.168.88.213/agriser_work/search_by_user.php?isAdd=true&function=3");
     print("หารถแล้วเจอ:   " + response.data);
     if (response.data == "null") {
       dialong(context, "ไม่มีรถในระบบ");
@@ -275,7 +276,7 @@ class _User_searchState extends State<User_search> {
     print("เข้าหาโดรน");
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_by_user.php?isAdd=true&function=4");
+        "http://192.168.88.213/agriser_work/search_by_user.php?isAdd=true&function=4");
     print("หารถแล้วเจอ:   " + response.data);
     if (response.data == "null") {
       dialong(context, "ไม่มีรถในระบบ");
@@ -338,7 +339,12 @@ class _User_searchState extends State<User_search> {
       );
 
   void search_5() async {
-    print("เช็คเบอร์");
+    print("แรงงานทางการเกษตร");
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("function", "5");
+    MaterialPageRoute route =
+        MaterialPageRoute(builder: (context) => List_service());
+    Navigator.pushAndRemoveUntil(context, route, (route) => false);
   }
 }
 
