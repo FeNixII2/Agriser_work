@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:agriser_work/utility/allmethod.dart';
 import 'package:agriser_work/utility/dialog.dart';
 import 'package:dio/dio.dart';

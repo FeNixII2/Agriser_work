@@ -80,7 +80,7 @@ class _Confirm_workState extends State<Confirm_work> {
 
   void submith() async {
     var url =
-        "http://192.168.88.213/Agriser_work/confirm_work_user.php?isAdd=true";
+        "http://192.168.1.4/Agriser_work/confirm_work_user.php?isAdd=true";
 
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
