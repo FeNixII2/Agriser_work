@@ -92,28 +92,8 @@ class _User_searchState extends State<User_search> {
     if (response.data == "null") {
       dialong(context, "ไม่มีรถในระบบ");
     } else {
-      // print("1");
       var result = json.decode(response.data);
       print(result);
-      // print("2");
-      // print("ได้ข้อมูลจากเบอร์:  " + result);
-      // for (var map in result) {
-      //   Welcome datauser = Welcome.fromJson(map);
-
-      //   SharedPreferences preferences = await SharedPreferences.getInstance();
-      //   preferences.setString("phone_user", datauser.phone_user);
-      //   preferences.setString("name_user", datauser.name_user);
-
-      //   if (password_user == datauser.password_user) {
-      //     print("ไปหน้าหลัก");
-      //     MaterialPageRoute route =
-      //         MaterialPageRoute(builder: (context) => All_bottombar_user());
-      //     Navigator.pushAndRemoveUntil(context, route, (route) => false);
-      //     print("เข้าสู่ระบบ");
-      //   } else {
-      //     dialong(context, "รหัสผ่านไม่ถูกต้อง");
-      //   }
-      // }
     }
   }
 
@@ -158,25 +138,6 @@ class _User_searchState extends State<User_search> {
       print("1");
       var result = json.decode(response.data);
       print(result);
-      // print("2");
-      // print("ได้ข้อมูลจากเบอร์:  " + result);
-      // for (var map in result) {
-      //   Welcome datauser = Welcome.fromJson(map);
-
-      //   SharedPreferences preferences = await SharedPreferences.getInstance();
-      //   preferences.setString("phone_user", datauser.phone_user);
-      //   preferences.setString("name_user", datauser.name_user);
-
-      //   if (password_user == datauser.password_user) {
-      //     print("ไปหน้าหลัก");
-      //     MaterialPageRoute route =
-      //         MaterialPageRoute(builder: (context) => All_bottombar_user());
-      //     Navigator.pushAndRemoveUntil(context, route, (route) => false);
-      //     print("เข้าสู่ระบบ");
-      //   } else {
-      //     dialong(context, "รหัสผ่านไม่ถูกต้อง");
-      //   }
-      // }
     }
   }
 
@@ -221,25 +182,6 @@ class _User_searchState extends State<User_search> {
       print("1");
       var result = json.decode(response.data);
       print(result);
-      // print("2");
-      // print("ได้ข้อมูลจากเบอร์:  " + result);
-      // for (var map in result) {
-      //   Welcome datauser = Welcome.fromJson(map);
-
-      //   SharedPreferences preferences = await SharedPreferences.getInstance();
-      //   preferences.setString("phone_user", datauser.phone_user);
-      //   preferences.setString("name_user", datauser.name_user);
-
-      //   if (password_user == datauser.password_user) {
-      //     print("ไปหน้าหลัก");
-      //     MaterialPageRoute route =
-      //         MaterialPageRoute(builder: (context) => All_bottombar_user());
-      //     Navigator.pushAndRemoveUntil(context, route, (route) => false);
-      //     print("เข้าสู่ระบบ");
-      //   } else {
-      //     dialong(context, "รหัสผ่านไม่ถูกต้อง");
-      //   }
-      // }
     }
   }
 
@@ -284,25 +226,6 @@ class _User_searchState extends State<User_search> {
       print("1");
       var result = json.decode(response.data);
       print(result);
-      // print("2");
-      // print("ได้ข้อมูลจากเบอร์:  " + result);
-      // for (var map in result) {
-      //   Welcome datauser = Welcome.fromJson(map);
-
-      //   SharedPreferences preferences = await SharedPreferences.getInstance();
-      //   preferences.setString("phone_user", datauser.phone_user);
-      //   preferences.setString("name_user", datauser.name_user);
-
-      //   if (password_user == datauser.password_user) {
-      //     print("ไปหน้าหลัก");
-      //     MaterialPageRoute route =
-      //         MaterialPageRoute(builder: (context) => All_bottombar_user());
-      //     Navigator.pushAndRemoveUntil(context, route, (route) => false);
-      //     print("เข้าสู่ระบบ");
-      //   } else {
-      //     dialong(context, "รหัสผ่านไม่ถูกต้อง");
-      //   }
-      // }
     }
   }
 
@@ -347,17 +270,3 @@ class _User_searchState extends State<User_search> {
     // Navigator.pushAndRemoveUntil(context, route, (route) => false);
   }
 }
-
-// child: InkWell(
-//             onTap: () {},
-//             child: Ink.image(
-//               image: AssetImage("assets/images/logo.png"),
-//               height: 200,
-//               width: 200,
-//               fit: BoxFit.cover,
-//               child: Text(
-//                 'Button',
-//                 style: TextStyle(fontSize: 22, color: Colors.green),
-//               ),
-//             ),
-//           ),
