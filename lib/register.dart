@@ -46,7 +46,7 @@ class _RegisterState extends State<Register> {
   Future getAllprovince() async {
     // print("เข้าแล้วเน้อ");
 
-    var url = "http://192.168.88.213/Agriser_work/getProvince.php?isAdd=true";
+    var url = "http://192.168.1.4/Agriser_work/getProvince.php?isAdd=true";
 
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -63,7 +63,7 @@ class _RegisterState extends State<Register> {
   Future getSelectAmphures() async {
     // print("มาอำเภอ");
     var url =
-        "http://192.168.88.213/Agriser_work/getSelectAmphures.php?isAdd=true&&idprovince=$selectProvince";
+        "http://192.168.1.4/Agriser_work/getSelectAmphures.php?isAdd=true&&idprovince=$selectProvince";
 
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -252,7 +252,7 @@ class _RegisterState extends State<Register> {
   void checktel() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.88.213/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user");
+        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user");
 
     print(response.data);
     // print('check ^^^^');
@@ -269,7 +269,7 @@ class _RegisterState extends State<Register> {
     }
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.88.213/agriser_work/addUser.php?isAdd=true&tel=$phone_user&pass=$password_user&name=$name_user&date=$formattedDate&sex=$sex_user&address=$address_user&province=$selectProvince&amphures=$selectAmphure&email=$email_user");
+        "http://192.168.1.4/agriser_work/addUser.php?isAdd=true&tel=$phone_user&pass=$password_user&name=$name_user&date=$formattedDate&sex=$sex_user&address=$address_user&province=$selectProvince&amphures=$selectAmphure&email=$email_user");
 
     print(response.data);
     if (response.data == "true") {

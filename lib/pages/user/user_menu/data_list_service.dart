@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 import '../../../utility/allmethod.dart';
 import '../../provider/all_bottombar_provider.dart';
-import '../../provider/provider_service/type_provider_service.dart';
+// import '../../provider/provider_service/type_provider_service.dart';
 import '../user_search.dart';
 import 'confirm_work.dart';
 
@@ -51,7 +51,7 @@ class Data_list_serviceState extends State<Data_list_service> {
   }
 
   Future getinfo_service() async {
-    var url = "http://192.168.88.213/agriser_work/get_img.php";
+    var url = "http://192.168.1.4/agriser_work/get_img.php";
     var response = await http.get(Uri.parse(url));
     return json.decode(response.body);
   }
@@ -83,7 +83,7 @@ class Data_list_serviceState extends State<Data_list_service> {
                   Center(
                     child: Container(
                       child: Image.network(
-                        "http://192.168.88.213/agriser_work/upload_image/${search_service[index]['image_car']}",
+                        "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['image_car']}",
                         width: 200,
                         height: 200,
                         fit: BoxFit.cover,
@@ -168,7 +168,7 @@ class Data_list_serviceState extends State<Data_list_service> {
   Loadservice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.88.213/agriser_work/all_data_provider.php?isAdd=true&id_service=$id_service");
+        "http://192.168.1.4/agriser_work/all_data_provider.php?isAdd=true&id_service=$id_service");
     if (response.statusCode == 200) {
       setState(() {
         search_service = json.decode(response.data);

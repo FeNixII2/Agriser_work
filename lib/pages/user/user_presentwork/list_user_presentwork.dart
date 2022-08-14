@@ -13,11 +13,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../../provider/all_bottombar_provider.dart';
-import '../../provider/provider_service/type_provider_service.dart';
+// import '../../provider/provider_service/type_provider_service.dart';
 import '../user_search.dart';
 
-class List_service extends StatefulWidget {
-  const List_service({Key? key}) : super(key: key);
+class List_user_presentwork extends StatefulWidget {
+  const List_user_presentwork({Key? key}) : super(key: key);
 
   @override
   State<List_user_presentwork> createState() => _List_user_presentworkState();
@@ -25,8 +25,9 @@ class List_service extends StatefulWidget {
 
 class _List_user_presentworkState extends State<List_user_presentwork> {
   List search_service = [];
-
+  List dataProvince = [];
   late String function;
+  late String phone_provider;
   int result = 0;
 
   @override
@@ -39,7 +40,7 @@ class _List_user_presentworkState extends State<List_user_presentwork> {
   Future getAllprovince() async {
     // print("เข้าแล้วเน้อ");
 
-    var url = "http://192.168.88.213/Agriser_work/getProvince.php?isAdd=true";
+    var url = "http://192.168.1.4/Agriser_work/getProvince.php?isAdd=true";
 
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -92,7 +93,7 @@ class _List_user_presentworkState extends State<List_user_presentwork> {
               child: ListTile(
                 leading: Container(
                   child: Image.network(
-                      "http://192.168.88.213/agriser_work/upload_image/${search_service[index]['image_car']}"),
+                      "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['image_car']}"),
                 ),
                 title: Text(search_service[index]["brand"]),
                 subtitle: Text(
@@ -111,7 +112,7 @@ class _List_user_presentworkState extends State<List_user_presentwork> {
           onPressed: () {
             print("คลิกเพิ่มรายการ");
             MaterialPageRoute route = MaterialPageRoute(
-                builder: (context) => Type_provider_service());
+                builder: (context) => Type_provider_service_car());
             Navigator.push(context, route);
           }),
     );

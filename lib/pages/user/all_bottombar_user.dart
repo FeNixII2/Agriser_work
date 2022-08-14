@@ -218,12 +218,8 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
   void check_data_provider() async {
     var dio = Dio();
     final response = await dio.get(
-<<<<<<< HEAD
-        "http://192.168.88.213/agriser_work/getProviderWhereUser.php?isAdd=true&phone_provider=$phone_provider");
-=======
         "http://192.168.1.4/agriser_work/getProviderWhereUser.php?isAdd=true&phone_provider=$phone_provider");
 
->>>>>>> 14083025ef02f138298c92e5e420926f90329703
     print(response.data);
     if (response.data == "null") {
       print("ไม่มีเบอร์นี้ในระบบผู้ให้บริการ");
@@ -239,12 +235,7 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
   void regis_provider() async {
     var dio = Dio();
     final response = await dio.get(
-<<<<<<< HEAD
-        "http://192.168.88.213/agriser_work/addProvider.php?isAdd=true&phone_provider=$phone_provider&name_provider=$name_provider");
-=======
-        "http://192.168.1.4/agriser_work/addProvider.php?isAdd=true&phone_provider=$phone_provider&name_provider=$name_provider&email_provider=$email_provider&date_provider=$date_provider&sex_provider=$sex_provider&address_provider=$address_provider&province_provider=$province_provider&district_provider=$district_provider");
-
->>>>>>> 14083025ef02f138298c92e5e420926f90329703
+        "http://192.168.1.4/agriser_work/addProvider.php?isAdd=true&phone_provider=$phone_provider&name_provider=$name_provider");
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
