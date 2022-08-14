@@ -143,7 +143,7 @@ class _LoginState extends State<Login> {
     print("เช็คเบอร์");
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user");
+        "http://192.168.88.213/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user");
 
     print("หาเบอร์แล้วเจอ:   " + response.data);
     if (response.data == "null") {
