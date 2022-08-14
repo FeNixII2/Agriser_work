@@ -31,11 +31,13 @@ if (isset($_GET)) {
 		$address_provider = $_GET['address_provider'];
 		$province_provider = $_GET['province_provider'];
 		$district_provider = $_GET['district_provider'];
+		$map_lat_provider = $_GET['map_lat_provider'];
+		$map_long_provider = $_GET['map_long_provider'];
 		
 							// INSERT INTO `tb_service_provider_car`( `type`, `brand`, `model`, `date_buy`, `prices`) VALUES ('$type','$brand','$model','$date_buy','$prices')
 
 
-		$sql = "UPDATE tb_service_provider_car SET type = '$type' , brand = '$brand' , model = '$model', date_buy = '$date_buy', prices = '$prices' , status = '1' , name_provider = '$name_provider' , email_provider = '$email_provider' , address_provider = '$address_provider' , province_provider = '$province_provider' , district_provider = '$district_provider'       WHERE phone_provider = '$phone_provider' and status = '0' ";
+		$sql = "UPDATE tb_service_provider_car SET type = '$type' , brand = '$brand' , model = '$model', date_buy = '$date_buy', prices = '$prices' , status = '1' , name_provider = '$name_provider' , email_provider = '$email_provider' , address_provider = '$address_provider' , province_provider = '$province_provider' , district_provider = '$district_provider' , map_lat_provider = '$map_lat_provider', map_long_provider = '$map_long_provider'       WHERE phone_provider = '$phone_provider' and status = '0' ";
 
 		$result = mysqli_query($link, $sql);
 

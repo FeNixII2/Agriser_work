@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:agriser_work/pages/provider/all_bottombar_provider.dart';
 import 'package:agriser_work/pages/provider/provider_service/type_provider_service_car.dart';
 import 'package:agriser_work/pages/user/all_bottombar_user.dart';
-import 'package:agriser_work/pages/user/user_presentwork/type_user_presentwork.dart';
+import 'package:agriser_work/pages/user/user_presentwork/select_presentwork_type.dart';
+import 'package:agriser_work/pages/user/user_presentwork/type_user_presentwork_car.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -12,14 +13,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class List_user_presentwork extends StatefulWidget {
-  const List_user_presentwork({Key? key}) : super(key: key);
+class List_user_presentwork_car extends StatefulWidget {
+  const List_user_presentwork_car({Key? key}) : super(key: key);
 
   @override
-  State<List_user_presentwork> createState() => _List_user_presentworkState();
+  State<List_user_presentwork_car> createState() =>
+      _List_user_presentwork_carState();
 }
 
-class _List_user_presentworkState extends State<List_user_presentwork> {
+class _List_user_presentwork_carState extends State<List_user_presentwork_car> {
   List search_service = [];
 
   late String name_provider;
@@ -57,7 +59,7 @@ class _List_user_presentworkState extends State<List_user_presentwork> {
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const All_bottombar_user()),
+            MaterialPageRoute(builder: (context) => Select_presentwork_type()),
           ),
         ),
         title: Text("ข้อมูลประกาศจ้างงาน"),
@@ -89,7 +91,7 @@ class _List_user_presentworkState extends State<List_user_presentwork> {
           onPressed: () {
             print("คลิกเพิ่มรายการ");
             MaterialPageRoute route = MaterialPageRoute(
-                builder: (context) => Type_user_presentwork());
+                builder: (context) => Type_user_presentwork_car());
             Navigator.push(context, route);
           }),
     );

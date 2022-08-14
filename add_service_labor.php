@@ -36,6 +36,8 @@ if (isset($_GET)) {
 		$address_provider = $_GET['address_provider'];
 		$province_provider = $_GET['province_provider'];
 		$district_provider = $_GET['district_provider'];
+		$map_lat_provider = $_GET['map_lat_provider'];
+		$map_long_provider = $_GET['map_long_provider'];
 							
 
 	$nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
@@ -50,7 +52,7 @@ if (isset($_GET)) {
 
 
 
-		$sql = "INSERT INTO `tb_service_provider_labor`( `id_service`, `phone_provider`, `type`, `rice`,`sweetcorn`,`cassava`,`sugarcane`,`chili`,`yam`,`palm`,`bean`,`prices`,`name_provider`,`email_provider`,`address_provider`,`province_provider`,`district_provider`) VALUES ('$num','$phone_provider','$type','$rice','$sweetcorn','$cassava','$sugarcane','$chili','$yam','$palm','$bean','$prices','$name_provider','$email_provider','$address_provider','$province_provider','$district_provider')";
+		$sql = "INSERT INTO `tb_service_provider_labor`( `id_service`, `phone_provider`, `type`, `rice`,`sweetcorn`,`cassava`,`sugarcane`,`chili`,`yam`,`palm`,`bean`,`prices`,`name_provider`,`email_provider`,`address_provider`,`province_provider`,`district_provider`,`map_lat_provider`,`map_long_provider`) VALUES ('$num','$phone_provider','$type','$rice','$sweetcorn','$cassava','$sugarcane','$chili','$yam','$palm','$bean','$prices','$name_provider','$email_provider','$address_provider','$province_provider','$district_provider','$map_lat_provider','$map_long_provider')";
 
 		$result = mysqli_query($link, $sql);
 

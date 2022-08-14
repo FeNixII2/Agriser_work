@@ -34,7 +34,9 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
       sex_provider = "",
       address_provider = "",
       province_provider = "",
-      district_provider = "";
+      district_provider = "",
+      map_lat_provider = "",
+      map_long_provider = "";
 
   @override
   void initState() {
@@ -55,6 +57,7 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
   }
 
   Future getinfo_user() async {
+    print("------------ Getinfo User ------------");
     var url =
         "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_provider";
     var response = await http.get(Uri.parse(url));
@@ -62,7 +65,7 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
       var jsonData = json.decode(response.body);
       for (var map in jsonData) {
         Modeluser datauser = Modeluser.fromJson(map);
-        setState(() async {
+        setState(() {
           phone_provider = datauser.phone;
           name_provider = datauser.name;
           email_provider = datauser.email;
@@ -71,13 +74,8 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
           address_provider = datauser.address;
           province_provider = datauser.province;
           district_provider = datauser.district;
-
-          SharedPreferences preferences = await SharedPreferences.getInstance();
-          preferences.setString("name_provider", name_provider);
-          preferences.setString("email_provider", email_provider);
-          preferences.setString("address_provider", address_provider);
-          preferences.setString("province_provider", province_provider);
-          preferences.setString("district_provider", district_provider);
+          map_lat_provider = datauser.map_lat;
+          map_long_provider = datauser.map_long;
         });
 
         // map_provider = datauser.map;
@@ -93,6 +91,17 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
     print(address_provider);
     print(province_provider);
     print(district_provider);
+    print(map_lat_provider);
+    print(map_long_provider);
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("name_provider", name_provider);
+    preferences.setString("email_provider", email_provider);
+    preferences.setString("address_provider", address_provider);
+    preferences.setString("province_provider", province_provider);
+    preferences.setString("district_provider", district_provider);
+    preferences.setString("map_lat_provider", map_lat_provider);
+    preferences.setString("map_long_provider", map_long_provider);
   }
 
   int _currenIndex = 0;
@@ -165,7 +174,7 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
           Text(phone_provider == null ? 'Main Tel' : "$phone_provider"),
       currentAccountPicture: CircleAvatar(
         backgroundColor: Colors.white,
-        // backgroundImage: NetworkImage(gravatarUrl),
+        backgroundImage: AssetImage('assets/images/user.png'),
       ),
     );
   }

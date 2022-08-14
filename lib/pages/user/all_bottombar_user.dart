@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:agriser_work/model/usermodel.dart';
+import 'package:agriser_work/pages/user/user_menu/edit_user_data.dart';
 import 'package:agriser_work/utility/modeluser.dart';
 
 import 'package:agriser_work/login.dart';
@@ -8,7 +9,6 @@ import 'package:agriser_work/pages/provider/all_bottombar_provider.dart';
 import 'package:agriser_work/pages/user/user_calenda.dart';
 import 'package:agriser_work/pages/user/user_chat.dart';
 import 'package:agriser_work/pages/user/user_main.dart';
-import 'package:agriser_work/pages/user/user_menu/register_provider.dart';
 import 'package:agriser_work/pages/user/user_search.dart';
 import 'package:agriser_work/utility/dialog.dart';
 import 'package:dio/dio.dart';
@@ -27,7 +27,7 @@ class All_bottombar_user extends StatefulWidget {
 }
 
 class _All_bottombar_userState extends State<All_bottombar_user> {
-  late String name_user = "";
+  late String name_user = "asdasd";
   late String phone_user = "";
 
   late String id_provider;
@@ -38,14 +38,16 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
       sex_provider = "",
       address_provider = "",
       province_provider = "",
-      district_provider = "";
+      district_provider = "",
+      map_lat_provider = "",
+      map_long_provider = "";
 
   List info_user = [];
 
   @override
   void initState() {
     super.initState();
-    print(name_user);
+
     findUser();
   }
 
@@ -62,7 +64,6 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
       // print("--- Get name user State :     " + name_user);
       print("--- Get phone user State :     " + phone_user);
     });
-
     getinfo_user();
   }
 
@@ -89,6 +90,7 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
   }
 
   Future getinfo_user() async {
+    print("------------ Getinfo User ------------");
     var url =
         "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user";
     var response = await http.get(Uri.parse(url));
@@ -105,6 +107,8 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
           address_provider = datauser.address;
           province_provider = datauser.province;
           district_provider = datauser.district;
+          map_lat_provider = datauser.map_lat;
+          map_long_provider = datauser.map_long;
         });
 
         // map_provider = datauser.map;
@@ -120,6 +124,17 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
     print(address_provider);
     print(province_provider);
     print(district_provider);
+    print(map_lat_provider);
+    print(map_long_provider);
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("name_user", name_user);
+    preferences.setString("email_user", email_provider);
+    preferences.setString("address_user", address_provider);
+    preferences.setString("province_user", province_provider);
+    preferences.setString("district_user", district_provider);
+    preferences.setString("map_lat_user", map_lat_provider);
+    preferences.setString("map_long_user", map_long_provider);
   }
 
   @override
@@ -184,7 +199,7 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
       accountEmail: Text(phone_user == null ? 'Main Tel' : "$phone_user"),
       currentAccountPicture: CircleAvatar(
         backgroundColor: Colors.white,
-        // backgroundImage: NetworkImage(gravatarUrl),
+        backgroundImage: AssetImage('assets/images/user.png'),
       ),
     );
   }
@@ -194,7 +209,7 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
         title: Text("ข้อมูลส่วนตัว"),
         onTap: () {
           MaterialPageRoute route =
-              MaterialPageRoute(builder: (value) => Edit_user_data());
+              MaterialPageRoute(builder: (value) => Edit_user_data_c());
           Navigator.push(context, route);
         },
       );
@@ -235,7 +250,7 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
   void regis_provider() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/addProvider.php?isAdd=true&phone_provider=$phone_provider&name_provider=$name_provider&email_provider=$email_provider&date_provider=$date_provider&sex_provider=$sex_provider&address_provider=$address_provider&province_provider=$province_provider&district_provider=$district_provider");
+        "http://192.168.1.4/agriser_work/addProvider.php?isAdd=true&phone_provider=$phone_provider&name_provider=$name_provider&email_provider=$email_provider&date_provider=$date_provider&sex_provider=$sex_provider&address_provider=$address_provider&province_provider=$province_provider&district_provider=$district_provider&map_lat_provider=$map_lat_provider&map_long_provider=$map_long_provider");
 
     print(response.data);
     if (response.data == "true") {

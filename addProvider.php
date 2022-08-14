@@ -38,10 +38,12 @@ if (isset($_GET)) {
 		$address_provider = $_GET['address_provider'];
 		$province_provider = $_GET['province_provider'];
 		$district_provider = $_GET['district_provider'];
+		$map_lat_provider = $_GET['map_lat_provider'];
+		$map_long_provider = $_GET['map_long_provider'];
 
 		
 							
-		$sql = "INSERT INTO `tb_provider`(`id_provider`,`phone_provider`, `name_provider`, `email_provider`,`date_provider`, `sex_provider`,`address_provider`, `province_provider`,`district_provider`) VALUES ('$num','$phone_provider','$name_provider','$email_provider', '$date_provider','$sex_provider', '$address_provider','$province_provider', '$district_provider')";
+		$sql = "INSERT INTO `tb_provider`(`id_provider`,`phone_provider`, `name_provider`, `email_provider`,`date_provider`, `sex_provider`,`address_provider`, `province_provider`,`district_provider`,`map_lat_provider`,`map_long_provider`) VALUES ('$num','$phone_provider','$name_provider','$email_provider', '$date_provider','$sex_provider', '$address_provider','$province_provider', '$district_provider', '$map_lat_provider', '$map_long_provider')";
 
 		$result = mysqli_query($link, $sql);
 

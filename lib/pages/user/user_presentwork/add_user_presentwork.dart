@@ -34,6 +34,8 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
 
   late String name_provider;
   late String phone_provider;
+  late String map_lat_provider;
+  late String map_long_provider;
 
   @override
   void initState() {

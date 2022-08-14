@@ -9,14 +9,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utility/allmethod.dart';
 
-class Type_user_presentwork extends StatefulWidget {
-  const Type_user_presentwork({Key? key}) : super(key: key);
+class Type_user_presentwork_car extends StatefulWidget {
+  const Type_user_presentwork_car({Key? key}) : super(key: key);
 
   @override
-  State<Type_user_presentwork> createState() => _Type_user_presentworkState();
+  State<Type_user_presentwork_car> createState() =>
+      _Type_user_presentwork_carState();
 }
 
-class _Type_user_presentworkState extends State<Type_user_presentwork> {
+class _Type_user_presentwork_carState extends State<Type_user_presentwork_car> {
   @override
   void initState() {
     super.initState();
@@ -32,6 +33,7 @@ class _Type_user_presentworkState extends State<Type_user_presentwork> {
     return Scaffold(
       appBar: AppBar(
         title: Text("เลือกประเภทจ้างงาน"),
+        backgroundColor: Colors.green.shade400,
       ),
       body: Container(
         child: Column(
@@ -118,52 +120,6 @@ class _Type_user_presentworkState extends State<Type_user_presentwork> {
                       SharedPreferences preferences =
                           await SharedPreferences.getInstance();
                       preferences.setString("choose_type_service", "โดรน");
-                      MaterialPageRoute route = MaterialPageRoute(
-                          builder: (context) => Add_user_presentwork());
-                      Navigator.push(context, route);
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Allmethod().Space(),
-            Allmethod().Space(),
-            Allmethod().Space(),
-            Text("แรงงานทางการเกษตร"),
-            Allmethod().Space(),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 140,
-                  height: 140,
-                  child: RaisedButton(
-                    child: Text("เพาะปลูก"),
-                    onPressed: () async {
-                      SharedPreferences preferences =
-                          await SharedPreferences.getInstance();
-                      preferences.setString("choose_type_service", "เพาะปลูก");
-                      MaterialPageRoute route = MaterialPageRoute(
-                          builder: (context) => Add_user_presentwork());
-                      Navigator.push(context, route);
-                    },
-                  ),
-                ),
-                Allmethod().Space(),
-                Allmethod().Space(),
-                Allmethod().Space(),
-                Allmethod().Space(),
-                Container(
-                  width: 140,
-                  height: 140,
-                  child: RaisedButton(
-                    child: Text("เก็บเกี่ยว"),
-                    onPressed: () async {
-                      SharedPreferences preferences =
-                          await SharedPreferences.getInstance();
-                      preferences.setString(
-                          "choose_type_service", "เก็บเกี่ยว");
                       MaterialPageRoute route = MaterialPageRoute(
                           builder: (context) => Add_user_presentwork());
                       Navigator.push(context, route);

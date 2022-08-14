@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:agriser_work/pages/user/user_menu/list_service.dart';
+// import 'package:agriser_work/pages/user/user_menu/list_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -342,9 +342,9 @@ class _User_searchState extends State<User_search> {
     print("แรงงานทางการเกษตร");
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString("function", "5");
-    MaterialPageRoute route =
-        MaterialPageRoute(builder: (context) => List_service());
-    Navigator.pushAndRemoveUntil(context, route, (route) => false);
+    // MaterialPageRoute route =
+    //     MaterialPageRoute(builder: (context) => List_service());
+    // Navigator.pushAndRemoveUntil(context, route, (route) => false);
   }
 }
 

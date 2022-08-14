@@ -1,4 +1,5 @@
-import 'package:agriser_work/pages/user/user_presentwork/list_user_presentwork.dart';
+import 'package:agriser_work/pages/user/user_presentwork/list_user_presentwork_car.dart';
+import 'package:agriser_work/pages/user/user_presentwork/select_presentwork_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -20,7 +21,7 @@ class _User_mainState extends State<User_main> {
             onPressed: () async {
               print("คลิกเพิ่มประกาศจ้างงาน");
               MaterialPageRoute route = MaterialPageRoute(
-                  builder: (value) => List_user_presentwork());
+                  builder: (value) => Select_presentwork_type());
               Navigator.push(context, route);
             },
             child: Text(

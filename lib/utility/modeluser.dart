@@ -15,6 +15,8 @@ class Modeluser {
     required this.address,
     required this.province,
     required this.district,
+    required this.map_lat,
+    required this.map_long,
     // required this.map,
   });
 
@@ -27,6 +29,8 @@ class Modeluser {
   String address;
   String province;
   String district;
+  String map_lat;
+  String map_long;
   // String map;
 
   factory Modeluser.fromJson(Map<String, dynamic> json) => Modeluser(
@@ -39,6 +43,8 @@ class Modeluser {
         address: json["address_user"],
         province: json["province_user"],
         district: json["district_user"],
+        map_lat: json["map_lat_user"],
+        map_long: json["map_long_user"],
         // map: json["map_user"],
       );
 
@@ -52,6 +58,8 @@ class Modeluser {
         "address_user": address,
         "province_user": province,
         "district_user": district,
+        "map_lat_user": map_lat,
+        "map_long_user": map_long,
         // "map_user": map,
       };
 }
