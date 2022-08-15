@@ -5,13 +5,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../utility/allmethod.dart';
 import '../../provider/all_bottombar_provider.dart';
-// import '../../provider/provider_service/type_provider_service.dart';
 import '../user_search.dart';
 import 'confirm_work.dart';
 
@@ -30,6 +31,8 @@ class Data_list_serviceState extends State<Data_list_service> {
   late String id_service;
   late String number_;
   late String formattedDate = "";
+  late String slat, slong;
+  late double lat = 0, long = 0;
   int result = 0;
 
   @override
@@ -43,9 +46,16 @@ class Data_list_serviceState extends State<Data_list_service> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       id_service = preferences.getString('id_service')!;
+      slat = preferences.getString('lat_provider')!;
+      slong = preferences.getString('long_provider')!;
+      lat = double.parse(slat);
+      long = double.parse(slong);
+
       print("------------ Data - Mode ------------");
 
-      print("--- Get data provider State :     " + id_service);
+      print("--- Get id_service State :     " + id_service);
+      print("--- Get lat_provider State :     " + slat);
+      print("--- Get long_provider State :     " + slong);
     });
     Loadservice();
   }
@@ -71,81 +81,93 @@ class Data_list_serviceState extends State<Data_list_service> {
         title: Text("ข้อมูลทั้งหมด"),
         // centerTitle: true,
       ),
-      body: ListView.builder(
-          itemCount: search_service.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Allmethod().Space(),
-                  Center(
-                    child: Container(
-                      child: Image.network(
-                        "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['image_car']}",
-                        width: 200,
-                        height: 200,
-                        fit: BoxFit.cover,
+      body: Center(
+        child: ListView.builder(
+            itemCount: search_service.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Allmethod().Space(),
+                    Center(
+                      child: Container(
+                        child: Image.network(
+                          "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['image_car']}",
+                          width: 200,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
-                  Text(
-                    '${search_service[index]['name_provider']}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 26.0,
+                    Text(
+                      '${search_service[index]['name_provider']}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 26.0,
+                      ),
                     ),
-                  ),
-                  const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-                  Text(
-                    'เบอร์โทรติดต่อ ${search_service[index]['phone_provider']}',
-                    style: const TextStyle(fontSize: 22.0),
-                  ),
-                  const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
-                  Text(
-                    'ผู้ให้บริการ ${search_service[index]['type']}',
-                    style: const TextStyle(fontSize: 22.0),
-                  ),
-                  const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
-                  Text(
-                    'ราคาต่อไร่ ${search_service[index]['prices']} บาท/ไร่',
-                    style: const TextStyle(fontSize: 22.0),
-                  ),
-                  Allmethod().Space(),
-                  Row(
-                    children: [
-                      Text(
-                        'จำนวนจ้าง ',
-                        style: const TextStyle(fontSize: 22.0),
-                      ),
-                      Number_(),
-                      Text(
-                        ' ไร่',
-                        style: const TextStyle(fontSize: 22.0),
-                      ),
-                    ],
-                  ),
-                  Allmethod().Space(),
-                  Dateform(),
-                  Allmethod().Space(),
-                  Center(
-                    child: RaisedButton(
-                      onPressed: () => accept(
-                        formattedDate,
-                        number_,
-                        search_service[index]['name_provider'],
-                        search_service[index]['phone_provider'],
-                        search_service[index]['type'],
-                        search_service[index]['prices'],
-                      ),
-                      child: Text("ถัดไป"),
+                    const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
+                    Text(
+                      'เบอร์โทรติดต่อ ${search_service[index]['phone_provider']}',
+                      style: const TextStyle(fontSize: 22.0),
                     ),
-                  ),
-                ],
-              ),
-            );
-          }),
+                    const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
+                    Text(
+                      'ผู้ให้บริการ ${search_service[index]['type']}',
+                      style: const TextStyle(fontSize: 22.0),
+                    ),
+                    const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
+                    Text(
+                      'ราคาต่อไร่ ${search_service[index]['prices']} บาท/ไร่',
+                      style: const TextStyle(fontSize: 22.0),
+                    ),
+                    Allmethod().Space(),
+                    Row(
+                      children: [
+                        Text(
+                          'จำนวนจ้าง ',
+                          style: const TextStyle(fontSize: 22.0),
+                        ),
+                        Number_(),
+                        Text(
+                          ' ไร่',
+                          style: const TextStyle(fontSize: 22.0),
+                        ),
+                      ],
+                    ),
+                    Allmethod().Space(),
+                    Dateform(),
+                    Allmethod().Space(),
+                    Container(
+                      child: FutureBuilder(builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        if (lat != 0) {
+                          return showmap();
+                        }
+                        return Center(child: CircularProgressIndicator());
+                      }),
+                    ),
+                    Allmethod().Space(),
+                    Center(
+                      child: RaisedButton(
+                        onPressed: () => accept(
+                          formattedDate,
+                          number_,
+                          search_service[index]['name_provider'],
+                          search_service[index]['phone_provider'],
+                          search_service[index]['type'],
+                          search_service[index]['prices'],
+                        ),
+                        child: Text("ถัดไป"),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+      ),
     );
   }
 
@@ -231,4 +253,36 @@ class Data_list_serviceState extends State<Data_list_service> {
     Navigator.push(context, route);
     // print(int.parse(number_) * int.parse(price));
   }
+
+  ////////////////////////////////////   MAP  //////////////////////////////////////////////////////////////
+
+  Container showmap() {
+    LatLng latLng = LatLng(lat, long);
+    CameraPosition Location_user = CameraPosition(target: latLng, zoom: 17);
+
+    return Container(
+      height: 300,
+      // width: 300,
+      child: GoogleMap(
+        initialCameraPosition: Location_user,
+        mapType: MapType.normal,
+        onMapCreated: (controller) {},
+        markers: marker(),
+      ),
+    );
+  }
+
+  Marker mylocation() {
+    return Marker(
+      markerId: MarkerId("asdsadasdasd"),
+      position: LatLng(lat, long),
+      icon: BitmapDescriptor.defaultMarkerWithHue(1),
+    );
+  }
+
+  Set<Marker> marker() {
+    return <Marker>[mylocation()].toSet();
+  }
+
+  //////////////////////////////////// END MAP ///////////////////////////////
 }

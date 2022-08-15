@@ -28,7 +28,7 @@ class _List_serviceState extends State<List_service> {
   List dataAmphure = [];
   var selectProvince;
   var selectAmphure;
-
+  late String lat_provider = "", long_provider = "";
   late String function;
   int result = 0;
 
@@ -113,6 +113,8 @@ class _List_serviceState extends State<List_service> {
   void all_data(id_service) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString("id_service", id_service);
+    preferences.setString("lat_provider", lat_provider);
+    preferences.setString("long_provider", long_provider);
     MaterialPageRoute route =
         MaterialPageRoute(builder: (context) => Data_list_service());
     Navigator.push(context, route);
@@ -178,7 +180,32 @@ class _List_serviceState extends State<List_service> {
       );
 
   void search_provider_province(province, amphures) async {
-    print(province + amphures);
+    var dio = Dio();
+
+    if (province == null || amphures == null) {
+      print('1');
+      final response = await dio.get(
+          "http://192.168.1.4/agriser_work/search_by_user.php?isAdd=true&function=$function");
+      if (response.statusCode == 200) {
+        setState(() {
+          search_service = json.decode(response.data);
+        });
+        print('หาตามอำเภอ');
+        print(search_service);
+      }
+    } else {
+      print(selectProvince);
+      print(selectAmphure);
+      final response = await dio.get(
+          "http://192.168.1.4/agriser_work/search_by_user_provinces.php?isAdd=true&function=$function&province=$selectProvince&amphures=$selectAmphure");
+      if (response.statusCode == 200) {
+        setState(() {
+          search_service = json.decode(response.data);
+        });
+        print('หาตามอำเภอ');
+        print(search_service);
+      }
+    }
   }
 
   Widget Data_Provider() => Container(
@@ -198,8 +225,15 @@ class _List_serviceState extends State<List_service> {
                         search_service[index]["prices"] +
                         ' บาท'),
                     trailing: RaisedButton(
-                      onPressed: () =>
-                          all_data(search_service[index]["id_service"]),
+                      onPressed: () {
+                        lat_provider = search_service[index]["map_lat_provider"]
+                            .toString();
+                        long_provider = search_service[index]
+                                ["map_long_provider"]
+                            .toString();
+
+                        all_data(search_service[index]["id_service"]);
+                      },
                       child: Text("ดูข้อมูล"),
                     ),
                   ),
