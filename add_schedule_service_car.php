@@ -17,22 +17,20 @@ if (!$link->set_charset("utf8")) {
     exit();
 	}
 
+	
+
 if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
 		
-		$type = $_GET['type'];
-		$rice = $_GET['rice'];
-		$sweetcorn = $_GET['sweetcorn'];
-		$cassava = $_GET['cassava'];
-		$sugarcane = $_GET['sugarcane'];
-		$chili = $_GET['chili'];
-		$yam = $_GET['yam'];
-		$palm = $_GET['palm'];
-		$bean = $_GET['bean'];
-		$prices = $_GET['prices'];
+		$id_service = $_GET['id_service'];
+		$phone_user = $_GET['phone_user'];
 		$phone_provider = $_GET['phone_provider'];
+		$date_work = $_GET['date_work'];
+		$count_field = $_GET['count_field'];
+		$total_price = $_GET['total_price'];
+		$map_lat_work = $_GET['map_lat_work'];
+		$map_long_work = $_GET['map_long_work'];
 		
-							
 
 	$nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
     $selectdatabooking = "SELECT * from tb_provider where id_provider = '" . $num . "' ";
@@ -42,13 +40,21 @@ if (isset($_GET)) {
     $nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
 
     }
-    $num = "l_".$nums."";
+    $num = "sc_".$nums."";
+							
+		$sql = "INSERT INTO `tb_schedule_service_car`( `id_schedule`, `id_service`, `phone_user`, `phone_provider`, `date_work`, `count_field`, `total_price`, `map_lat_work`, `map_long_work`, `status` ,`action` ) VALUES ('$num','$id_service','$phone_user','$phone_provider','$date_work','$count_field','$total_price','$map_lat_work','$map_long_work','0','ucp' )";
 
+		$sql2 = "INSERT INTO `tb_schedule_service_car`( `id_schedule`, `id_service`, `phone_user`, `phone_provider`, `date_work`, `count_field`, `total_price`, `map_lat_work`, `map_long_work`, `status` ,`action` ) VALUES ('$num','$id_service','$phone_user','$phone_provider','$date_work','$count_field','$total_price','$map_lat_work','$map_long_work','0','urp' )";
 
+		
 
-		$sql = "INSERT INTO `tb_service_provider_labor`( `id_service`, `phone_provider`, `type`, `rice`,`sweetcorn`,`cassava`,`sugarcane`,`chili`,`yam`,`palm`,`bean`,`prices`) VALUES ('$num','$phone_provider','$type','$rice','$sweetcorn','$cassava','$sugarcane','$chili','$yam','$palm','$bean','$prices')";
+		
 
 		$result = mysqli_query($link, $sql);
+
+		$result2 = mysqli_query($link, $sql2);
+
+		
 
 		if ($result) {
 			echo "true";
@@ -56,8 +62,8 @@ if (isset($_GET)) {
 			echo "false";
 		}
 
+		
 	} else echo "Welcome Master UNG";
    
 }
 	mysqli_close($link);
-?>

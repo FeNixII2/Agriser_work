@@ -35,14 +35,7 @@ class _Add_provider_service_laborState
   String image_car = "";
   String image_license_plate = "";
 
-  late String name_provider;
   late String phone_provider;
-  String email_provider = "";
-  String address_provider = "";
-  String province_provider = "";
-  String district_provider = "";
-  String map_lat_provider = "";
-  String map_long_provider = "";
 
   bool isChecked_box1 = false;
   bool isChecked_box2 = false;
@@ -65,25 +58,11 @@ class _Add_provider_service_laborState
       type = preferences.getString("choose_type_service")!;
 
       phone_provider = preferences.getString('phone_user')!;
-      name_provider = preferences.getString('name_provider')!;
-      email_provider = preferences.getString('email_provider')!;
-      address_provider = preferences.getString('address_provider')!;
-      province_provider = preferences.getString('province_provider')!;
-      district_provider = preferences.getString('district_provider')!;
-      map_lat_provider = preferences.getString('map_lat_provider')!;
-      map_long_provider = preferences.getString('map_long_provider')!;
 
       print("------------ Provider - Mode ------------");
       print("--- Get type provider State :     " + type);
 
       print("--- Get phone provider State :     " + phone_provider);
-      print("--- Get name_provider State :     " + name_provider);
-      print("--- Get email_provider State :     " + email_provider);
-      print("--- Get address_provider State :     " + address_provider);
-      print("--- Get province_provider State :     " + province_provider);
-      print("--- Get district_provider State :     " + district_provider);
-      print("--- Get map_lat_provider State :     " + map_lat_provider);
-      print("--- Get map_long_provider State :     " + map_long_provider);
     });
   }
 
@@ -304,7 +283,7 @@ class _Add_provider_service_laborState
   void upload_service() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/add_service_labor.php?isAdd=true&prices=$prices&phone_provider=$phone_provider&rice=$isChecked_box1&sweetcorn=$isChecked_box2&cassava=$isChecked_box3&sugarcane=$isChecked_box4&chili=$isChecked_box5&yam=$isChecked_box6&palm=$isChecked_box7&bean=$isChecked_box8&type=$type&name_provider=$name_provider&email_provider=$email_provider&address_provider=$address_provider&province_provider=$province_provider&district_provider=$district_provider&map_lat_provider=$map_lat_provider&map_long_provider=$map_long_provider");
+        "http://192.168.1.4/agriser_work/add_service_labor.php?isAdd=true&prices=$prices&phone_provider=$phone_provider&rice=$isChecked_box1&sweetcorn=$isChecked_box2&cassava=$isChecked_box3&sugarcane=$isChecked_box4&chili=$isChecked_box5&yam=$isChecked_box6&palm=$isChecked_box7&bean=$isChecked_box8&type=$type");
 
     print(response.data);
     if (response.data == "true") {

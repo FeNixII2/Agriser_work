@@ -20,17 +20,17 @@ if (!$link->set_charset("utf8")) {
 if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
 				
-		$type = $_GET['type'];
-		$brand = $_GET['brand'];
-		$model = $_GET['model'];
-		$date_buy = $_GET['date_buy'];
-		$prices = $_GET['prices'];
-		$phone_provider = $_GET['phone_provider'];
+		$status = $_GET['status'];
+		$id_schedule = $_GET['id_schedule'];
 
+		$sql = "UPDATE tb_schedule_service_car SET status = '$status' WHERE id_schedule = '$id_schedule' and action = 'ucp' ";
 
-		$sql = "UPDATE tb_service_provider_car SET type = '$type' , brand = '$brand' , model = '$model', date_buy = '$date_buy', prices = '$prices' , status = '1'   WHERE phone_provider = '$phone_provider' and status = '0' ";
+		$sql2 = "UPDATE tb_schedule_service_car SET status = '$status' WHERE id_schedule = '$id_schedule' and action = 'urp' ";
+
 
 		$result = mysqli_query($link, $sql);
+
+		$result2 = mysqli_query($link, $sql2);
 
 		if ($result) {
 			echo "true";

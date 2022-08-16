@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:agriser_work/pages/user/all_bottombar_user.dart';
+import 'package:agriser_work/pages/user/user_search/test.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -28,8 +29,7 @@ class _List_serviceState extends State<List_service> {
   List dataAmphure = [];
   var selectProvince;
   var selectAmphure;
-  late String lat_provider = "", long_provider = "";
-  late String function;
+  late String function, phone_provider, phone_user;
   int result = 0;
 
   @override
@@ -60,9 +60,11 @@ class _List_serviceState extends State<List_service> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       function = preferences.getString('function')!;
+      phone_user = preferences.getString('phone_user')!;
       print("------------ Provider - Mode ------------");
 
-      print("--- Get phone provider State :     " + function);
+      print("--- Get function State :     " + function);
+      print("--- Get phone_user State :     " + phone_user);
     });
     Loadservice();
   }
@@ -100,7 +102,7 @@ class _List_serviceState extends State<List_service> {
   Loadservice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_by_user.php?isAdd=true&function=$function");
+        "http://192.168.1.4/agriser_work/search_by_user.php?isAdd=true&function=$function&phone_user=$phone_user");
     if (response.statusCode == 200) {
       setState(() {
         search_service = json.decode(response.data);
@@ -113,10 +115,9 @@ class _List_serviceState extends State<List_service> {
   void all_data(id_service) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString("id_service", id_service);
-    preferences.setString("lat_provider", lat_provider);
-    preferences.setString("long_provider", long_provider);
+    preferences.setString("phone_provider", phone_provider);
     MaterialPageRoute route =
-        MaterialPageRoute(builder: (context) => Data_list_service());
+        MaterialPageRoute(builder: (context) => Testdata());
     Navigator.push(context, route);
     print(id_service);
   }
@@ -226,11 +227,8 @@ class _List_serviceState extends State<List_service> {
                         ' บาท'),
                     trailing: RaisedButton(
                       onPressed: () {
-                        lat_provider = search_service[index]["map_lat_provider"]
-                            .toString();
-                        long_provider = search_service[index]
-                                ["map_long_provider"]
-                            .toString();
+                        phone_provider =
+                            search_service[index]["phone_provider"].toString();
 
                         all_data(search_service[index]["id_service"]);
                       },

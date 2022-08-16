@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:agriser_work/pages/user/all_bottombar_user.dart';
+import 'package:agriser_work/utility/model_service_provider_car.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -28,42 +30,81 @@ class Data_list_serviceState extends State<Data_list_service> {
 
   List search_service = [];
 
-  late String id_service;
+  late String id_service = "";
   late String number_;
   late String formattedDate = "";
   late String slat, slong;
   late double lat = 0, long = 0;
   int result = 0;
+  late String phone_provider_u_c_p;
+  late String gphone = "", gtype = "", gbrand = "";
 
   @override
   void initState() {
     dateinput.text = "";
     super.initState();
-    findUser();
+    findData();
   }
 
-  Future<Null> findUser() async {
+  Future<Null> findData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       id_service = preferences.getString('id_service')!;
       slat = preferences.getString('lat_provider')!;
       slong = preferences.getString('long_provider')!;
+      phone_provider_u_c_p = preferences.getString('phone_provider_u_c_p')!;
       lat = double.parse(slat);
       long = double.parse(slong);
 
       print("------------ Data - Mode ------------");
-
       print("--- Get id_service State :     " + id_service);
       print("--- Get lat_provider State :     " + slat);
       print("--- Get long_provider State :     " + slong);
+      print("--- Get phone_provider_u_c_p State :     " + phone_provider_u_c_p);
     });
-    Loadservice();
+    LoadData_service();
+    // Loadservice();
   }
 
-  Future getinfo_service() async {
-    var url = "http://192.168.1.4/agriser_work/get_img.php";
+  Future LoadData_service() async {
+    print("------------ Getinfo DataService ------------");
+    print("--- Get id_service State :     " + id_service);
+    var url =
+        "http://192.168.1.4/agriser_work/getServiceWhereIdservice.php?isAdd=true&id_service=$id_service";
     var response = await http.get(Uri.parse(url));
-    return json.decode(response.body);
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      for (var map in jsonData) {
+        ModelService_Pro_car datauser = ModelService_Pro_car.fromJson(map);
+        setState(() {
+          print(
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+          gphone = datauser.phone_provider;
+          gtype = datauser.type;
+          gbrand = datauser.brand;
+          // date_provider = datauser.date;
+          // sex_provider = datauser.sex;
+          // address_provider = datauser.address;
+          // province_provider = datauser.province;
+          // district_provider = datauser.district;
+          // map_lat_provider = datauser.map_lat;
+          // map_long_provider = datauser.map_long;
+
+          print(gphone);
+          print(gtype);
+          print(gbrand);
+        });
+      }
+    }
+
+    // SharedPreferences preferences = await SharedPreferences.getInstance();
+    // preferences.setString("name_user", name_user);
+    // preferences.setString("email_user", email_provider);
+    // preferences.setString("address_user", address_provider);
+    // preferences.setString("province_user", province_provider);
+    // preferences.setString("district_user", district_provider);
+    // preferences.setString("map_lat_user", map_lat_provider);
+    // preferences.setString("map_long_user", map_long_provider);
   }
 
   @override
@@ -73,10 +114,7 @@ class Data_list_serviceState extends State<Data_list_service> {
         backgroundColor: Colors.green,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const All_bottombar_user()),
-          ),
+          onPressed: () => Navigator.pop(context),
         ),
         title: Text("ข้อมูลทั้งหมด"),
         // centerTitle: true,
@@ -247,6 +285,7 @@ class Data_list_serviceState extends State<Data_list_service> {
     preferences.setString("phone_provider", phone);
     preferences.setString("type", type);
     preferences.setString("price", price);
+    
 
     MaterialPageRoute route =
         MaterialPageRoute(builder: (context) => Confirm_work());
@@ -285,4 +324,8 @@ class Data_list_serviceState extends State<Data_list_service> {
   }
 
   //////////////////////////////////// END MAP ///////////////////////////////
+  ///
+  ///
+  ///
+
 }

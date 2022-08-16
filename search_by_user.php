@@ -19,20 +19,24 @@ if (!$link->set_charset("utf8")) {
 
 if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
+
+
+        $phone_user = $_GET['phone_user'];
+
         if ($_GET['function'] == '1') {
-		    $result = mysqli_query($link, "SELECT * FROM tb_service_provider_car where type = 'รถเกี่ยวข้าว' ");
+		    $result = mysqli_query($link, "SELECT * FROM tb_service_provider_car where type = 'รถเกี่ยวข้าว' and phone_provider != '$phone_user'  ");
         }
         if ($_GET['function'] == '2') {
-            $result = mysqli_query($link, "SELECT * FROM tb_service_provider_car where type = 'รถแทรกเตอร์' ");
+            $result = mysqli_query($link, "SELECT * FROM tb_service_provider_car where type = 'รถแทรกเตอร์' and phone_provider != '$phone_user' ");
         }
         if ($_GET['function'] == '3') {
-            $result = mysqli_query($link, "SELECT * FROM tb_service_provider_car where type = 'รถปลูกข้าว' ");
+            $result = mysqli_query($link, "SELECT * FROM tb_service_provider_car where type = 'รถปลูกข้าว' and phone_provider != '$phone_user' ");
         }
         if ($_GET['function'] == '4') {
-            $result = mysqli_query($link, "SELECT * FROM tb_service_provider_car where type = 'โดรน' ");
+            $result = mysqli_query($link, "SELECT * FROM tb_service_provider_car where type = 'โดรน'  and phone_provider != '$phone_user' ");
         }
         if ($_GET['function'] == '5') {
-            $result = mysqli_query($link, "SELECT * FROM tb_service_provider_car where type = 'แรงงานทางการเกษตร' ");
+            $result = mysqli_query($link, "SELECT * FROM tb_service_provider_car where type = 'แรงงานทางการเกษตร' and phone_provider != '$phone_user' ");
         }
 
 		if ($result) {

@@ -60,6 +60,7 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
       phone_provider = preferences.getString('phone_user')!;
       // preferences.setString("phone_provider", phone_provider);
       // preferences.setString("name_provider", name_provider);
+
       print("------------ User - Mode ------------");
       // print("--- Get name user State :     " + name_user);
       print("--- Get phone user State :     " + phone_user);
@@ -241,6 +242,8 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
       Alert_regis_provider();
     } else {
       print("มีเบอร์นี้ในระบบผู้ให้บริการ");
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setString("phone_provider", phone_provider);
       MaterialPageRoute route =
           MaterialPageRoute(builder: (value) => All_bottombar_provider());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
@@ -254,6 +257,8 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
 
     print(response.data);
     if (response.data == "true") {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setString("phone_provider", phone_provider);
       MaterialPageRoute route =
           MaterialPageRoute(builder: (value) => All_bottombar_provider());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);

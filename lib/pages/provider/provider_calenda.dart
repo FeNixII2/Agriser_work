@@ -1,3 +1,5 @@
+import 'package:agriser_work/pages/provider/contact/provider_both_contact.dart';
+import 'package:agriser_work/pages/provider/request/provider_both_request.dart';
 import 'package:agriser_work/pages/user/contact/user_both_contact.dart';
 import 'package:agriser_work/pages/user/request/user_both_request.dart';
 import 'package:agriser_work/utility/allmethod.dart';
@@ -33,8 +35,8 @@ class _Provider_calendaState extends State<Provider_calenda> {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: InkWell(
             onTap: () {
-              MaterialPageRoute route =
-                  MaterialPageRoute(builder: (value) => User_both_contact());
+              MaterialPageRoute route = MaterialPageRoute(
+                  builder: (value) => Provider_both_request());
               Navigator.push(context, route);
             },
             child: Column(
@@ -49,7 +51,7 @@ class _Provider_calendaState extends State<Provider_calenda> {
                 ),
                 SizedBox(height: 6),
                 Text(
-                  'ตารางงาน',
+                  'ตารางงานที่ส่งมา',
                   style: TextStyle(fontSize: 22, color: Colors.black),
                 ),
                 SizedBox(height: 6),
@@ -70,8 +72,8 @@ class _Provider_calendaState extends State<Provider_calenda> {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: InkWell(
             onTap: () {
-              MaterialPageRoute route =
-                  MaterialPageRoute(builder: (value) => User_both_request());
+              MaterialPageRoute route = MaterialPageRoute(
+                  builder: (value) => Provider_both_contact());
               Navigator.push(context, route);
             },
             child: Column(
@@ -86,7 +88,7 @@ class _Provider_calendaState extends State<Provider_calenda> {
                 ),
                 SizedBox(height: 6),
                 Text(
-                  'ตารางงานประกาศ',
+                  'ตารางงานที่ร้องขอ',
                   style: TextStyle(fontSize: 22, color: Colors.black),
                 ),
                 SizedBox(height: 6),

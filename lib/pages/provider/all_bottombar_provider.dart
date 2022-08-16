@@ -46,8 +46,10 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
 
   Future<Null> findUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+
     setState(() {
-      phone_provider = preferences.getString('phone_user')!;
+      phone_provider = preferences.getString('phone_provider')!;
+
       print("------------ User - Mode ------------");
       // print("--- Get name user State :     " + name_user);
       print("--- Get phone provider State :     " + phone_provider);
@@ -95,6 +97,7 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
     print(map_long_provider);
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("phone_provider", phone_provider);
     preferences.setString("name_provider", name_provider);
     preferences.setString("email_provider", email_provider);
     preferences.setString("address_provider", address_provider);

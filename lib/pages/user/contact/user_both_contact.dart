@@ -53,8 +53,8 @@ class _User_both_contactState extends State<User_both_contact> {
               ),
               Expanded(
                 child: TabBarView(children: [
-                  User_record_request(),
-                  User_schedule_request(),
+                  User_schedule_contact(),
+                  User_record_contact(),
                 ]),
               ),
             ],

@@ -20,26 +20,25 @@ if (!$link->set_charset("utf8")) {
 if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
 				
-		$type = $_GET['type'];
-		$brand = $_GET['brand'];
-		$model = $_GET['model'];
-		$date_buy = $_GET['date_buy'];
-		$prices = $_GET['prices'];
-		$phone_provider = $_GET['phone_provider'];
+		$id_schedule = $_GET['id_schedule'];
 
-
-		$sql = "UPDATE tb_service_provider_car SET type = '$type' , brand = '$brand' , model = '$model', date_buy = '$date_buy', prices = '$prices' , status = '1'   WHERE phone_provider = '$phone_provider' and status = '0' ";
-
-		$result = mysqli_query($link, $sql);
+		$result = mysqli_query($link, "SELECT * FROM tb_schedule_user_contact_provider WHERE id_schedule = '$id_schedule'");
 
 		if ($result) {
-			echo "true";
-		} else {
-			echo "false";
-		}
 
-	} else echo "Welcome Master UNG";
+			while($row=mysqli_fetch_assoc($result)){
+			$output[]=$row;
+
+			}	// while
+
+			echo json_encode($output);
+
+		} //if
+
+	} else echo "Welcome Master UNG";	// if2
    
-}
+}	// if1
+
+
 	mysqli_close($link);
 ?>

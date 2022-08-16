@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:agriser_work/pages/provider/request/data_schedule_request.dart';
+import 'package:agriser_work/pages/user/contact/data_schedule_contact.dart';
+import 'package:agriser_work/utility/model_service_provider_car.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +20,8 @@ class Provider_schedule_request extends StatefulWidget {
 class _Provider_schedule_requestState extends State<Provider_schedule_request> {
   List search_service = [];
 
-  late String name_provider;
-  late String phone_provider;
+  late String phone_provider, id_service;
+  late String status = "", type = "";
 
   @override
   void initState() {
@@ -29,18 +32,11 @@ class _Provider_schedule_requestState extends State<Provider_schedule_request> {
   Future<Null> findUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      phone_provider = preferences.getString('phone_user')!;
+      phone_provider = preferences.getString('phone_provider')!;
       print("------------ Provider - Mode ------------");
-
       print("--- Get phone provider State :     " + phone_provider);
     });
     Loadservice();
-  }
-
-  Future getinfo_service() async {
-    var url = "http://192.168.1.4/agriser_work/get_img.php";
-    var response = await http.get(Uri.parse(url));
-    return json.decode(response.body);
   }
 
   @override
@@ -49,19 +45,54 @@ class _Provider_schedule_requestState extends State<Provider_schedule_request> {
       body: ListView.builder(
           itemCount: search_service.length,
           itemBuilder: (context, index) {
+            if (search_service[index]["status"] == "0") {
+              status = "รอการตอบรับ";
+            }
+            if (search_service[index]["status"] == "1") {
+              status = "ดำเนินการ";
+            }
+            if (search_service[index]["status"] == "4") {
+              status = "รอคอนเฟิร์มยกเลิก";
+            }
+            if (search_service[index]["status"] == "5") {
+              status = "รอคอนเฟิร์มเสร็จ";
+            }
+
             return Card(
-              child: ListTile(
-                leading: Container(
-                  child: Image.network(
-                      width: 100,
-                      height: 100,
-                      "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['image_car']}"),
-                ),
-                title: Text(search_service[index]["brand"]),
-                subtitle: Text(search_service[index]["prices"]),
-                trailing: RaisedButton(
-                  onPressed: () {},
-                  child: Text("แก้ไข"),
+              clipBehavior: Clip.antiAlias,
+              child: Container(
+                height: 100,
+                child: InkWell(
+                  onTap: () async {
+                    SharedPreferences preferences =
+                        await SharedPreferences.getInstance();
+                    preferences.setString(
+                        "id_schedule", search_service[index]["id_schedule"]);
+                    preferences.setString(
+                        "id_service", search_service[index]["id_service"]);
+                    preferences.setString(
+                        "phone_user", search_service[index]["phone_user"]);
+
+                    preferences.setString(
+                        "status", search_service[index]["status"]);
+
+                    preferences.setString(
+                        "action", search_service[index]["action"]);
+
+                    MaterialPageRoute route = MaterialPageRoute(
+                        builder: (context) => Data_schedule_request());
+                    Navigator.push(context, route);
+                  },
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Text(search_service[index]["id_schedule"]),
+                        title: Text(search_service[index]["total_price"]),
+                        trailing: Text("$status"),
+                        subtitle: Text(search_service[index]["date_work"]),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -69,16 +100,32 @@ class _Provider_schedule_requestState extends State<Provider_schedule_request> {
     );
   }
 
+  // Card(
+  //             child: ListTile(
+  //               leading: const Icon(Icons.add),
+  //               title: Text(search_service[index]["date_work"]),
+  //               trailing: Text(search_service[index]["status"]),
+  //               subtitle: Text(search_service[index]["total_price"]),
+  //               selected: true,
+  //               onTap: () {
+  //                 print("object");
+  //               },
+  //             ),
+  //           );
+
   Loadservice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_service.php?isAdd=true&phone_provider=$phone_provider");
+        "http://192.168.1.4/agriser_work/search_schedule_service_car_urp.php?isAdd=true&phone_provider=$phone_provider");
     if (response.statusCode == 200) {
       setState(() {
         search_service = json.decode(response.data);
       });
       print(search_service);
+
       return search_service;
     }
   }
+
+  loadtype() {}
 }

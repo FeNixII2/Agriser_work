@@ -1,3 +1,5 @@
+import 'package:agriser_work/pages/provider/request/provider_record_request.dart';
+import 'package:agriser_work/pages/provider/request/provider_schedule_request.dart';
 import 'package:agriser_work/pages/user/request/user_record_request.dart';
 import 'package:agriser_work/pages/user/request/user_schedule_request.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +17,8 @@ class _Provider_both_requestState extends State<Provider_both_request> {
   int _currenIndex_C = 0;
 
   final List<Widget> _children_c = [
-    User_record_request(),
-    User_schedule_request(),
+    Provider_record_request(),
+    Provider_schedule_request(),
   ];
 
   void onTappedBar(int index) {
@@ -32,7 +34,6 @@ class _Provider_both_requestState extends State<Provider_both_request> {
       child: Scaffold(
           appBar: AppBar(
             title: Text("ตารางงานที่ร้องขอเข้ามา"),
-            backgroundColor: Colors.green.shade400,
           ),
           // body: _children[_currenIndex],
 
@@ -51,8 +52,8 @@ class _Provider_both_requestState extends State<Provider_both_request> {
               ),
               Expanded(
                 child: TabBarView(children: [
-                  User_record_request(),
-                  User_schedule_request(),
+                  Provider_schedule_request(),
+                  Provider_record_request(),
                 ]),
               ),
             ],
