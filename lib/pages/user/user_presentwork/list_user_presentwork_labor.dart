@@ -27,7 +27,7 @@ class _List_user_presentwork_laborState
   List search_service = [];
 
   late String name_provider;
-  late String phone_provider;
+  late String phone_user;
 
   @override
   void initState() {
@@ -38,10 +38,10 @@ class _List_user_presentwork_laborState
   Future<Null> findUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      phone_provider = preferences.getString('phone_user')!;
+      phone_user = preferences.getString('phone_user')!;
       print("------------ Provider - Mode ------------");
 
-      print("--- Get phone provider State :     " + phone_provider);
+      print("--- Get phone provider State :     " + phone_user);
     });
     Loadservice();
   }
@@ -72,13 +72,13 @@ class _List_user_presentwork_laborState
           itemBuilder: (context, index) {
             return Card(
               child: ListTile(
-                // leading: Container(
-                //   child: Image.network(
-                //       width: 100,
-                //       height: 100,
-                //       "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['image_car']}"),
-                // ),
-                title: Text(search_service[index]["type"]),
+                leading: Container(
+                  child: Image.network(
+                      width: 100,
+                      height: 100,
+                      "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['img_field1']}"),
+                ),
+                title: Text(search_service[index]["type_presentwork"]),
                 subtitle: Text(search_service[index]["prices"]),
                 trailing: RaisedButton(
                   onPressed: () {},
@@ -102,7 +102,7 @@ class _List_user_presentwork_laborState
   Loadservice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_service_labor.php?isAdd=true&phone_provider=$phone_provider");
+        "http://192.168.1.4/agriser_work/search_presentwork_labor.php?isAdd=true&phone_user=$phone_user");
     if (response.statusCode == 200) {
       setState(() {
         search_service = json.decode(response.data);

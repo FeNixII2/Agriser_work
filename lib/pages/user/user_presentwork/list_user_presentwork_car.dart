@@ -25,7 +25,7 @@ class _List_user_presentwork_carState extends State<List_user_presentwork_car> {
   List search_service = [];
 
   late String name_provider;
-  late String phone_provider;
+  late String phone_user;
 
   @override
   void initState() {
@@ -36,18 +36,12 @@ class _List_user_presentwork_carState extends State<List_user_presentwork_car> {
   Future<Null> findUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      phone_provider = preferences.getString('phone_user')!;
+      phone_user = preferences.getString('phone_user')!;
       print("------------ Provider - Mode ------------");
 
-      print("--- Get phone provider State :     " + phone_provider);
+      print("--- Get phone provider State :     " + phone_user);
     });
     Loadservice();
-  }
-
-  Future getinfo_service() async {
-    var url = "http://192.168.1.4/agriser_work/get_img.php";
-    var response = await http.get(Uri.parse(url));
-    return json.decode(response.body);
   }
 
   @override
@@ -71,12 +65,13 @@ class _List_user_presentwork_carState extends State<List_user_presentwork_car> {
             return Card(
               child: ListTile(
                 leading: Container(
+                  height: 380,
                   child: Image.network(
                       width: 100,
                       height: 100,
-                      "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['image_car']}"),
+                      "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['img_field1']}"),
                 ),
-                title: Text(search_service[index]["brand"]),
+                title: Text(search_service[index]["type_presentwork"]),
                 subtitle: Text(search_service[index]["prices"]),
                 trailing: RaisedButton(
                   onPressed: () {},
@@ -100,7 +95,7 @@ class _List_user_presentwork_carState extends State<List_user_presentwork_car> {
   Loadservice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_service.php?isAdd=true&phone_provider=$phone_provider");
+        "http://192.168.1.4/agriser_work/search_presentwork_car.php?isAdd=true&phone_user=$phone_user");
     if (response.statusCode == 200) {
       setState(() {
         search_service = json.decode(response.data);

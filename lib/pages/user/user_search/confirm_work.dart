@@ -21,13 +21,15 @@ class Confirm_work extends StatefulWidget {
 
 class _Confirm_workState extends State<Confirm_work> {
   late int total_price;
-  late double map_lat_work, map_long_work;
+  late double map_lat_work = 0, map_long_work;
   late String date_work,
       phone_user,
       phone_provider,
       count_field,
       prices,
-      id_service;
+      id_service,
+      function,
+      type_service;
   @override
   void initState() {
     super.initState();
@@ -44,6 +46,7 @@ class _Confirm_workState extends State<Confirm_work> {
       phone_provider = preferences.getString('phone_provider')!;
       count_field = preferences.getString('count_field')!;
       prices = preferences.getString('prices')!;
+      function = preferences.getString('function')!;
       total_price = int.parse(prices) * int.parse(count_field);
     });
   }
@@ -141,9 +144,15 @@ class _Confirm_workState extends State<Confirm_work> {
   //////////////////////////////////// END MAP ///////////////////////////////
 
   void addschedule_user() async {
+    if (function == "5" || function == "6") {
+      type_service = "labor";
+    } else {
+      type_service = "car";
+    }
+
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/add_schedule_service_car.php?isAdd=true&id_service=$id_service&phone_user=$phone_user&phone_provider=$phone_provider&date_work=$date_work&count_field=$count_field&total_price=$total_price&map_lat_work=$map_lat_work&map_long_work=$map_long_work");
+        "http://192.168.1.4/agriser_work/add_schedule_service_car.php?isAdd=true&id_service=$id_service&phone_user=$phone_user&phone_provider=$phone_provider&date_work=$date_work&count_field=$count_field&total_price=$total_price&map_lat_work=$map_lat_work&map_long_work=$map_long_work&type_service=$type_service");
 
     print(response.data);
     if (response.data == "true") {

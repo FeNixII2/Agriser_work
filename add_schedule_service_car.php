@@ -30,6 +30,7 @@ if (isset($_GET)) {
 		$total_price = $_GET['total_price'];
 		$map_lat_work = $_GET['map_lat_work'];
 		$map_long_work = $_GET['map_long_work'];
+		$type_service = $_GET['type_service'];
 		
 
 	$nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
@@ -42,9 +43,9 @@ if (isset($_GET)) {
     }
     $num = "sc_".$nums."";
 							
-		$sql = "INSERT INTO `tb_schedule_service_car`( `id_schedule`, `id_service`, `phone_user`, `phone_provider`, `date_work`, `count_field`, `total_price`, `map_lat_work`, `map_long_work`, `status` ,`action` ) VALUES ('$num','$id_service','$phone_user','$phone_provider','$date_work','$count_field','$total_price','$map_lat_work','$map_long_work','0','ucp' )";
+		$sql = "INSERT INTO `tb_schedule_service`( `id_schedule`, `id_service`, `phone_user`, `phone_provider`, `date_work`, `count_field`, `total_price`, `map_lat_work`, `map_long_work`, `status` ,`action` ,`type_service` ) VALUES ('$num','$id_service','$phone_user','$phone_provider','$date_work','$count_field','$total_price','$map_lat_work','$map_long_work','0','ucp' ,'$type_service' )";
 
-		$sql2 = "INSERT INTO `tb_schedule_service_car`( `id_schedule`, `id_service`, `phone_user`, `phone_provider`, `date_work`, `count_field`, `total_price`, `map_lat_work`, `map_long_work`, `status` ,`action` ) VALUES ('$num','$id_service','$phone_user','$phone_provider','$date_work','$count_field','$total_price','$map_lat_work','$map_long_work','0','urp' )";
+		$sql2 = "INSERT INTO `tb_schedule_service`( `id_schedule`, `id_service`, `phone_user`, `phone_provider`, `date_work`, `count_field`, `total_price`, `map_lat_work`, `map_long_work`, `status` ,`action`,`type_service` ) VALUES ('$num','$id_service','$phone_user','$phone_provider','$date_work','$count_field','$total_price','$map_lat_work','$map_long_work','0','urp','$type_service' )";
 
 		
 

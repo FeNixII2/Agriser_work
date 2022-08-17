@@ -25,7 +25,7 @@ if (isset($_GET)) {
 		$phone_user = $_GET['phone_user'];
 		
 
-		$result = mysqli_query($link, "SELECT * FROM tb_schedule_service_car where phone_user = '$phone_user' and (status = '2' or status = '3') and action = 'urp'  ");
+		$result = mysqli_query($link, "SELECT * FROM tb_schedule_service where phone_user = '$phone_user' and (status = '2' or status = '3') and action = 'urp'  ");
 
 		
 

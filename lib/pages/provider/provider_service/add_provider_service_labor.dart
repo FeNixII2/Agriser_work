@@ -22,9 +22,9 @@ class Add_provider_service_labor extends StatefulWidget {
 class _Add_provider_service_laborState
     extends State<Add_provider_service_labor> {
   late File _image_car;
-  late File _image_license;
+
   final picker1 = ImagePicker();
-  final picker2 = ImagePicker();
+
   bool check1 = false;
   bool check2 = false;
   String type = "";
@@ -33,7 +33,7 @@ class _Add_provider_service_laborState
   String date_buy = "";
   String prices = "";
   String image_car = "";
-  String image_license_plate = "";
+  String image_car_2 = "";
 
   late String phone_provider;
 
@@ -50,6 +50,15 @@ class _Add_provider_service_laborState
   void initState() {
     super.initState();
     init();
+  }
+
+  Future chooseImage1() async {
+    var pickImage1 = await picker1.getImage(source: ImageSource.gallery);
+    setState(() {
+      _image_car = File(pickImage1!.path);
+      check1 = true;
+      // print("Path File :      " + _image.path);
+    });
   }
 
   Future init() async {
@@ -97,6 +106,17 @@ class _Add_provider_service_laborState
             Allmethod().Space(),
             w_price_per_rai(),
             Allmethod().Space(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    width: 120,
+                    height: 120,
+                    child: Image.asset("assets/images/img_front.png")),
+                SizedBox(width: 1),
+                display_image(),
+              ],
+            ),
             Allmethod().Space(),
             Allmethod().Space(),
             Allmethod().Space(),
@@ -115,7 +135,7 @@ class _Add_provider_service_laborState
               child: RaisedButton(
                   child: Text("อัพโหลด"),
                   onPressed: () {
-                    upload_service();
+                    uploadImage();
                   }),
             ),
           ],
@@ -123,6 +143,29 @@ class _Add_provider_service_laborState
       ),
     );
   }
+
+  Widget display_image() => Container(
+        // child: check1 == false ? Text('No Image') : Image.file(_image_car),
+        // width: 250,
+        // height: 250,
+        // color: Colors.red,
+        child: check1 == false
+            ? IconButton(
+                iconSize: 160,
+                onPressed: () {
+                  chooseImage1();
+                },
+                color: Color.fromARGB(255, 242, 238, 238),
+                icon: Image.asset("assets/images/gallery.png"),
+              )
+            : IconButton(
+                iconSize: 160,
+                onPressed: () {
+                  chooseImage1();
+                },
+                icon: Image.file(_image_car),
+              ),
+      );
 
   Widget type_labor() => Container(
       width: 300.0,
@@ -280,7 +323,34 @@ class _Add_provider_service_laborState
         ),
       );
 
-  void upload_service() async {
+  Future uploadImage() async {
+    final uri =
+        Uri.parse("http://192.168.1.4/agriser_work/up_img_service_labor.php");
+
+    var request = http.MultipartRequest("POST", uri);
+    request.fields["phone_provider"] = phone_provider;
+    var pic_car =
+        await http.MultipartFile.fromPath("image_car", _image_car.path);
+    // var id_pro = await http.MultipartFile.fromPath("id_pro", "111");
+    request.files.add(pic_car);
+
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      updatedata();
+      print("Image UPLOAD");
+    } else {
+      print("UPLOAD FAIL");
+    }
+  }
+
+  void updatedata() async {
+    print(prices);
+    print(phone_provider);
+    print(isChecked_box2);
+    print(isChecked_box3);
+    print(isChecked_box4);
+    print(isChecked_box5);
     var dio = Dio();
     final response = await dio.get(
         "http://192.168.1.4/agriser_work/add_service_labor.php?isAdd=true&prices=$prices&phone_provider=$phone_provider&rice=$isChecked_box1&sweetcorn=$isChecked_box2&cassava=$isChecked_box3&sugarcane=$isChecked_box4&chili=$isChecked_box5&yam=$isChecked_box6&palm=$isChecked_box7&bean=$isChecked_box8&type=$type");

@@ -26,8 +26,12 @@ class _User_searchState extends State<User_search> {
       body: Center(
         child: SingleChildScrollView(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+              Allmethod().Space(),
+              Text(
+                "รถทางการเกษตร",
+                style: TextStyle(fontSize: 20),
+              ),
               Allmethod().Space(),
               Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,7 +51,20 @@ class _User_searchState extends State<User_search> {
                     ImageButton4(),
                   ]),
               Allmethod().Space(),
-              ImageButton5()
+              Text(
+                "แรงงานทางการเกษตร",
+                style: TextStyle(fontSize: 20),
+              ),
+              Allmethod().Space(),
+              Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ImageButton5(),
+                    Allmethod().Space(),
+                    ImageButton6(),
+                  ]),
+              Allmethod().Space(),
             ],
           ),
         ),
@@ -56,26 +73,37 @@ class _User_searchState extends State<User_search> {
   }
 
   Widget ImageButton1() => Container(
+        padding: EdgeInsets.all(1),
+        height: 175,
+        width: 175,
         child: Material(
-          color: Color.fromARGB(255, 152, 252, 156),
+          color: Color.fromARGB(225, 255, 253, 230),
           elevation: 8,
           borderRadius: BorderRadius.circular(28),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: InkWell(
-            onTap: (() => search_1()),
+            onTap: () async {
+              SharedPreferences preferences =
+                  await SharedPreferences.getInstance();
+              preferences.setString("function", "1");
+              MaterialPageRoute route =
+                  MaterialPageRoute(builder: (context) => List_service());
+              Navigator.push(context, route);
+            },
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Ink.image(
-                  image: AssetImage("assets/images/logo.png"),
-                  height: 180,
-                  width: 180,
+                  image: AssetImage("assets/images/i2.png"),
+                  height: 100,
+                  width: 100,
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 6),
                 Text(
                   'รถเกี่ยวข้าว',
-                  style: TextStyle(fontSize: 22, color: Colors.black),
+                  style: TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 SizedBox(height: 6),
               ],
@@ -83,37 +111,39 @@ class _User_searchState extends State<User_search> {
           ),
         ),
       );
-
-  void search_1() async {
-    print("เข้าหารถเกียวข้าว");
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString("function", "1");
-    MaterialPageRoute route =
-        MaterialPageRoute(builder: (context) => List_service());
-    Navigator.pushAndRemoveUntil(context, route, (route) => false);
-  }
 
   Widget ImageButton2() => Container(
+        padding: EdgeInsets.all(1),
+        height: 175,
+        width: 175,
         child: Material(
-          color: Color.fromARGB(255, 152, 252, 156),
+          color: Color.fromARGB(225, 255, 253, 230),
           elevation: 8,
           borderRadius: BorderRadius.circular(28),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: InkWell(
-            onTap: ((() => search_2())),
+            onTap: () async {
+              SharedPreferences preferences =
+                  await SharedPreferences.getInstance();
+              preferences.setString("function", "2");
+              MaterialPageRoute route =
+                  MaterialPageRoute(builder: (context) => List_service());
+              Navigator.push(context, route);
+            },
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Ink.image(
-                  image: AssetImage("assets/images/logo.png"),
-                  height: 180,
-                  width: 180,
+                  image: AssetImage("assets/images/i1.png"),
+                  height: 100,
+                  width: 100,
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 6),
                 Text(
-                  'รถไถนา',
-                  style: TextStyle(fontSize: 22, color: Colors.black),
+                  'แทรกเตอร์',
+                  style: TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 SizedBox(height: 6),
               ],
@@ -121,37 +151,39 @@ class _User_searchState extends State<User_search> {
           ),
         ),
       );
-
-  void search_2() async {
-    print("เข้าหารถไถนา");
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString("function", "2");
-    MaterialPageRoute route =
-        MaterialPageRoute(builder: (context) => List_service());
-    Navigator.pushAndRemoveUntil(context, route, (route) => false);
-  }
 
   Widget ImageButton3() => Container(
+        padding: EdgeInsets.all(1),
+        height: 175,
+        width: 175,
         child: Material(
-          color: Color.fromARGB(255, 152, 252, 156),
+          color: Color.fromARGB(225, 255, 253, 230),
           elevation: 8,
           borderRadius: BorderRadius.circular(28),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: InkWell(
-            onTap: ((() => search_3())),
+            onTap: () async {
+              SharedPreferences preferences =
+                  await SharedPreferences.getInstance();
+              preferences.setString("function", "3");
+              MaterialPageRoute route =
+                  MaterialPageRoute(builder: (context) => List_service());
+              Navigator.push(context, route);
+            },
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Ink.image(
-                  image: AssetImage("assets/images/logo.png"),
-                  height: 180,
-                  width: 180,
+                  image: AssetImage("assets/images/i3.png"),
+                  height: 100,
+                  width: 100,
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 6),
                 Text(
-                  'รถปลูกข้าว',
-                  style: TextStyle(fontSize: 22, color: Colors.black),
+                  'รถดำนา',
+                  style: TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 SizedBox(height: 6),
               ],
@@ -160,36 +192,38 @@ class _User_searchState extends State<User_search> {
         ),
       );
 
-  void search_3() async {
-    print("เข้าหารถเกียวข้าว");
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString("function", "3");
-    MaterialPageRoute route =
-        MaterialPageRoute(builder: (context) => List_service());
-    Navigator.pushAndRemoveUntil(context, route, (route) => false);
-  }
-
   Widget ImageButton4() => Container(
+        padding: EdgeInsets.all(1),
+        height: 175,
+        width: 175,
         child: Material(
-          color: Color.fromARGB(255, 152, 252, 156),
+          color: Color.fromARGB(225, 255, 253, 230),
           elevation: 8,
           borderRadius: BorderRadius.circular(28),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: InkWell(
-            onTap: ((() => search_4())),
+            onTap: () async {
+              SharedPreferences preferences =
+                  await SharedPreferences.getInstance();
+              preferences.setString("function", "4");
+              MaterialPageRoute route =
+                  MaterialPageRoute(builder: (context) => List_service());
+              Navigator.push(context, route);
+            },
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Ink.image(
-                  image: AssetImage("assets/images/logo.png"),
-                  height: 180,
-                  width: 180,
+                  image: AssetImage("assets/images/i4.png"),
+                  height: 100,
+                  width: 100,
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 6),
                 Text(
                   'โดรน',
-                  style: TextStyle(fontSize: 22, color: Colors.black),
+                  style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(height: 6),
               ],
@@ -198,39 +232,38 @@ class _User_searchState extends State<User_search> {
         ),
       );
 
-  void search_4() async {
-    print("เข้าหาโดรน");
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString("function", "4");
-    MaterialPageRoute route =
-        MaterialPageRoute(builder: (context) => List_service());
-    Navigator.pushAndRemoveUntil(context, route, (route) => false);
-  }
-
   Widget ImageButton5() => Container(
+        padding: EdgeInsets.all(1),
+        height: 175,
+        width: 175,
         child: Material(
-          color: Color.fromARGB(255, 152, 252, 156),
+          color: Color.fromARGB(225, 255, 253, 230),
           elevation: 8,
           borderRadius: BorderRadius.circular(28),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: InkWell(
-            onTap: ((() => search_5())),
+            onTap: () async {
+              SharedPreferences preferences =
+                  await SharedPreferences.getInstance();
+              preferences.setString("function", "5");
+              MaterialPageRoute route =
+                  MaterialPageRoute(builder: (context) => List_service());
+              Navigator.push(context, route);
+            },
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Ink.image(
-                  image: AssetImage("assets/images/logo.png"),
-                  height: 180,
-                  width: 180,
+                  image: AssetImage("assets/images/i5.png"),
+                  height: 100,
+                  width: 100,
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 6),
                 Text(
-                  'แรงงานทางการเกษตร',
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black,
-                  ),
+                  'แรงงานเพาะปลูก',
+                  style: TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 SizedBox(height: 6),
               ],
@@ -239,12 +272,43 @@ class _User_searchState extends State<User_search> {
         ),
       );
 
-  void search_5() async {
-    print("แรงงานทางการเกษตร");
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString("function", "5");
-    MaterialPageRoute route =
-        MaterialPageRoute(builder: (context) => List_service());
-    Navigator.pushAndRemoveUntil(context, route, (route) => false);
-  }
+  Widget ImageButton6() => Container(
+        padding: EdgeInsets.all(1),
+        height: 175,
+        width: 175,
+        child: Material(
+          color: Color.fromARGB(225, 255, 253, 230),
+          elevation: 8,
+          borderRadius: BorderRadius.circular(28),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          child: InkWell(
+            onTap: () async {
+              SharedPreferences preferences =
+                  await SharedPreferences.getInstance();
+              preferences.setString("function", "6");
+              MaterialPageRoute route =
+                  MaterialPageRoute(builder: (context) => List_service());
+              Navigator.push(context, route);
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Ink.image(
+                  image: AssetImage("assets/images/i6.png"),
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(height: 6),
+                Text(
+                  'แรงงานเก็บเกี่ยว',
+                  style: TextStyle(fontSize: 20, color: Colors.black),
+                ),
+                SizedBox(height: 6),
+              ],
+            ),
+          ),
+        ),
+      );
 }

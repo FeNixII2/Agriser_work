@@ -99,11 +99,11 @@ class _Type_provider_service_carState extends State<Type_provider_service_car> {
                   width: 140,
                   height: 140,
                   child: RaisedButton(
-                    child: Text("รถขนข้าว"),
+                    child: Text("รถดำนา"),
                     onPressed: () async {
                       SharedPreferences preferences =
                           await SharedPreferences.getInstance();
-                      preferences.setString("choose_type_service", "รถขนข้าว");
+                      preferences.setString("choose_type_service", "รถดำนา");
                       MaterialPageRoute route = MaterialPageRoute(
                           builder: (context) => Add_provider_service());
                       Navigator.push(context, route);

@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:agriser_work/pages/user/all_bottombar_user.dart';
-import 'package:agriser_work/pages/user/user_search/test.dart';
+import 'package:agriser_work/pages/user/user_search/data_service_car.dart';
+import 'package:agriser_work/pages/user/user_search/data_service_labor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -13,7 +14,6 @@ import '../../../utility/allmethod.dart';
 import '../../provider/all_bottombar_provider.dart';
 // import '../../provider/provider_service/type_provider_service.dart';
 import '../user_search.dart';
-import 'data_list_service.dart';
 
 class List_service extends StatefulWidget {
   const List_service({Key? key}) : super(key: key);
@@ -31,6 +31,7 @@ class _List_serviceState extends State<List_service> {
   var selectAmphure;
   late String function, phone_provider, phone_user;
   int result = 0;
+  late String fix_img;
 
   @override
   void initState() {
@@ -80,13 +81,7 @@ class _List_serviceState extends State<List_service> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const All_bottombar_user()),
-          ),
-        ),
+
         title: Text("ข้อมูลการให้บริการ"),
         // centerTitle: true,
       ),
@@ -116,9 +111,16 @@ class _List_serviceState extends State<List_service> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString("id_service", id_service);
     preferences.setString("phone_provider", phone_provider);
-    MaterialPageRoute route =
-        MaterialPageRoute(builder: (context) => Testdata());
-    Navigator.push(context, route);
+    if (function == "5" || function == "6") {
+      MaterialPageRoute route =
+          MaterialPageRoute(builder: (context) => Data_service_labor());
+      Navigator.push(context, route);
+    } else {
+      MaterialPageRoute route =
+          MaterialPageRoute(builder: (context) => Data_service_car());
+      Navigator.push(context, route);
+    }
+
     print(id_service);
   }
 
@@ -215,13 +217,18 @@ class _List_serviceState extends State<List_service> {
               shrinkWrap: true,
               itemCount: search_service.length,
               itemBuilder: (context, index) {
+                if (function == "5" || function == "6") {
+                  fix_img = search_service[index]['image_labor'];
+                } else {
+                  fix_img = search_service[index]['image_car'];
+                }
                 return Card(
                   child: ListTile(
                     leading: Container(
                       child: Image.network(
-                          "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['image_car']}"),
+                          "http://192.168.1.4/agriser_work/upload_image/${fix_img}"),
                     ),
-                    title: Text(search_service[index]["brand"]),
+                    title: Text(search_service[index]["type"]),
                     subtitle: Text('ราคาต่อไร่ ' +
                         search_service[index]["prices"] +
                         ' บาท'),

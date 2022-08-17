@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:agriser_work/pages/provider/all_bottombar_provider.dart';
-import 'package:agriser_work/pages/provider/request/provider_both_request.dart';
+import 'package:agriser_work/pages/user/all_bottombar_user.dart';
 import 'package:agriser_work/pages/user/user_search/confirm_work.dart';
 import 'package:agriser_work/utility/allmethod.dart';
 import 'package:agriser_work/utility/dialog.dart';
 import 'package:agriser_work/utility/model_schedule.dart';
 import 'package:agriser_work/utility/model_service_provider_car.dart';
+import 'package:agriser_work/utility/model_service_provider_labor.dart';
 import 'package:agriser_work/utility/modelprovider.dart';
 import 'package:agriser_work/utility/modeluser.dart';
 import 'package:dio/dio.dart';
@@ -29,56 +30,82 @@ class Data_schedule_request extends StatefulWidget {
 
 class _Data_schedule_requestState extends State<Data_schedule_request> {
   TextEditingController dateinput = TextEditingController();
+  late String l_type,
+      l_rice,
+      l_sweetcorn,
+      l_cassava,
+      l_sugarcane,
+      l_chili,
+      l_yam,
+      l_palm,
+      l_bean,
+      l_prices,
+      l_image_labor;
+
   late String id_schedule,
       id_service,
-      phone_user,
+      phone_provider,
+      type,
       count_field,
       total_price,
       date_work,
       map_lat_work,
       map_long_work,
       status,
-      text_status,
-      action;
+      action,
+      text_status;
   late String c_type,
       c_brand,
       c_model,
       c_datebuy,
       c_prices,
       c_image_car,
-      c_image_license_plate;
+      c_image_car_2;
 
-  late String u_phone,
-      u_name,
-      u_email,
-      u_date,
-      u_sex,
-      u_address,
-      u_province,
-      u_district,
-      u_map_lat,
-      u_map_long;
+  late String p_phone,
+      p_name,
+      p_email,
+      p_date,
+      p_sex,
+      p_address,
+      p_province,
+      p_district,
+      p_map_lat,
+      p_map_long,
+      phone_user;
 
   late double lat = 0, long = 0;
   late String count_file, prices = "";
   late String formattedDate = "";
   late bool _isButtonDisabled_1;
   late bool _isButtonDisabled_2;
+  late String type_service;
+  late String show_img = "", load = "0";
 
   @override
   void initState() {
     super.initState();
-
+    print("-----------------ShowDATA++++++++++++++++++++");
     findData();
-    // findLocation();
+  }
+
+  clearpremission() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove("id_schedule");
+    preferences.remove("id_service");
+    preferences.remove("phone_user");
+    preferences.remove("status");
+    preferences.remove("action");
   }
 
   void _incrementCounter_1() {
     if (status == "0") {
+      clearpremission();
       change_status_1();
       dialong(context, "กำลังดำเนินงาน");
     }
     if (status == "1") {
+      clearpremission();
       change_status_5();
       dialong(context, "รอคอนเฟิร์มเสร็จสิ้นงาน");
     }
@@ -86,18 +113,22 @@ class _Data_schedule_requestState extends State<Data_schedule_request> {
 
   void _incrementCounter_2() {
     if (status == "0") {
+      clearpremission();
       change_status_3();
       dialong(context, "ยกเลิกงาน");
     }
     if (status == "1") {
+      clearpremission();
       change_status_4();
       dialong(context, "รอคอนเฟิร์มยกเลิกงาน");
     }
     if (status == "4") {
+      clearpremission();
       change_status_1();
       dialong(context, "กำลังดำเนินงาน");
     }
     if (status == "5") {
+      clearpremission();
       change_status_1();
       dialong(context, "กำลังดำเนินงาน");
     }
@@ -142,15 +173,57 @@ class _Data_schedule_requestState extends State<Data_schedule_request> {
         _isButtonDisabled_1 = true;
         _isButtonDisabled_2 = false;
       }
+
+      print("------------ Data - Mode ------------");
+
+      print("--- Get status State :     " + action);
+
+      tb_schedule_service();
+      LoadData_user();
     });
-    LoadData_service();
-    LoadData_provider();
-    tb_schedule_service_car();
+  }
+
+  Future LoadData_service_labor() async {
+    var url =
+        "http://192.168.1.4/agriser_work/getServiceWhereIdservice_labor.php?isAdd=true&id_service=$id_service";
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      for (var map in jsonData) {
+        ModelService_Pro_labor datauser = ModelService_Pro_labor.fromJson(map);
+        setState(() {
+          l_type = datauser.type;
+          l_rice = datauser.rice;
+          l_sweetcorn = datauser.sweetcorn;
+          l_cassava = datauser.cassava;
+          l_sugarcane = datauser.sugarcane;
+          l_chili = datauser.chili;
+          l_yam = datauser.yam;
+          l_palm = datauser.palm;
+          l_bean = datauser.bean;
+          l_prices = datauser.prices;
+          l_image_labor = datauser.image_labor;
+
+          prices = l_prices;
+
+          show_img = l_image_labor;
+
+          print(
+              "---------------------asdasdasdasdasdasd-----------------------");
+          print(l_type);
+          print(l_sweetcorn);
+          print(l_bean);
+          print(l_image_labor);
+
+          load = "1";
+        });
+      }
+    }
   }
 
   Future LoadData_service() async {
     var url =
-        "http://192.168.1.4/agriser_work/getServiceWhereIdservice.php?isAdd=true&id_service=$id_service";
+        "http://192.168.1.4/agriser_work/getServiceWhereIdservice_car.php?isAdd=true&id_service=$id_service";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -163,26 +236,27 @@ class _Data_schedule_requestState extends State<Data_schedule_request> {
           c_datebuy = datauser.date_buy;
           c_prices = datauser.prices;
           c_image_car = datauser.image_car;
-          c_image_license_plate = datauser.image_license_plate;
+          c_image_car_2 = datauser.image_car_2;
 
           prices = c_prices;
 
-          // print("------------ Getinfo DataService ------------");
-          // print("--- Get id_service State :     " + id_service);
-          // print("--- Get c_type State :     " + c_type);
-          // print("--- Get c_brand State :     " + c_brand);
-          // print("--- Get c_model State :     " + c_model);
-          // print("--- Get c_datebuy State :     " + c_datebuy);
-          // print("--- Get c_prices State :     " + c_prices);
-          // print("--- Get c_image_car State :     " + c_image_car);
-          // print("--- Get c_image_license_plate State :     " +
-          //     c_image_license_plate);
+          show_img = c_image_car;
+
+          print("------------ Getinfo DataService ------------");
+          print("--- Get id_service State :     " + id_service);
+          print("--- Get c_type State :     " + c_type);
+          print("--- Get c_brand State :     " + c_brand);
+          print("--- Get c_model State :     " + c_model);
+          print("--- Get c_datebuy State :     " + c_datebuy);
+          print("--- Get c_prices State :     " + c_prices);
+
+          load = "1";
         });
       }
     }
   }
 
-  Future LoadData_provider() async {
+  Future LoadData_user() async {
     var url =
         "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user";
     var response = await http.get(Uri.parse(url));
@@ -191,33 +265,32 @@ class _Data_schedule_requestState extends State<Data_schedule_request> {
       for (var map in jsonData) {
         Modeluser datauser = Modeluser.fromJson(map);
         setState(() {
-          u_phone = datauser.phone;
-          u_name = datauser.name;
-          u_email = datauser.email;
-          u_date = datauser.date;
-          u_sex = datauser.sex;
-          u_address = datauser.address;
-          u_province = datauser.province;
-          u_map_lat = datauser.map_lat;
-          u_map_long = datauser.map_long;
+          p_phone = datauser.phone;
+          p_name = datauser.name;
+          p_email = datauser.email;
+          p_date = datauser.date;
+          p_sex = datauser.sex;
+          p_address = datauser.address;
+          p_province = datauser.province;
+          p_map_lat = datauser.map_lat;
+          p_map_long = datauser.map_long;
 
           print("------------ Getinfo DataProvider ------------");
-          print("--- Get p_phone State :     " + u_phone);
-          print("--- Get p_name State :     " + u_name);
-          print("--- Get p_email State :     " + u_email);
-          print("--- Get p_date State :     " + u_date);
-          print("--- Get p_sex State :     " + u_sex);
-          print("--- Get p_address State :     " + u_address);
-          print("--- Get p_address State :     " + u_province);
-          print("--- Get p_map_lat State :     " + u_map_lat);
-          print("--- Get p_map_long State :     " + u_map_long);
+          print("--- Get p_phone State :     " + p_phone);
+          print("--- Get p_name State :     " + p_name);
+          print("--- Get p_email State :     " + p_email);
+          print("--- Get p_date State :     " + p_date);
+          print("--- Get p_sex State :     " + p_sex);
+          print("--- Get p_address State :     " + p_address);
+          print("--- Get p_address State :     " + p_province);
+          print("--- Get p_map_lat State :     " + p_map_lat);
+          print("--- Get p_map_long State :     " + p_map_long);
         });
       }
     }
   }
 
-  Future tb_schedule_service_car() async {
-    print("get tb_schedule_service_car");
+  Future tb_schedule_service() async {
     var url =
         "http://192.168.1.4/agriser_work/get_schedule_service_car.php?isAdd=true&id_schedule=$id_schedule";
     var response = await http.get(Uri.parse(url));
@@ -227,7 +300,8 @@ class _Data_schedule_requestState extends State<Data_schedule_request> {
         Model_schedule datauser = Model_schedule.fromJson(map);
         setState(() {
           id_service = datauser.id_service;
-          phone_user = datauser.phone_provider;
+          type = datauser.type_service;
+          phone_provider = datauser.phone_provider;
           count_field = datauser.count_field;
           total_price = datauser.total_price;
           date_work = datauser.date_work;
@@ -236,6 +310,17 @@ class _Data_schedule_requestState extends State<Data_schedule_request> {
 
           lat = double.parse(map_lat_work);
           long = double.parse(map_long_work);
+
+          if (type == "car") {
+            LoadData_service();
+            print(
+                "----------------------------------------- เข้าโหลดภาพรถ -----------------------------------------------------");
+          }
+          if (type == "labor") {
+            LoadData_service_labor();
+            print(
+                "----------------------------------------- เข้าโหลดภาพคน -----------------------------------------------------");
+          }
         });
       }
     }
@@ -244,110 +329,17 @@ class _Data_schedule_requestState extends State<Data_schedule_request> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("รายละเอียด"),
+      ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              child: Image.network(
-                  "http://192.168.1.4/agriser_work/upload_image/${c_image_car}"),
-            ),
-            Row(
-              children: [
-                Text("ต้องการว่าจ้าง   :  "),
-                Allmethod().Space(),
-                Text("$c_type"),
-              ],
-            ),
-            Row(
-              children: [
-                Text("ชื่อ  :  "),
-                Allmethod().Space(),
-                Text("$u_name"),
-              ],
-            ),
-            Row(
-              children: [
-                Text("เบอร์โทร  :  "),
-                Allmethod().Space(),
-                Text("$u_phone"),
-              ],
-            ),
-            Row(
-              children: [
-                Text("อีเมลล์  :  "),
-                Allmethod().Space(),
-                Text("$u_email"),
-              ],
-            ),
-            Row(
-              children: [
-                Text("ที่อยู่  :  "),
-                Allmethod().Space(),
-                Text("$u_address"),
-              ],
-            ),
-            Row(
-              children: [
-                Text("อำเภอ  :  "),
-                Allmethod().Space(),
-                // Text("$c_type"),
-              ],
-            ),
-            Row(
-              children: [
-                Text("จังหวัด  :  "),
-                Allmethod().Space(),
-                // Text("$c_type"),
-              ],
-            ),
-            Row(
-              children: [
-                Text("ราคาจ่ายรวม  :  "),
-                Allmethod().Space(),
-                Text("$total_price"),
-              ],
-            ),
-            Row(
-              children: [
-                Text("จำนวนไร่ที่จ้าง  :  "),
-                Allmethod().Space(),
-                Text("$count_field")
-              ],
-            ),
-            Row(
-              children: [
-                Text("วันที่นัดหมาย  :  "),
-                Allmethod().Space(),
-                Text("$date_work")
-              ],
-            ),
-            Text("จุดนัดพบ"),
-            Container(
-              child: FutureBuilder(builder:
-                  (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (lat != 0) {
-                  return showmap();
-                }
-                return Center(child: CircularProgressIndicator());
-              }),
-            ),
-            Text("สถานะ : $text_status", style: GoogleFonts.mitr(fontSize: 22)),
-            ButtonBar(
-              alignment: MainAxisAlignment.center,
-              children: [
-                RaisedButton(
-                  child: Text("ยืนยัน"),
-                  onPressed: _isButtonDisabled_1 ? null : _incrementCounter_1,
-                ),
-                RaisedButton(
-                  child: Text("ยกเลิก"),
-                  onPressed: _isButtonDisabled_2 ? null : _incrementCounter_2,
-                ),
-              ],
-            ),
-          ],
-        ),
+        child: FutureBuilder(
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (load != "0") {
+            return check_type();
+          }
+          return Center(child: CircularProgressIndicator());
+        }),
       ),
     );
   }
@@ -440,6 +432,17 @@ class _Data_schedule_requestState extends State<Data_schedule_request> {
         ),
       );
 
+  Widget ss() => Container();
+
+  check_type() {
+    if (type == "car") {
+      return service_car();
+    }
+    if (type == "labor") {
+      return service_labor();
+    }
+  }
+
   Widget Button_next() => Container(
         width: 350,
         height: 50,
@@ -458,7 +461,7 @@ class _Data_schedule_requestState extends State<Data_schedule_request> {
             }),
       );
 
-  /////////////////////// CHANGE STATUS /////////////////////////////
+  /////////////////////////  change status  ///////////////////////////////////////
 
   void change_status_5() async {
     var dio = Dio();
@@ -524,5 +527,212 @@ class _Data_schedule_requestState extends State<Data_schedule_request> {
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
     } else {}
   }
-  /////////////////////// END CHANGE STATUS /////////////////////////////
+
+  ///////////////////////// end   change status  ///////////////////////////////////////
+
+  Widget service_car() => Container(
+        child: Column(children: [
+          Container(
+            child: Image.network(
+                "http://192.168.1.4/agriser_work/upload_image/${show_img}"),
+          ),
+          Row(
+            children: [
+              Text("ต้องการติดต่อเกี่ยวกับ   :  "),
+              Allmethod().Space(),
+              Text("$c_type"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("ชื่อ  :  "),
+              Allmethod().Space(),
+              Text("$p_name"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("เบอร์โทร  :  "),
+              Allmethod().Space(),
+              Text("$p_phone"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("อีเมลล์  :  "),
+              Allmethod().Space(),
+              Text("$p_email"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("ที่อยู่  :  "),
+              Allmethod().Space(),
+              Text("$p_address"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("อำเภอ  :  "),
+              Allmethod().Space(),
+              // Text("$c_type"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("จังหวัด  :  "),
+              Allmethod().Space(),
+              // Text("$c_type"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("ราคาจ่ายรวม  :  "),
+              Allmethod().Space(),
+              Text("$total_price"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("จำนวนไร่ที่จ้าง  :  "),
+              Allmethod().Space(),
+              Text("$count_field")
+            ],
+          ),
+          Row(
+            children: [
+              Text("วันที่นัดหมาย  :  "),
+              Allmethod().Space(),
+              Text("$date_work")
+            ],
+          ),
+          Text("จุดนัดพบ"),
+          Container(
+            child: FutureBuilder(builder:
+                (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (lat != 0) {
+                return showmap();
+              }
+              return Center(child: CircularProgressIndicator());
+            }),
+          ),
+          Text("สถานะ : $text_status", style: GoogleFonts.mitr(fontSize: 22)),
+          ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: [
+              RaisedButton(
+                child: Text("เสร็จสิ้น"),
+                onPressed: _isButtonDisabled_1 ? null : _incrementCounter_1,
+              ),
+              RaisedButton(
+                child: Text("ยกเลิก"),
+                onPressed: _isButtonDisabled_2 ? null : _incrementCounter_2,
+              ),
+            ],
+          ),
+        ]),
+      );
+
+  Widget service_labor() => Container(
+        child: Column(children: [
+          Container(
+            child: Image.network(
+                "http://192.168.1.4/agriser_work/upload_image/${show_img}"),
+          ),
+          Row(
+            children: [
+              Text("ต้องการติดต่อเกี่ยวกับแรงงาน   :  "),
+              Allmethod().Space(),
+              Text("$l_type"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("ชื่อ  :  "),
+              Allmethod().Space(),
+              Text("$p_name"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("เบอร์โทร  :  "),
+              Allmethod().Space(),
+              Text("$p_phone"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("อีเมลล์  :  "),
+              Allmethod().Space(),
+              Text("$p_email"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("ที่อยู่  :  "),
+              Allmethod().Space(),
+              Text("$p_address"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("อำเภอ  :  "),
+              Allmethod().Space(),
+              // Text("$c_type"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("จังหวัด  :  "),
+              Allmethod().Space(),
+              // Text("$c_type"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("ราคาจ่ายรวม  :  "),
+              Allmethod().Space(),
+              Text("$total_price"),
+            ],
+          ),
+          Row(
+            children: [
+              Text("จำนวนไร่ที่จ้าง  :  "),
+              Allmethod().Space(),
+              Text("$count_field")
+            ],
+          ),
+          Row(
+            children: [
+              Text("วันที่นัดหมาย  :  "),
+              Allmethod().Space(),
+              Text("$date_work")
+            ],
+          ),
+          Text("จุดนัดพบ"),
+          Container(
+            child: FutureBuilder(builder:
+                (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (lat != 0) {
+                return showmap();
+              }
+              return Center(child: CircularProgressIndicator());
+            }),
+          ),
+          Text("สถานะ : $text_status", style: GoogleFonts.mitr(fontSize: 22)),
+          ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: [
+              RaisedButton(
+                child: Text("เสร็จสิ้น"),
+                onPressed: _isButtonDisabled_1 ? null : _incrementCounter_1,
+              ),
+              RaisedButton(
+                child: Text("ยกเลิก"),
+                onPressed: _isButtonDisabled_2 ? null : _incrementCounter_2,
+              ),
+            ],
+          ),
+        ]),
+      );
 }

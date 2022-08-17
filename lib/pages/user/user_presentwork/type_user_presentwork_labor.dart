@@ -1,6 +1,7 @@
 import 'package:agriser_work/pages/provider/provider_service/add_provider_service.dart';
 import 'package:agriser_work/pages/provider/provider_service/add_provider_service_labor.dart';
 import 'package:agriser_work/pages/user/user_presentwork/add_user_presentwork.dart';
+import 'package:agriser_work/pages/user/user_presentwork/add_user_presentwork_labor.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -57,7 +58,7 @@ class _Type_user_presentwork_laborState
                           await SharedPreferences.getInstance();
                       preferences.setString("choose_type_service", "เพาะปลูก");
                       MaterialPageRoute route = MaterialPageRoute(
-                          builder: (context) => Add_user_presentwork());
+                          builder: (context) => Add_user_presentwork_labor());
                       Navigator.push(context, route);
                     },
                   ),
@@ -77,7 +78,7 @@ class _Type_user_presentwork_laborState
                       preferences.setString(
                           "choose_type_service", "เก็บเกี่ยว");
                       MaterialPageRoute route = MaterialPageRoute(
-                          builder: (context) => Add_user_presentwork());
+                          builder: (context) => Add_user_presentwork_labor());
                       Navigator.push(context, route);
                     },
                   ),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:agriser_work/pages/provider/request/data_schedule_request.dart';
 import 'package:agriser_work/pages/user/contact/data_schedule_contact.dart';
 import 'package:agriser_work/utility/model_service_provider_car.dart';
 import 'package:http/http.dart' as http;
@@ -44,14 +45,11 @@ class _Provider_record_requestState extends State<Provider_record_request> {
       body: ListView.builder(
           itemCount: search_service.length,
           itemBuilder: (context, index) {
-            if (search_service[index]["status"] == "1") {
-              status = "รอดำเนินการ";
-            }
             if (search_service[index]["status"] == "2") {
-              status = "ยกเลิกระหว่างดำเนินการ";
+              status = "งานเสร็จสิ้น";
             }
             if (search_service[index]["status"] == "3") {
-              status = "ยกเลิก";
+              status = "งานถูกยกเลิก";
             }
 
             return Card(
@@ -76,7 +74,7 @@ class _Provider_record_requestState extends State<Provider_record_request> {
                         "action", search_service[index]["action"]);
 
                     MaterialPageRoute route = MaterialPageRoute(
-                        builder: (context) => Data_schedule_contact());
+                        builder: (context) => Data_schedule_request());
                     Navigator.push(context, route);
                   },
                   child: Column(
@@ -112,7 +110,7 @@ class _Provider_record_requestState extends State<Provider_record_request> {
   Loadservice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_record_schedule_service_car_ucp.php?isAdd=true&phone_provider=$phone_provider");
+        "http://192.168.1.4/agriser_work/search_record_schedule_service_car_urp.php?isAdd=true&phone_provider=$phone_provider");
     if (response.statusCode == 200) {
       setState(() {
         search_service = json.decode(response.data);

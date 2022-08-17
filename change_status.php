@@ -23,9 +23,9 @@ if (isset($_GET)) {
 		$status = $_GET['status'];
 		$id_schedule = $_GET['id_schedule'];
 
-		$sql = "UPDATE tb_schedule_service_car SET status = '$status' WHERE id_schedule = '$id_schedule' and action = 'ucp' ";
+		$sql = "UPDATE tb_schedule_service SET status = '$status' WHERE id_schedule = '$id_schedule' and action = 'ucp' ";
 
-		$sql2 = "UPDATE tb_schedule_service_car SET status = '$status' WHERE id_schedule = '$id_schedule' and action = 'urp' ";
+		$sql2 = "UPDATE tb_schedule_service SET status = '$status' WHERE id_schedule = '$id_schedule' and action = 'urp' ";
 
 
 		$result = mysqli_query($link, $sql);

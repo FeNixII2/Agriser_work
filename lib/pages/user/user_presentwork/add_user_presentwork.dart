@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:agriser_work/pages/provider/provider_service/list_provider_service_car.dart';
+import 'package:agriser_work/pages/user/user_presentwork/list_user_presentwork_car.dart';
 import 'package:agriser_work/utility/dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../utility/allmethod.dart';
 
@@ -30,12 +32,14 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
   String date_buy = "";
   String prices = "";
   String image_car = "";
-  String image_license_plate = "";
+  String image_car_2 = "";
 
-  late String name_provider;
-  late String phone_provider;
-  late String map_lat_provider;
-  late String map_long_provider;
+  late String name_user;
+  late String phone_user;
+  late String map_lat_user;
+  late String map_long_user;
+  TextEditingController dateinput = TextEditingController();
+  late String formattedDate = "";
 
   @override
   void initState() {
@@ -48,11 +52,11 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
     setState(() {
       type = preferences.getString("choose_type_service")!;
 
-      phone_provider = preferences.getString('phone_user')!;
-      print("------------ Provider - Mode ------------");
-      print("--- Get type provider State :     " + type);
+      phone_user = preferences.getString('phone_user')!;
+      print("------------ user - Mode ------------");
+      print("--- Get type user State :     " + type);
 
-      print("--- Get phone provider State :     " + phone_provider);
+      print("--- Get phone user State :     " + phone_user);
     });
   }
 
@@ -75,14 +79,15 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
   }
 
   Future uploadImage() async {
-    final uri = Uri.parse("http://192.168.1.4/agriser_work/up_img_p.php");
+    final uri =
+        Uri.parse("http://192.168.1.4/agriser_work/up_img_presentwork_car.php");
 
     var request = http.MultipartRequest("POST", uri);
-    request.fields["phone_provider"] = phone_provider;
+    request.fields["phone_user"] = phone_user;
     var pic_car =
-        await http.MultipartFile.fromPath("image_car", _image_car.path);
+        await http.MultipartFile.fromPath("img_field1", _image_car.path);
     var pic_license =
-        await http.MultipartFile.fromPath("image_license", _image_license.path);
+        await http.MultipartFile.fromPath("img_field2", _image_license.path);
     // var id_pro = await http.MultipartFile.fromPath("id_pro", "111");
     request.files.add(pic_car);
     request.files.add(pic_license);
@@ -114,7 +119,7 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
               children: [w_brand(), SizedBox(width: 1), w_model()],
             ),
             Allmethod().Space(),
-            w_date_buy(),
+            Dateform(),
             Allmethod().Space(),
             w_price_per_rai(),
             Allmethod().Space(),
@@ -137,7 +142,7 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
                     height: 120,
                     child: Image.asset("assets/images/field.png")),
                 SizedBox(width: 1),
-                display_image_license_plate(),
+                display_image_car_2(),
               ],
             ),
             Container(
@@ -195,24 +200,9 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
         ),
       );
 
-  Widget w_date_buy() => Container(
-        width: 300.0,
-        child: TextField(
-          keyboardType: TextInputType.number,
-          onChanged: (value) => date_buy = value.trim(),
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.timer),
-            hintText: "วันที่ดำเนินงาน",
-            enabledBorder: OutlineInputBorder(),
-            focusedBorder: OutlineInputBorder(),
-          ),
-        ),
-      );
-
   Widget w_price_per_rai() => Container(
         width: 300.0,
         child: TextField(
-          keyboardType: TextInputType.number,
           onChanged: (value) => prices = value.trim(),
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.price_change_rounded),
@@ -257,7 +247,7 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
               ),
       );
 
-  Widget display_image_license_plate() => Container(
+  Widget display_image_car_2() => Container(
         child: check2 == false
             ? IconButton(
                 iconSize: 160,
@@ -277,18 +267,66 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
       );
 
   void regisservice() async {
+    print(type);
+    print(brand);
+    print(model);
+    print(dateinput);
+    print(prices);
+    print(prices);
+    print(phone_user);
+
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/add_service_car.php?isAdd=true&type=$type&brand=$brand&model=$model&date_buy=$date_buy&prices=$prices&phone_provider=$phone_provider");
+        "http://192.168.1.4/agriser_work/add_presentwork_car.php?isAdd=true&phone_user=$phone_user&type=$type&brand=$brand&model=$model&date_buy=$formattedDate&prices=$prices");
 
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => List_provider_service_car());
+          MaterialPageRoute(builder: (context) => List_user_presentwork_car());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       dialong(context, "ลงทะเบียนสำเร็จ");
     } else {
       dialong(context, "ไม่สามารถสมัครได้ กรุณาลองใหม่");
     }
   }
+
+  Widget Dateform() => Container(
+        padding: EdgeInsets.all(15),
+        height: 100,
+        width: 200,
+        child: TextField(
+          controller: dateinput, //editing controller of this TextField
+          decoration: InputDecoration(
+              icon: Icon(Icons.calendar_today), //icon of text field
+              labelText: "เลือกวันที่เริ่มงาน" //label text of field
+              ),
+          readOnly: true, //set it true, so that user will not able to edit text
+          onTap: () async {
+            var dateTime = DateTime.now();
+            DateTime? pickedDate = await showDatePicker(
+                context: context,
+                initialDate: dateTime,
+                firstDate: DateTime(
+                    1950), //DateTime.now() - not to allow to choose before today.
+                lastDate: DateTime.utc(dateTime.year, dateTime.month + 1,
+                    dateTime.day, dateTime.hour, dateTime.minute));
+
+            if (pickedDate != null) {
+              print(
+                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+              formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+              print(
+                  formattedDate); //formatted date output using intl package =>  2021-03-16
+              //you can implement different kind of Date Format here according to your requirement
+
+              setState(() {
+                dateinput.text =
+                    formattedDate; //set output date to TextField value.
+              });
+            } else {
+              print("Date is not selected");
+            }
+          },
+        ),
+      );
 }

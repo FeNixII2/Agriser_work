@@ -22,7 +22,7 @@ if (isset($_GET)) {
 				
 		$id_schedule = $_GET['id_schedule'];
 
-		$result = mysqli_query($link, "SELECT * FROM tb_schedule_service_car WHERE id_schedule = '$id_schedule' and action ='ucp' ");
+		$result = mysqli_query($link, "SELECT * FROM tb_schedule_service WHERE id_schedule = '$id_schedule' and action ='ucp' ");
 
 		if ($result) {
 

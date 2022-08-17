@@ -45,7 +45,7 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
     setState(() {
       type = preferences.getString("choose_type_service")!;
 
-      phone_provider = preferences.getString('phone_user')!;
+      phone_provider = preferences.getString('phone_provider')!;
 
       print("------------ Provider - Mode ------------");
       print("--- Get type provider State :     " + type);
@@ -73,7 +73,8 @@ class _Add_provider_serviceState extends State<Add_provider_service> {
   }
 
   Future uploadImage() async {
-    final uri = Uri.parse("http://192.168.1.4/agriser_work/up_img_p.php");
+    final uri =
+        Uri.parse("http://192.168.1.4/agriser_work/up_img_service_car.php");
 
     var request = http.MultipartRequest("POST", uri);
     request.fields["phone_provider"] = phone_provider;

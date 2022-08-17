@@ -71,13 +71,13 @@ class _List_provider_service_laborState
           itemBuilder: (context, index) {
             return Card(
               child: ListTile(
-                // leading: Container(
-                //   height: 380,
-                //   child: Image.network(
-                //       width: 100,
-                //       height: 100,
-                //       "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['image_car']}"),
-                // ),
+                leading: Container(
+                  height: 380,
+                  child: Image.network(
+                      width: 100,
+                      height: 100,
+                      "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['image_labor']}"),
+                ),
                 title: Text(search_service[index]["type"]),
                 subtitle: Text(search_service[index]["prices"]),
                 trailing: RaisedButton(

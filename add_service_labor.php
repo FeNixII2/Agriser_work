@@ -19,7 +19,7 @@ if (!$link->set_charset("utf8")) {
 
 if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
-		
+				
 		$type = $_GET['type'];
 		$rice = $_GET['rice'];
 		$sweetcorn = $_GET['sweetcorn'];
@@ -31,24 +31,12 @@ if (isset($_GET)) {
 		$bean = $_GET['bean'];
 		$prices = $_GET['prices'];
 		$phone_provider = $_GET['phone_provider'];
-		
-							
-
-	$nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
-    $selectdatabooking = "SELECT * from tb_provider where id_provider = '" . $num . "' ";
-    $objselect = mysqli_query($link, $selectdatabooking);
-    $Resultselect = mysqli_fetch_array($objselect ,MYSQLI_ASSOC);
-    while (!is_null($Resultselect)) {
-    $nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
-
-    }
-    $num = "l_".$nums."";
 
 
-
-		$sql = "INSERT INTO `tb_service_provider_labor`( `id_service`, `phone_provider`, `type`, `rice`,`sweetcorn`,`cassava`,`sugarcane`,`chili`,`yam`,`palm`,`bean`,`prices`) VALUES ('$num','$phone_provider','$type','$rice','$sweetcorn','$cassava','$sugarcane','$chili','$yam','$palm','$bean','$prices')";
+		$sql = "UPDATE tb_service_provider_labor SET type = '$type' , rice = '$rice' , sweetcorn = '$sweetcorn' ,cassava = '$cassava' ,sugarcane = '$sugarcane' ,chili = '$chili' ,yam = '$yam' ,palm = '$palm' ,bean = '$bean' ,prices = '$prices' , status = '1'   WHERE phone_provider = '$phone_provider' and status = '0' ";
 
 		$result = mysqli_query($link, $sql);
+
 
 		if ($result) {
 			echo "true";

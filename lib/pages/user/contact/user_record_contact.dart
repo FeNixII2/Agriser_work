@@ -43,11 +43,11 @@ class _User_record_contactState extends State<User_record_contact> {
       body: ListView.builder(
           itemCount: search_service.length,
           itemBuilder: (context, index) {
-            if (search_service[index]["status"] == "1") {
-              status = "ดำเนินการ";
+            if (search_service[index]["status"] == "2") {
+              status = "งานเสร็จสิ้น";
             }
             if (search_service[index]["status"] == "3") {
-              status = "ยกเลิก";
+              status = "งานถูกยกเลิก";
             }
 
             return Card(

@@ -8,6 +8,7 @@ import 'package:agriser_work/pages/provider/provider_menu/edit_provider_data.dar
 import 'package:agriser_work/pages/provider/provider_search.dart';
 import 'package:agriser_work/pages/user/all_bottombar_user.dart';
 import 'package:agriser_work/utility/dialog.dart';
+import 'package:agriser_work/utility/modelprovider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -61,12 +62,12 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
   Future getinfo_user() async {
     print("------------ Getinfo User ------------");
     var url =
-        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_provider";
+        "http://192.168.1.4/agriser_work/getProviderWhereProvider.php?isAdd=true&phone_provider=$phone_provider";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
       for (var map in jsonData) {
-        Modeluser datauser = Modeluser.fromJson(map);
+        Modelprovider datauser = Modelprovider.fromJson(map);
         setState(() {
           phone_provider = datauser.phone;
           name_provider = datauser.name;

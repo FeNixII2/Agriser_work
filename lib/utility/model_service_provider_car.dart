@@ -15,7 +15,7 @@ class ModelService_Pro_car {
     required this.date_buy,
     required this.prices,
     required this.image_car,
-    required this.image_license_plate,
+    required this.image_car_2,
   });
 
   String id_service;
@@ -26,7 +26,7 @@ class ModelService_Pro_car {
   String date_buy;
   String prices;
   String image_car;
-  String image_license_plate;
+  String image_car_2;
 
   factory ModelService_Pro_car.fromJson(Map<String, dynamic> json) =>
       ModelService_Pro_car(
@@ -38,7 +38,7 @@ class ModelService_Pro_car {
         date_buy: json["date_buy"],
         prices: json["prices"],
         image_car: json["image_car"],
-        image_license_plate: json["image_license_plate"],
+        image_car_2: json["image_car_2"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -50,6 +50,6 @@ class ModelService_Pro_car {
         "date_buy": date_buy,
         "prices": prices,
         "image_car": image_car,
-        "image_license_plate": image_license_plate,
+        "image_car_2": image_car_2,
       };
 }
