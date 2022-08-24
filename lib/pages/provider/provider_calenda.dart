@@ -6,6 +6,7 @@ import 'package:agriser_work/utility/allmethod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Provider_calenda extends StatefulWidget {
   const Provider_calenda({Key? key}) : super(key: key);
@@ -52,7 +53,7 @@ class _Provider_calendaState extends State<Provider_calenda> {
                 SizedBox(height: 6),
                 Text(
                   'ตารางงานที่ส่งมา',
-                  style: TextStyle(fontSize: 22, color: Colors.black),
+                  style: GoogleFonts.mitr(fontSize: 18),
                 ),
                 SizedBox(height: 6),
               ],
@@ -89,7 +90,7 @@ class _Provider_calendaState extends State<Provider_calenda> {
                 SizedBox(height: 6),
                 Text(
                   'ตารางงานที่ร้องขอ',
-                  style: TextStyle(fontSize: 22, color: Colors.black),
+                  style: GoogleFonts.mitr(fontSize: 18),
                 ),
                 SizedBox(height: 6),
               ],

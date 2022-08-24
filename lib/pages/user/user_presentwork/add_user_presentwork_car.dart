@@ -1,38 +1,46 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:agriser_work/pages/provider/provider_service/list_provider_service_car.dart';
 import 'package:agriser_work/pages/user/user_presentwork/list_user_presentwork_car.dart';
+import 'package:agriser_work/pages/user/user_presentwork/setmap_presentwork_car.dart';
 import 'package:agriser_work/utility/dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../utility/allmethod.dart';
+import 'dart:io' as Io;
 
-class Add_user_presentwork extends StatefulWidget {
-  const Add_user_presentwork({Key? key}) : super(key: key);
+class Add_user_presentwork_car extends StatefulWidget {
+  const Add_user_presentwork_car({Key? key}) : super(key: key);
 
   @override
-  State<Add_user_presentwork> createState() => _Add_user_presentworkState();
+  State<Add_user_presentwork_car> createState() =>
+      _Add_user_presentwork_carState();
 }
 
-class _Add_user_presentworkState extends State<Add_user_presentwork> {
-  late File _image_car;
-  late File _image_license;
+class _Add_user_presentwork_carState extends State<Add_user_presentwork_car> {
+  late File img_1;
+  late File img_2;
   final picker1 = ImagePicker();
   final picker2 = ImagePicker();
   bool check1 = false;
   bool check2 = false;
   String type = "";
-  String brand = "";
-  String model = "";
-  String date_buy = "";
+  String count_field = "";
   String prices = "";
-  String image_car = "";
-  String image_car_2 = "";
+  String date_buy = "";
+  String more_details = "ไม่มี";
+  String image1 = "";
+  String image2 = "";
+
+  late Uint8List imgfromb64;
 
   late String name_user;
   late String phone_user;
@@ -63,110 +71,163 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
   Future chooseImage1() async {
     var pickImage1 = await picker1.getImage(source: ImageSource.gallery);
     setState(() {
-      _image_car = File(pickImage1!.path);
+      img_1 = File(pickImage1!.path);
+      String name_img1 = img_1.path.split("/").last;
+
       check1 = true;
-      // print("Path File :      " + _image.path);
+      print("Path File img_1  :    $img_1 ");
+      print("Name img_1  :    $name_img1 ");
+
+      final bytes = Io.File(img_1.path).readAsBytesSync();
+      image1 = base64Encode(bytes);
+
+      // imgfromb64 = base64Decode(image1);
     });
   }
 
   Future chooseImage2() async {
     var pickImage2 = await picker2.getImage(source: ImageSource.gallery);
     setState(() {
-      _image_license = File(pickImage2!.path);
+      img_2 = File(pickImage2!.path);
+      String name_img2 = img_2.path.split("/").last;
+
       check2 = true;
-      // print("Path File :      " + _image.path);
+      print("Path File img_2  :    $img_2 ");
+      print("Name img_2  :    $name_img2 ");
+
+      final bytes = Io.File(img_2.path).readAsBytesSync();
+      image2 = base64Encode(bytes);
     });
-  }
-
-  Future uploadImage() async {
-    final uri =
-        Uri.parse("http://192.168.1.4/agriser_work/up_img_presentwork_car.php");
-
-    var request = http.MultipartRequest("POST", uri);
-    request.fields["phone_user"] = phone_user;
-    var pic_car =
-        await http.MultipartFile.fromPath("img_field1", _image_car.path);
-    var pic_license =
-        await http.MultipartFile.fromPath("img_field2", _image_license.path);
-    // var id_pro = await http.MultipartFile.fromPath("id_pro", "111");
-    request.files.add(pic_car);
-    request.files.add(pic_license);
-    var response = await request.send();
-
-    if (response.statusCode == 200) {
-      regisservice();
-      print("Image UPLOAD");
-    } else {
-      print("UPLOAD FAIL");
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("รายละเอียดจ้างงาน"),
+        title: Text(
+          "รายละเอียดจ้างงาน",
+          style: GoogleFonts.mitr(
+            fontSize: 18,
+          ),
+        ),
         backgroundColor: Colors.green.shade400,
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Allmethod().Space(),
-            type_car(),
-            Allmethod().Space(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [w_brand(), SizedBox(width: 1), w_model()],
-            ),
-            Allmethod().Space(),
-            Dateform(),
-            Allmethod().Space(),
-            w_price_per_rai(),
-            Allmethod().Space(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: 120,
-                    height: 120,
-                    child: Image.asset("assets/images/field.png")),
-                SizedBox(width: 1),
-                display_image_car(),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: 120,
-                    height: 120,
-                    child: Image.asset("assets/images/field.png")),
-                SizedBox(width: 1),
-                display_image_car_2(),
-              ],
-            ),
-            Container(
-              width: 380,
-              height: 50,
-              child: RaisedButton(
-                  child: Text("อัพโหลด"),
-                  onPressed: () {
-                    uploadImage();
-                  }),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: [
+                  Container(
+                      width: 150,
+                      child: Text("งานประกาศ :",
+                          style: GoogleFonts.mitr(fontSize: 18))),
+                  type_car(),
+                ],
+              ),
+              Allmethod().Space(),
+              Row(
+                children: [
+                  Container(
+                      width: 150,
+                      child: Text("จำนวนไร่ :",
+                          style: GoogleFonts.mitr(fontSize: 18))),
+                  box_count_field(),
+                ],
+              ),
+              Allmethod().Space(),
+              Row(
+                children: [
+                  Container(
+                      width: 150,
+                      child: Text("ราคาจ่าย :",
+                          style: GoogleFonts.mitr(fontSize: 18))),
+                  box_price(),
+                ],
+              ),
+              Allmethod().Space(),
+              Row(
+                children: [
+                  Container(
+                      width: 150,
+                      child: Text("รายละเอียดเพิ่มเติม :",
+                          style: GoogleFonts.mitr(fontSize: 18))),
+                  box_moreinfo(),
+                ],
+              ),
+              Allmethod().Space(),
+              Row(
+                children: [
+                  Container(
+                      width: 150,
+                      child: Text("วันที่นัดหมาย :",
+                          style: GoogleFonts.mitr(fontSize: 18))),
+                  Dateform(),
+                ],
+              ),
+              Allmethod().Space(),
+              Row(
+                children: [
+                  Container(
+                      width: 150,
+                      child: Text("รูปภาพพื้นที่1 :",
+                          style: GoogleFonts.mitr(fontSize: 18))),
+                  display1(),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                      width: 150,
+                      child: Text("รูปภาพพื้นที่2 :",
+                          style: GoogleFonts.mitr(fontSize: 18))),
+                  display2(),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          height: 50,
+          child: RaisedButton(
+              color: Colors.green.shade400,
+              onPressed: () async {
+                SharedPreferences preferences =
+                    await SharedPreferences.getInstance();
+                preferences.setString("count", count_field);
+                preferences.setString("prices", prices);
+                preferences.setString("date_work", formattedDate);
+                preferences.setString("details", more_details);
+
+                preferences.setString("img1", image1);
+                preferences.setString("img2", image2);
+
+                MaterialPageRoute route = MaterialPageRoute(
+                    builder: (context) => Setmap_presentwork_car());
+                Navigator.push(context, route);
+              },
+              child: Text(
+                "ถัดไป",
+                style: GoogleFonts.mitr(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              )),
         ),
       ),
     );
   }
 
   Widget type_car() => Container(
-      width: 300.0,
+      height: 60,
+      width: 200,
       child: TextField(
         readOnly: true,
         onChanged: (value) => type = value.trim(),
         decoration: InputDecoration(
-            prefixIcon: Icon(Icons.type_specimen_outlined),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
             hintStyle: TextStyle(color: Colors.grey[800]),
@@ -174,12 +235,13 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
             fillColor: Colors.white70),
       ));
 
-  Widget w_brand() => Container(
-        width: 150.0,
+  Widget box_count_field() => Container(
+        height: 60,
+        width: 200,
         child: TextField(
-          onChanged: (value) => brand = value.trim(),
+          keyboardType: TextInputType.number,
+          onChanged: (value) => count_field = value.trim(),
           decoration: InputDecoration(
-            prefixIcon: Icon(Icons.abc),
             hintText: "จำนวนไร่",
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
@@ -187,12 +249,13 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
         ),
       );
 
-  Widget w_model() => Container(
-        width: 150.0,
+  Widget box_price() => Container(
+        height: 60,
+        width: 200,
         child: TextField(
-          onChanged: (value) => model = value.trim(),
+          keyboardType: TextInputType.number,
+          onChanged: (value) => prices = value.trim(),
           decoration: InputDecoration(
-            prefixIcon: Icon(Icons.developer_mode_outlined),
             hintText: "ราคา",
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
@@ -200,35 +263,22 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
         ),
       );
 
-  Widget w_price_per_rai() => Container(
-        width: 300.0,
+  Widget box_moreinfo() => Container(
+        height: 100,
+        width: 200,
         child: TextField(
-          onChanged: (value) => prices = value.trim(),
+          onChanged: (value) => more_details = value.trim(),
           decoration: InputDecoration(
-            prefixIcon: Icon(Icons.price_change_rounded),
             hintText: "รายละเอียดเพิ่มเติม",
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
-          maxLines: 5,
           minLines: 1,
+          maxLines: 5,
         ),
       );
 
-  Widget w_pickimg() => Container(
-        child: IconButton(
-          icon: Icon(Icons.camera),
-          onPressed: () {
-            chooseImage1();
-          },
-        ),
-      );
-
-  Widget display_image_car() => Container(
-        // child: check1 == false ? Text('No Image') : Image.file(_image_car),
-        // width: 250,
-        // height: 250,
-        // color: Colors.red,
+  Widget display1() => Container(
         child: check1 == false
             ? IconButton(
                 iconSize: 160,
@@ -243,11 +293,11 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
                 onPressed: () {
                   chooseImage1();
                 },
-                icon: Image.file(_image_car),
+                icon: Image.file(img_1),
               ),
       );
 
-  Widget display_image_car_2() => Container(
+  Widget display2() => Container(
         child: check2 == false
             ? IconButton(
                 iconSize: 160,
@@ -262,33 +312,9 @@ class _Add_user_presentworkState extends State<Add_user_presentwork> {
                 onPressed: () {
                   chooseImage2();
                 },
-                icon: Image.file(_image_license),
+                icon: Image.file(img_2),
               ),
       );
-
-  void regisservice() async {
-    print(type);
-    print(brand);
-    print(model);
-    print(dateinput);
-    print(prices);
-    print(prices);
-    print(phone_user);
-
-    var dio = Dio();
-    final response = await dio.get(
-        "http://192.168.1.4/agriser_work/add_presentwork_car.php?isAdd=true&phone_user=$phone_user&type=$type&brand=$brand&model=$model&date_buy=$formattedDate&prices=$prices");
-
-    print(response.data);
-    if (response.data == "true") {
-      MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => List_user_presentwork_car());
-      Navigator.pushAndRemoveUntil(context, route, (route) => false);
-      dialong(context, "ลงทะเบียนสำเร็จ");
-    } else {
-      dialong(context, "ไม่สามารถสมัครได้ กรุณาลองใหม่");
-    }
-  }
 
   Widget Dateform() => Container(
         padding: EdgeInsets.all(15),

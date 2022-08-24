@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../model/usermodel.dart';
@@ -31,7 +32,7 @@ class _Provider_searchState extends State<Provider_search> {
               Allmethod().Space(),
               Text(
                 "งานประกาศเกี่ยวกับรถทางการเกษตร",
-                style: TextStyle(fontSize: 20),
+                style: GoogleFonts.mitr(fontSize: 18),
               ),
               Allmethod().Space(),
               Row(
@@ -54,7 +55,7 @@ class _Provider_searchState extends State<Provider_search> {
               Allmethod().Space(),
               Text(
                 "งานประกาศเกี่ยวกับแรงงานทางการเกษตร",
-                style: TextStyle(fontSize: 20),
+                style: GoogleFonts.mitr(fontSize: 18),
               ),
               Allmethod().Space(),
               Row(
@@ -104,7 +105,7 @@ class _Provider_searchState extends State<Provider_search> {
                 SizedBox(height: 6),
                 Text(
                   'รถเกี่ยวข้าว',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  style: GoogleFonts.mitr(fontSize: 18),
                 ),
                 SizedBox(height: 6),
               ],
@@ -144,7 +145,7 @@ class _Provider_searchState extends State<Provider_search> {
                 SizedBox(height: 6),
                 Text(
                   'แทรกเตอร์',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  style: GoogleFonts.mitr(fontSize: 18),
                 ),
                 SizedBox(height: 6),
               ],
@@ -184,7 +185,7 @@ class _Provider_searchState extends State<Provider_search> {
                 SizedBox(height: 6),
                 Text(
                   'รถดำนา',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  style: GoogleFonts.mitr(fontSize: 18),
                 ),
                 SizedBox(height: 6),
               ],
@@ -206,7 +207,7 @@ class _Provider_searchState extends State<Provider_search> {
             onTap: () async {
               SharedPreferences preferences =
                   await SharedPreferences.getInstance();
-              preferences.setString("function", "1");
+              preferences.setString("function", "4");
               MaterialPageRoute route =
                   MaterialPageRoute(builder: (context) => List_presentwork());
               Navigator.push(context, route);
@@ -224,7 +225,7 @@ class _Provider_searchState extends State<Provider_search> {
                 SizedBox(height: 6),
                 Text(
                   'โดรน',
-                  style: TextStyle(fontSize: 20),
+                  style: GoogleFonts.mitr(fontSize: 18),
                 ),
                 SizedBox(height: 6),
               ],
@@ -264,7 +265,7 @@ class _Provider_searchState extends State<Provider_search> {
                 SizedBox(height: 6),
                 Text(
                   'แรงงานเพาะปลูก',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  style: GoogleFonts.mitr(fontSize: 18),
                 ),
                 SizedBox(height: 6),
               ],
@@ -304,7 +305,7 @@ class _Provider_searchState extends State<Provider_search> {
                 SizedBox(height: 6),
                 Text(
                   'แรงงานเก็บเกี่ยว',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  style: GoogleFonts.mitr(fontSize: 18),
                 ),
                 SizedBox(height: 6),
               ],

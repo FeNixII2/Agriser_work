@@ -19,36 +19,31 @@ if (!$link->set_charset("utf8")) {
 
 if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
-
-
 				
-		$phone_provider = $_GET['phone_provider'];
-		$id_provider = $_GET['id_provider'];
-
-		$result = mysqli_query($link, "SELECT * FROM tb_service_provider_car where phone_provider = '$phone_provider' ");
-
+		
+		$id_presentwork = $_GET['id_presentwork'];
 		
 
+		$sql = "UPDATE tb_presentwork_user_labor SET status_work = '3'  WHERE id_presentwork = '$id_presentwork' ";
 
-		// WHERE phone_user = '$phone_user'
+		$sql2 = "UPDATE tb_schedule_presentwork SET status = '3'  WHERE id_presentwork = '$id_presentwork' and status = '0' ";
+
+
+		$result = mysqli_query($link, $sql);
+
+		$result2 = mysqli_query($link, $sql2);
+
+
+
 
 		if ($result) {
+			echo "true";
+		} else {
+			echo "false";
+		}
 
-			while($row=mysqli_fetch_assoc($result)){
-			$output[]=$row;
-
-			}	// while
-
-			echo json_encode($output);
-
-		} 
-
-		
-
-	} else echo "Welcome Master UNG";	// if2
+	} else echo "Welcome Master UNG";
    
-}	// if1
-
-
+}
 	mysqli_close($link);
 ?>

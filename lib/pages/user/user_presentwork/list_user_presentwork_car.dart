@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:agriser_work/pages/provider/all_bottombar_provider.dart';
 import 'package:agriser_work/pages/provider/provider_service/type_provider_service_car.dart';
 import 'package:agriser_work/pages/user/all_bottombar_user.dart';
+import 'package:agriser_work/pages/user/user_presentwork/edit_presentwork_car.dart';
 import 'package:agriser_work/pages/user/user_presentwork/select_presentwork_type.dart';
 import 'package:agriser_work/pages/user/user_presentwork/type_user_presentwork_car.dart';
 import 'package:dio/dio.dart';
@@ -56,26 +58,111 @@ class _List_user_presentwork_carState extends State<List_user_presentwork_car> {
             MaterialPageRoute(builder: (context) => Select_presentwork_type()),
           ),
         ),
-        title: Text("ข้อมูลประกาศจ้างงาน"),
+        title: Text("ข้อมูลประกาศจ้างงาน",
+            style: GoogleFonts.mitr(fontSize: 18, color: Colors.white)),
         // centerTitle: true,
       ),
       body: ListView.builder(
           itemCount: search_service.length,
           itemBuilder: (context, index) {
+            Uint8List imgfromb64 =
+                base64Decode(search_service[index]['img_field1']);
+
             return Card(
-              child: ListTile(
-                leading: Container(
-                  height: 380,
-                  child: Image.network(
-                      width: 100,
-                      height: 100,
-                      "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['img_field1']}"),
-                ),
-                title: Text(search_service[index]["type_presentwork"]),
-                subtitle: Text(search_service[index]["prices"]),
-                trailing: RaisedButton(
-                  onPressed: () {},
-                  child: Text("แก้ไข"),
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                onTap: () async {
+                  SharedPreferences preferences =
+                      await SharedPreferences.getInstance();
+                  preferences.setString("id_presentwork",
+                      search_service[index]['id_presentwork']);
+
+                  MaterialPageRoute route = MaterialPageRoute(
+                      builder: (context) => Edit_presentwork_car());
+                  Navigator.push(context, route);
+                },
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: CircleAvatar(
+                              radius: 45,
+                              backgroundImage: MemoryImage(imgfromb64),
+                            )),
+                      ],
+                    ),
+                    Container(
+                      // color: Colors.amber,
+
+                      child: Row(
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("ต้องการจ้าง: ",
+                                        style: GoogleFonts.mitr(fontSize: 18)),
+                                    Text(
+                                        "${search_service[index]['type_presentwork']}",
+                                        style: GoogleFonts.mitr(
+                                            fontSize: 18,
+                                            color: Colors.green.shade400)),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("ราคา: ",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                    Text("${search_service[index]['prices']}",
+                                        style: GoogleFonts.mitr(
+                                            fontSize: 16,
+                                            color: Colors.green.shade400)),
+                                    Text(" บาท",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("จำนวน: ",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                    Text(
+                                        "${search_service[index]['count_field']}",
+                                        style: GoogleFonts.mitr(
+                                            fontSize: 16,
+                                            color: Colors.green.shade400)),
+                                    Text(" ไร่",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("วันที่นัดหมาย: ",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                    Text(
+                                        "${search_service[index]['date_work']}",
+                                        style: GoogleFonts.mitr(
+                                            fontSize: 16,
+                                            color: Colors.green.shade400)),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );

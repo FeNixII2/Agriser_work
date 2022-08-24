@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:agriser_work/pages/provider/provider_service/list_provider_service_car.dart';
 import 'package:agriser_work/pages/provider/provider_service/list_provider_service_labor.dart';
@@ -6,10 +7,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../utility/allmethod.dart';
+import 'dart:io' as Io;
 
 class Add_provider_service_labor extends StatefulWidget {
   const Add_provider_service_labor({Key? key}) : super(key: key);
@@ -21,30 +24,33 @@ class Add_provider_service_labor extends StatefulWidget {
 
 class _Add_provider_service_laborState
     extends State<Add_provider_service_labor> {
-  late File _image_car;
-
+  late File img1;
+  late File img2;
   final picker1 = ImagePicker();
-
+  final picker2 = ImagePicker();
+  bool check_choice = true;
   bool check1 = false;
   bool check2 = false;
-  String type = "";
-  String brand = "";
-  String model = "";
-  String date_buy = "";
-  String prices = "";
-  String image_car = "";
-  String image_car_2 = "";
-
-  late String phone_provider;
-
+  List total_choice = [];
+  late String phone_provider,
+      type,
+      info_choice = "ไม่มี",
+      prices,
+      image1,
+      image2,
+      rice,
+      sweetcorn,
+      cassava,
+      sugarcane,
+      chili,
+      choice;
+  final fieldText = TextEditingController();
   bool isChecked_box1 = false;
   bool isChecked_box2 = false;
   bool isChecked_box3 = false;
   bool isChecked_box4 = false;
   bool isChecked_box5 = false;
   bool isChecked_box6 = false;
-  bool isChecked_box7 = false;
-  bool isChecked_box8 = false;
 
   @override
   void initState() {
@@ -55,9 +61,32 @@ class _Add_provider_service_laborState
   Future chooseImage1() async {
     var pickImage1 = await picker1.getImage(source: ImageSource.gallery);
     setState(() {
-      _image_car = File(pickImage1!.path);
+      img1 = File(pickImage1!.path);
       check1 = true;
-      // print("Path File :      " + _image.path);
+      String name_img1 = img1.path.split("/").last;
+
+      check1 = true;
+      print("Path File img_1  :    $img1 ");
+      print("Name img_1  :    $name_img1 ");
+
+      final bytes = Io.File(img1.path).readAsBytesSync();
+      image1 = base64Encode(bytes);
+    });
+  }
+
+  Future chooseImage2() async {
+    var pickImage2 = await picker2.getImage(source: ImageSource.gallery);
+    setState(() {
+      img2 = File(pickImage2!.path);
+      check2 = true;
+      String name_img2 = img2.path.split("/").last;
+
+      check1 = true;
+      print("Path File img_1  :    $img2 ");
+      print("Name img_2  :    $name_img2 ");
+
+      final bytes = Io.File(img2.path).readAsBytesSync();
+      image2 = base64Encode(bytes);
     });
   }
 
@@ -79,76 +108,128 @@ class _Add_provider_service_laborState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("รายละเอียดให้บริการ"),
+        title: Text(
+          "รายละเอียดให้บริการ",
+          style: GoogleFonts.mitr(
+            fontSize: 18,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Allmethod().Space(),
-            type_labor(),
-            Allmethod().Space(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [box1(), box2()],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [box3(), box4()],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [box5(), box6()],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [box7(), box8()],
-            ),
-            Allmethod().Space(),
-            w_price_per_rai(),
-            Allmethod().Space(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: 120,
-                    height: 120,
-                    child: Image.asset("assets/images/img_front.png")),
-                SizedBox(width: 1),
-                display_image(),
-              ],
-            ),
-            Allmethod().Space(),
-            Allmethod().Space(),
-            Allmethod().Space(),
-            Allmethod().Space(),
-            Allmethod().Space(),
-            Allmethod().Space(),
-            Allmethod().Space(),
-            Allmethod().Space(),
-            Allmethod().Space(),
-            Allmethod().Space(),
-            Allmethod().Space(),
-            Allmethod().Space(),
-            Container(
-              width: 380,
-              height: 50,
-              child: RaisedButton(
-                  child: Text("อัพโหลด"),
-                  onPressed: () {
-                    uploadImage();
-                  }),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: [
+                  Container(
+                      width: 150,
+                      child: Text("งานประกาศ :",
+                          style: GoogleFonts.mitr(fontSize: 18))),
+                  type_labor(),
+                ],
+              ),
+              Allmethod().Space(),
+              Text("เลือกประเภท", style: GoogleFonts.mitr(fontSize: 18)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [box1(), box2()],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [box3(), box4()],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [box5(), box6()],
+              ),
+              Allmethod().Space(),
+              Row(
+                children: [
+                  Container(
+                      width: 150,
+                      child: Text("ข้อมูลเพิ่มเติม :",
+                          style: GoogleFonts.mitr(fontSize: 18))),
+                  box_info_choice(),
+                ],
+              ),
+              Allmethod().Space(),
+              Row(
+                children: [
+                  Container(
+                      width: 150,
+                      child: Text("ราคาต่อวัน :",
+                          style: GoogleFonts.mitr(fontSize: 18))),
+                  box_prices(),
+                ],
+              ),
+              Allmethod().Space(),
+              Row(
+                children: [
+                  Container(
+                      width: 150,
+                      child: Text("รูปประกอบที่1 :",
+                          style: GoogleFonts.mitr(fontSize: 18))),
+                  display1(),
+                ],
+              ),
+              Allmethod().Space(),
+              Row(
+                children: [
+                  Container(
+                      width: 150,
+                      child: Text("รูปประกอบที่2 :",
+                          style: GoogleFonts.mitr(fontSize: 18))),
+                  display2(),
+                ],
+              ),
+              Allmethod().Space(),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          height: 50,
+          child: RaisedButton(
+              color: Colors.blue,
+              onPressed: () async {
+                if (isChecked_box1 == true) {
+                  total_choice.add("พริก");
+                }
+                if (isChecked_box2 == true) {
+                  total_choice.add("ข้าวโพด");
+                }
+                if (isChecked_box3 == true) {
+                  total_choice.add("มันสำปะหลัง");
+                }
+                if (isChecked_box4 == true) {
+                  total_choice.add("อ้อย");
+                }
+                if (isChecked_box5 == true) {
+                  total_choice.add("พริก");
+                }
+
+                if (isChecked_box6 == true) {
+                  total_choice.add("อื่นๆ");
+                }
+
+                upload_service_labor();
+              },
+              child: Text(
+                "ยืนยัน",
+                style: GoogleFonts.mitr(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              )),
         ),
       ),
     );
   }
 
-  Widget display_image() => Container(
-        // child: check1 == false ? Text('No Image') : Image.file(_image_car),
-        // width: 250,
-        // height: 250,
-        // color: Colors.red,
+  Widget display1() => Container(
         child: check1 == false
             ? IconButton(
                 iconSize: 160,
@@ -163,17 +244,43 @@ class _Add_provider_service_laborState
                 onPressed: () {
                   chooseImage1();
                 },
-                icon: Image.file(_image_car),
+                icon: Image.file(
+                  img1,
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+      );
+
+  Widget display2() => Container(
+        child: check2 == false
+            ? IconButton(
+                iconSize: 160,
+                onPressed: () {
+                  chooseImage2();
+                },
+                color: Color.fromARGB(255, 242, 238, 238),
+                icon: Image.asset("assets/images/gallery.png"),
+              )
+            : IconButton(
+                iconSize: 160,
+                onPressed: () {
+                  chooseImage2();
+                },
+                icon: Image.file(
+                  img2,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
       );
 
   Widget type_labor() => Container(
-      width: 300.0,
+      height: 60,
+      width: 200,
       child: TextField(
         readOnly: true,
         onChanged: (value) => type = value.trim(),
+        style: GoogleFonts.mitr(fontSize: 18),
         decoration: InputDecoration(
-            prefixIcon: Icon(Icons.time_to_leave),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
             hintStyle: TextStyle(color: Colors.grey[800]),
@@ -184,7 +291,7 @@ class _Add_provider_service_laborState
   Widget box1() => Container(
         width: 180,
         child: CheckboxListTile(
-          title: Text("ข้าว"),
+          title: Text("ข้าว", style: GoogleFonts.mitr(fontSize: 18)),
           checkColor: Colors.white,
           // fillColor: MaterialStateProperty.resolveWith(getColor),
           value: isChecked_box1,
@@ -200,7 +307,7 @@ class _Add_provider_service_laborState
   Widget box2() => Container(
         width: 180,
         child: CheckboxListTile(
-          title: Text("ข้าวโพด"),
+          title: Text("ข้าวโพด", style: GoogleFonts.mitr(fontSize: 18)),
           checkColor: Colors.white,
           // fillColor: MaterialStateProperty.resolveWith(getColor),
           value: isChecked_box2,
@@ -216,7 +323,7 @@ class _Add_provider_service_laborState
   Widget box3() => Container(
         width: 180,
         child: CheckboxListTile(
-          title: Text("มันสำปะหลัง"),
+          title: Text("มันสำปะหลัง", style: GoogleFonts.mitr(fontSize: 18)),
           checkColor: Colors.white,
           // fillColor: MaterialStateProperty.resolveWith(getColor),
           value: isChecked_box3,
@@ -232,7 +339,7 @@ class _Add_provider_service_laborState
   Widget box4() => Container(
         width: 180,
         child: CheckboxListTile(
-          title: Text("อ้อย"),
+          title: Text("อ้อย", style: GoogleFonts.mitr(fontSize: 18)),
           checkColor: Colors.white,
           // fillColor: MaterialStateProperty.resolveWith(getColor),
           value: isChecked_box4,
@@ -248,7 +355,7 @@ class _Add_provider_service_laborState
   Widget box5() => Container(
         width: 180,
         child: CheckboxListTile(
-          title: Text("พริก"),
+          title: Text("พริก", style: GoogleFonts.mitr(fontSize: 18)),
           checkColor: Colors.white,
           // fillColor: MaterialStateProperty.resolveWith(getColor),
           value: isChecked_box5,
@@ -264,105 +371,83 @@ class _Add_provider_service_laborState
   Widget box6() => Container(
         width: 180,
         child: CheckboxListTile(
-          title: Text("มันเทศ"),
+          title: Text("อื่นๆ", style: GoogleFonts.mitr(fontSize: 18)),
           checkColor: Colors.white,
           // fillColor: MaterialStateProperty.resolveWith(getColor),
           value: isChecked_box6,
           onChanged: (bool? value) {
             setState(() {
+              check_choice = !check_choice;
               isChecked_box6 = value!;
+              if (check_choice == true) {
+                fieldText.clear();
+              }
             });
           },
           controlAffinity: ListTileControlAffinity.leading,
         ),
       );
 
-  Widget box7() => Container(
-        width: 180,
-        child: CheckboxListTile(
-          title: Text("ปาล์ม"),
-          checkColor: Colors.white,
-          // fillColor: MaterialStateProperty.resolveWith(getColor),
-          value: isChecked_box7,
-          onChanged: (bool? value) {
-            setState(() {
-              isChecked_box7 = value!;
-            });
-          },
-          controlAffinity: ListTileControlAffinity.leading,
-        ),
-      );
-
-  Widget box8() => Container(
-        width: 180,
-        child: CheckboxListTile(
-          title: Text("ถั่ว"),
-          checkColor: Colors.white,
-          // fillColor: MaterialStateProperty.resolveWith(getColor),
-          value: isChecked_box8,
-          onChanged: (bool? value) {
-            setState(() {
-              isChecked_box8 = value!;
-            });
-          },
-          controlAffinity: ListTileControlAffinity.leading,
-        ),
-      );
-
-  Widget w_price_per_rai() => Container(
-        width: 300.0,
+  Widget box_prices() => Container(
+        height: 60,
+        width: 200,
         child: TextField(
           keyboardType: TextInputType.number,
+          style: GoogleFonts.mitr(fontSize: 18),
           onChanged: (value) => prices = value.trim(),
           decoration: InputDecoration(
-            prefixIcon: Icon(Icons.price_change_rounded),
-            hintText: "ราคาต่อวัน ตัวอย่าง 800",
+            hintText: "ตัวอย่าง 800",
+            hintStyle: GoogleFonts.mitr(fontSize: 18),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
         ),
       );
 
-  Future uploadImage() async {
-    final uri =
-        Uri.parse("http://192.168.1.4/agriser_work/up_img_service_labor.php");
+  Widget box_info_choice() => Container(
+        height: 60,
+        width: 200,
+        child: TextField(
+          controller: fieldText,
+          readOnly: check_choice,
+          onChanged: (value) => info_choice = value.trim(),
+          style: GoogleFonts.mitr(fontSize: 18),
+          decoration: InputDecoration(
+            hintText: "ตัวอย่าง ผักชี,ลำไย",
+            hintStyle: GoogleFonts.mitr(fontSize: 18),
+            enabledBorder: OutlineInputBorder(),
+            focusedBorder: OutlineInputBorder(),
+          ),
+        ),
+      );
 
+  Future upload_service_labor() async {
+    final uri =
+        Uri.parse("http://192.168.1.4/agriser_work/add_service_labor.php");
     var request = http.MultipartRequest("POST", uri);
     request.fields["phone_provider"] = phone_provider;
-    var pic_car =
-        await http.MultipartFile.fromPath("image_car", _image_car.path);
-    // var id_pro = await http.MultipartFile.fromPath("id_pro", "111");
-    request.files.add(pic_car);
+    request.fields["type"] = type;
+    request.fields["info_choice"] = info_choice;
+    request.fields["prices"] = prices;
+    request.fields["image1"] = image1;
+    request.fields["image2"] = image2;
+    request.fields["box1"] = isChecked_box1.toString();
+    request.fields["box2"] = isChecked_box2.toString();
+    request.fields["box3"] = isChecked_box3.toString();
+    request.fields["box4"] = isChecked_box4.toString();
+    request.fields["box5"] = isChecked_box5.toString();
+    request.fields["box6"] = isChecked_box6.toString();
+    request.fields["total_choice"] = total_choice.toString();
 
     var response = await request.send();
 
     if (response.statusCode == 200) {
-      updatedata();
-      print("Image UPLOAD");
-    } else {
-      print("UPLOAD FAIL");
-    }
-  }
-
-  void updatedata() async {
-    print(prices);
-    print(phone_provider);
-    print(isChecked_box2);
-    print(isChecked_box3);
-    print(isChecked_box4);
-    print(isChecked_box5);
-    var dio = Dio();
-    final response = await dio.get(
-        "http://192.168.1.4/agriser_work/add_service_labor.php?isAdd=true&prices=$prices&phone_provider=$phone_provider&rice=$isChecked_box1&sweetcorn=$isChecked_box2&cassava=$isChecked_box3&sugarcane=$isChecked_box4&chili=$isChecked_box5&yam=$isChecked_box6&palm=$isChecked_box7&bean=$isChecked_box8&type=$type");
-
-    print(response.data);
-    if (response.data == "true") {
       MaterialPageRoute route = MaterialPageRoute(
           builder: (context) => List_provider_service_labor());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
-      dialong(context, "ลงทะเบียนสำเร็จ");
+      print("UPLOAD");
     } else {
-      dialong(context, "ไม่สามารถสมัครได้ กรุณาลองใหม่");
+      print("UPLOAD FAIL");
     }
   }
 }

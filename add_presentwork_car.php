@@ -15,37 +15,81 @@ if (!$link) {
 if (!$link->set_charset("utf8")) {
     printf("Error loading character set utf8: %s\n", $link->error);
     exit();
-	}
-
-if (isset($_GET)) {
-	if ($_GET['isAdd'] == 'true') {
-				
-		$type = $_GET['type'];
-		$brand = $_GET['brand'];
-		$model = $_GET['model'];
-		$date_buy = $_GET['date_buy'];
-		$prices = $_GET['prices'];
-		$phone_user = $_GET['phone_user'];
-
-		
+    }
 
 
 
+    
+    $phone_user = $_POST["phone_user"];
+    $type = $_POST["type"];
+    $count = $_POST["count"];
+    $prices = $_POST["prices"];
+    $date_work = $_POST["date_work"];
+    $details = $_POST["details"];
+    $map_lat_work = $_POST["map_lat_work"];
+    $map_long_work = $_POST["map_long_work"];
 
-		$sql = "UPDATE tb_presentwork_user_car SET type_presentwork = '$type' , count_field = '$brand' , date_work = '$date_buy', details = '$prices', prices = '$model' , status = '1'   WHERE phone_user = '$phone_user' and status = '0' ";
 
-		$result = mysqli_query($link, $sql);
-
-
-
-		if ($result) {
-			echo "true";
-		} else {
-			echo "false";
-		}
-
-	} else echo "Welcome Master UNG";
    
-}
-	mysqli_close($link);
+    $imag1 = $_POST["img1"];
+    $imag2 = $_POST["img2"];
+
+    
+    
+    
+    // $imagePath = "upload_image/".$imag1;
+    // $tmp_name = $_FILES['img_no1']["tmp_name"];
+
+    // move_uploaded_file($tmp_name, $imagePath);
+
+    // $imagePath = "upload_image/".$imag2;
+    // $tmp_name = $_FILES['img_no2']["tmp_name"];
+
+    // move_uploaded_file($tmp_name, $imagePath);
+
+    $nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+    $selectdatabooking = "SELECT * from tb_provider where id_provider = '" . $num . "' ";
+    $objselect = mysqli_query($link, $selectdatabooking);
+    $Resultselect = mysqli_fetch_array($objselect ,MYSQLI_ASSOC);
+    while (!is_null($Resultselect)) {
+    $nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+
+    }
+    $num = "c_".$nums."";
+
+     $link->query("INSERT INTO tb_presentwork_user_car( 
+            id_presentwork,
+            phone_user,
+            type_presentwork,
+            count_field,
+            prices,
+            date_work,
+            details,
+            img_field1,
+            img_field2,
+            map_lat_work,
+            map_long_work,
+            status_work
+            )VALUES(
+            '$num',
+            '$phone_user',
+            '$type',
+            '$count',
+            '$prices',
+            '$date_work',
+            '$details',
+            '$imag1',
+            '$imag2',
+            '$map_lat_work',
+            '$map_long_work',
+            '0'
+
+            )
+            ");
+
+
+     
+
+  
+
 ?>

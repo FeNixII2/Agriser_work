@@ -5,11 +5,13 @@ import 'package:agriser_work/pages/user/all_bottombar_user.dart';
 import 'package:agriser_work/register.dart';
 import 'package:agriser_work/utility/allmethod.dart';
 import 'package:agriser_work/utility/dialog.dart';
+import 'package:agriser_work/utility/get_ip.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,12 +32,14 @@ class _LoginState extends State<Login> {
   late double long;
 
   @override
-  void initState() {
+  initState() {
     super.initState();
-
+    // gettingIP();
     checklogin();
     // findLocation();
   }
+
+  // The response type can be text, json or jsonp
 
   Future<Null> findLocation() async {
     LocationData? locationData = await findLocationData();
@@ -91,7 +95,9 @@ class _LoginState extends State<Login> {
               Userform(),
               Allmethod().Space(),
               Passwordform(),
+              Allmethod().Space(),
               Loginbutton(),
+              Allmethod().Space(),
               regisbutton()
             ],
           ),
@@ -103,6 +109,7 @@ class _LoginState extends State<Login> {
   ////////////////////////////////////////////////////////////////////
 
   Widget Loginbutton() => Container(
+        height: 50,
         width: 250.0,
         child: RaisedButton(
           color: Allmethod().dartcolor,
@@ -118,12 +125,13 @@ class _LoginState extends State<Login> {
           },
           child: Text(
             "เข้าสู่ระบบ",
-            style: TextStyle(color: Colors.white),
+            style: GoogleFonts.mitr(fontSize: 18, color: Colors.white),
           ),
         ),
       );
 
   Widget regisbutton() => Container(
+        height: 50,
         width: 250.0,
         child: RaisedButton(
           color: Allmethod().dartcolor,
@@ -134,7 +142,7 @@ class _LoginState extends State<Login> {
           },
           child: Text(
             "ลงทะเบียน",
-            style: TextStyle(color: Colors.white),
+            style: GoogleFonts.mitr(fontSize: 18, color: Colors.white),
           ),
         ),
       );
@@ -179,9 +187,11 @@ class _LoginState extends State<Login> {
         width: 250.0,
         child: TextField(
           onChanged: (value) => phone_user = value.trim(),
+          style: GoogleFonts.mitr(fontSize: 18),
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.account_box),
-            labelStyle: TextStyle(color: Allmethod().dartcolor),
+            labelStyle:
+                GoogleFonts.mitr(fontSize: 18, color: Allmethod().dartcolor),
             labelText: "เบอร์โทรศัพท์",
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Allmethod().dartcolor)),
@@ -196,6 +206,7 @@ class _LoginState extends State<Login> {
         child: TextField(
           obscureText: _securetext,
           onChanged: (value) => password_user = value.trim(),
+          style: GoogleFonts.mitr(fontSize: 18),
           decoration: InputDecoration(
             suffixIcon: IconButton(
               icon: Icon(_securetext ? Icons.remove_red_eye : Icons.security),
@@ -206,7 +217,8 @@ class _LoginState extends State<Login> {
               },
             ),
             prefixIcon: Icon(Icons.lock),
-            labelStyle: TextStyle(color: Allmethod().dartcolor),
+            labelStyle:
+                GoogleFonts.mitr(fontSize: 18, color: Allmethod().dartcolor),
             labelText: "รหัสผ่าน",
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Allmethod().dartcolor)),

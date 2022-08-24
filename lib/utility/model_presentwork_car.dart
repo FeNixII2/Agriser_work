@@ -18,6 +18,7 @@ class Modelpresentwork_car {
     required this.prices,
     required this.map_lat_work,
     required this.map_long_work,
+    required this.status_work,
   });
 
   String id_presentwork;
@@ -31,6 +32,7 @@ class Modelpresentwork_car {
   String prices;
   String map_lat_work;
   String map_long_work;
+  String status_work;
 
   factory Modelpresentwork_car.fromJson(Map<String, dynamic> json) =>
       Modelpresentwork_car(
@@ -45,6 +47,7 @@ class Modelpresentwork_car {
         prices: json["prices"],
         map_lat_work: json["map_lat_work"],
         map_long_work: json["map_long_work"],
+        status_work: json["status_work"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,5 +62,6 @@ class Modelpresentwork_car {
         "prices": prices,
         "map_lat_work": map_lat_work,
         "map_long_work": map_long_work,
+        "status_work": status_work,
       };
 }

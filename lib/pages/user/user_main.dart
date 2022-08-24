@@ -3,6 +3,7 @@ import 'package:agriser_work/pages/user/user_presentwork/select_presentwork_type
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class User_main extends StatefulWidget {
   const User_main({Key? key}) : super(key: key);
@@ -17,16 +18,16 @@ class _User_mainState extends State<User_main> {
     return Scaffold(
       body: Center(
         child: Container(
-          child: RaisedButton(
-            onPressed: () async {
-              print("คลิกเพิ่มประกาศจ้างงาน");
-              MaterialPageRoute route = MaterialPageRoute(
-                  builder: (value) => Select_presentwork_type());
-              Navigator.push(context, route);
-            },
-            child: Text(
-              "เพิ่มประกาศจ้างงาน",
-              style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+          child: Container(
+            child: RaisedButton(
+              onPressed: () async {
+                print("คลิกเพิ่มประกาศจ้างงาน");
+                MaterialPageRoute route = MaterialPageRoute(
+                    builder: (value) => Select_presentwork_type());
+                Navigator.push(context, route);
+              },
+              child: Text("เพิ่มประกาศจ้างงาน",
+                  style: GoogleFonts.mitr(fontSize: 18)),
             ),
           ),
           alignment: Alignment.center,

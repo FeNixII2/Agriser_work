@@ -1,3 +1,5 @@
+import 'package:agriser_work/pages/provider/contact/provider_record_contact.dart';
+import 'package:agriser_work/pages/provider/contact/provider_schedule_contact.dart';
 import 'package:agriser_work/pages/user/contact/user_record_contact.dart';
 import 'package:agriser_work/pages/user/contact/user_schedule_contact.dart';
 import 'package:agriser_work/pages/user/request/user_record_request.dart';
@@ -5,6 +7,7 @@ import 'package:agriser_work/pages/user/request/user_schedule_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Provider_both_contact extends StatefulWidget {
   const Provider_both_contact({Key? key}) : super(key: key);
@@ -17,8 +20,8 @@ class _Provider_both_contactState extends State<Provider_both_contact> {
   int _currenIndex_C = 0;
 
   final List<Widget> _children_c = [
-    User_record_contact(),
-    User_schedule_contact(),
+    Provider_record_contact(),
+    Provider_schedule_contact(),
   ];
 
   void onTappedBar(int index) {
@@ -33,8 +36,8 @@ class _Provider_both_contactState extends State<Provider_both_contact> {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
-            title: Text("ตารางงานที่ติอต่อ"),
-            backgroundColor: Colors.green.shade400,
+            title: Text("ตารางงานที่ติอต่อ",
+                style: GoogleFonts.mitr(fontSize: 18)),
           ),
           // body: _children[_currenIndex],
 
@@ -44,17 +47,19 @@ class _Provider_both_contactState extends State<Provider_both_contact> {
                 labelColor: Colors.black,
                 tabs: [
                   Tab(
-                    text: "งานรอดำเนินการ",
+                    child: Text("รอดำเนินการ",
+                        style: GoogleFonts.mitr(fontSize: 18)),
                   ),
                   Tab(
-                    text: "ประวัติ",
+                    child:
+                        Text("ประวัติ", style: GoogleFonts.mitr(fontSize: 18)),
                   )
                 ],
               ),
               Expanded(
                 child: TabBarView(children: [
-                  User_record_request(),
-                  User_schedule_request(),
+                  Provider_schedule_contact(),
+                  Provider_record_contact(),
                 ]),
               ),
             ],

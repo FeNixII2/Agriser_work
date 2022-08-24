@@ -5,6 +5,7 @@ import 'package:agriser_work/pages/user/request/user_schedule_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Provider_both_request extends StatefulWidget {
   const Provider_both_request({Key? key}) : super(key: key);
@@ -33,7 +34,10 @@ class _Provider_both_requestState extends State<Provider_both_request> {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
-            title: Text("ตารางงานที่ร้องขอเข้ามา"),
+            title: Text(
+              "ตารางงานที่ร้องขอเข้ามา",
+              style: GoogleFonts.mitr(fontSize: 18),
+            ),
           ),
           // body: _children[_currenIndex],
 
@@ -43,10 +47,16 @@ class _Provider_both_requestState extends State<Provider_both_request> {
                 labelColor: Colors.black,
                 tabs: [
                   Tab(
-                    text: "งานรอดำเนินการ",
+                    child: Text(
+                      "รอดำเนินการ",
+                      style: GoogleFonts.mitr(fontSize: 18),
+                    ),
                   ),
                   Tab(
-                    text: "ประวัติ",
+                    child: Text(
+                      "ประวัติ",
+                      style: GoogleFonts.mitr(fontSize: 18),
+                    ),
                   )
                 ],
               ),

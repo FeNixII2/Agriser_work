@@ -15,11 +15,13 @@ class ModelService_Pro_labor {
     required this.cassava,
     required this.sugarcane,
     required this.chili,
-    required this.yam,
-    required this.palm,
-    required this.bean,
+    required this.choice,
+    required this.info_choice,
+    required this.total_choice,
     required this.prices,
-    required this.image_labor,
+    required this.image1,
+    required this.image2,
+    required this.status_work,
   });
 
   String id_service;
@@ -30,11 +32,13 @@ class ModelService_Pro_labor {
   String cassava;
   String sugarcane;
   String chili;
-  String yam;
-  String palm;
-  String bean;
+  String choice;
+  String info_choice;
+  String total_choice;
   String prices;
-  String image_labor;
+  String image1;
+  String image2;
+  String status_work;
 
   factory ModelService_Pro_labor.fromJson(Map<String, dynamic> json) =>
       ModelService_Pro_labor(
@@ -46,11 +50,13 @@ class ModelService_Pro_labor {
         cassava: json["cassava"],
         sugarcane: json["sugarcane"],
         chili: json["chili"],
-        yam: json["yam"],
-        palm: json["palm"],
-        bean: json["bean"],
+        choice: json["choice"],
+        info_choice: json["info_choice"],
+        total_choice: json["total_choice"],
         prices: json["prices"],
-        image_labor: json["image_labor"],
+        image1: json["image1"],
+        image2: json["image2"],
+        status_work: json["status_work"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -62,10 +68,12 @@ class ModelService_Pro_labor {
         "cassava": cassava,
         "sugarcane": sugarcane,
         "chili": chili,
-        "yam": yam,
-        "palm": palm,
-        "bean": bean,
+        "choice": choice,
+        "info_choice": info_choice,
+        "total_choice": total_choice,
         "prices": prices,
-        "image_labor": image_labor,
+        "image1": image1,
+        "image2": image2,
+        "status_work": status_work,
       };
 }

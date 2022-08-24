@@ -1,7 +1,10 @@
 import 'dart:convert';
-import 'package:agriser_work/pages/provider/request/data_schedule_request.dart';
-import 'package:agriser_work/pages/user/contact/data_schedule_contact.dart';
+import 'package:agriser_work/pages/provider/request/data_schedule_request_car.dart';
+import 'package:agriser_work/pages/provider/request/record_schedule_request_car.dart';
+import 'package:agriser_work/pages/provider/request/record_schedule_request_labor.dart';
+import 'package:agriser_work/pages/user/contact/data_schedule_contact_car.dart';
 import 'package:agriser_work/utility/model_service_provider_car.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -73,17 +76,29 @@ class _Provider_record_requestState extends State<Provider_record_request> {
                     preferences.setString(
                         "action", search_service[index]["action"]);
 
-                    MaterialPageRoute route = MaterialPageRoute(
-                        builder: (context) => Data_schedule_request());
-                    Navigator.push(context, route);
+                    if (search_service[index]["type_service"] == "car") {
+                      MaterialPageRoute route = MaterialPageRoute(
+                          builder: (context) => Record_schedule_request_car());
+                      Navigator.push(context, route);
+                    } else if (search_service[index]["type_service"] ==
+                        "labor") {
+                      MaterialPageRoute route = MaterialPageRoute(
+                          builder: (context) =>
+                              Record_schedule_request_labor());
+                      Navigator.push(context, route);
+                    }
                   },
                   child: Column(
                     children: [
                       ListTile(
-                        leading: Text(search_service[index]["id_schedule"]),
-                        title: Text(search_service[index]["total_price"]),
-                        trailing: Text("$status"),
-                        subtitle: Text(search_service[index]["date_work"]),
+                        leading: Text(search_service[index]["id_service"],
+                            style: GoogleFonts.mitr(fontSize: 18)),
+                        title: Text(search_service[index]["type_service"],
+                            style: GoogleFonts.mitr(fontSize: 18)),
+                        trailing: Text("$status",
+                            style: GoogleFonts.mitr(fontSize: 18)),
+                        subtitle: Text(search_service[index]["phone_user"],
+                            style: GoogleFonts.mitr(fontSize: 18)),
                       ),
                     ],
                   ),
@@ -93,19 +108,6 @@ class _Provider_record_requestState extends State<Provider_record_request> {
           }),
     );
   }
-
-  // Card(
-  //             child: ListTile(
-  //               leading: const Icon(Icons.add),
-  //               title: Text(search_service[index]["date_work"]),
-  //               trailing: Text(search_service[index]["status"]),
-  //               subtitle: Text(search_service[index]["total_price"]),
-  //               selected: true,
-  //               onTap: () {
-  //                 print("object");
-  //               },
-  //             ),
-  //           );
 
   Loadservice() async {
     var dio = Dio();

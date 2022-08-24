@@ -24,22 +24,22 @@ if (isset($_GET)) {
         $phone_provider = $_GET['phone_provider'];
 
         if ($_GET['function'] == '1') {
-		    $result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_car where type_presentwork = 'รถเกี่ยวข้าว' and phone_user != '$phone_provider'  ");
+		    $result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_car where type_presentwork = 'รถเกี่ยวข้าว' and phone_user != '$phone_provider' and status_work = '0' ");
         }
         if ($_GET['function'] == '2') {
-            $result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_car where type_presentwork = 'รถแทรกเตอร์' and phone_user != '$phone_provider' ");
+            $result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_car where type_presentwork = 'รถแทรกเตอร์' and phone_user != '$phone_provider' and status_work = '0'");
         }
         if ($_GET['function'] == '3') {
-            $result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_car where type_presentwork = 'รถดำนา' and phone_user != '$phone_provider' ");
+            $result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_car where type_presentwork = 'รถดำนา' and phone_user != '$phone_provider' and status_work = '0'");
         }
         if ($_GET['function'] == '4') {
-            $result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_car where type_presentwork = 'โดรน'  and phone_user != '$phone_provider' ");
+            $result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_car where type_presentwork = 'โดรน'  and phone_user != '$phone_provider' and status_work = '0'");
         }
         if ($_GET['function'] == '5') {
-            $result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_labor where type_presentwork = 'เพาะปลูก' and phone_user != '$phone_provider' ");
+            $result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_labor where type_presentwork = 'เพาะปลูก' and phone_user != '$phone_provider' and status_work = '0'");
         }
         if ($_GET['function'] == '6') {
-            $result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_labor where type_presentwork = 'เก็บเกี่ยว' and phone_user != '$phone_provider' ");
+            $result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_labor where type_presentwork = 'เก็บเกี่ยว' and phone_user != '$phone_provider' and status_work = '0'");
         }
         
 		if ($result) {

@@ -6,27 +6,27 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../all_bottombar_user.dart';
 
-class Confirm_work extends StatefulWidget {
-  const Confirm_work({Key? key}) : super(key: key);
+class Confirm_service_labor extends StatefulWidget {
+  const Confirm_service_labor({Key? key}) : super(key: key);
 
   @override
-  State<Confirm_work> createState() => _Confirm_workState();
+  State<Confirm_service_labor> createState() => _Confirm_service_laborState();
 }
 
-class _Confirm_workState extends State<Confirm_work> {
-  late int total_price;
+class _Confirm_service_laborState extends State<Confirm_service_labor> {
   late double map_lat_work = 0, map_long_work;
   late String date_work,
       phone_user,
       phone_provider,
       count_field,
-      prices,
+      total_price,
       id_service,
       function,
       type_service;
@@ -45,9 +45,8 @@ class _Confirm_workState extends State<Confirm_work> {
       phone_user = preferences.getString('phone_user')!;
       phone_provider = preferences.getString('phone_provider')!;
       count_field = preferences.getString('count_field')!;
-      prices = preferences.getString('prices')!;
+      total_price = preferences.getString('total_price')!;
       function = preferences.getString('function')!;
-      total_price = int.parse(prices) * int.parse(count_field);
     });
   }
 
@@ -55,17 +54,15 @@ class _Confirm_workState extends State<Confirm_work> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.green.shade400,
         leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.pop(context)),
-        title: Text("ยืนยันงาน"),
+        title: Text("เลือกจุดนัดพบ", style: GoogleFonts.mitr(fontSize: 18)),
         // centerTitle: true,
       ),
       body: Column(
         children: [
-          Text('งานเริ่มวันที่ $date_work'),
-          Text('ราคาทั้งหมด $total_price บาท'),
           Container(
             child: FutureBuilder(builder:
                 (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -75,13 +72,20 @@ class _Confirm_workState extends State<Confirm_work> {
               return Center(child: CircularProgressIndicator());
             }),
           ),
-          RaisedButton(
-            onPressed: () {
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          height: 50,
+          child: RaisedButton(
+            color: Colors.green.shade400,
+            onPressed: () async {
               addschedule_user();
             },
-            child: Text("ยืนยันรายการ"),
+            child: Text("ยืนยัน",
+                style: GoogleFonts.mitr(fontSize: 18, color: Colors.white)),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -111,7 +115,7 @@ class _Confirm_workState extends State<Confirm_work> {
     CameraPosition Location_user = CameraPosition(target: latLng, zoom: 17);
 
     return Container(
-      height: 450,
+      height: 610,
       // width: 300,
       child: GoogleMap(
         onTap: (LatLng laalongg) {
@@ -152,7 +156,7 @@ class _Confirm_workState extends State<Confirm_work> {
 
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/add_schedule_service_car.php?isAdd=true&id_service=$id_service&phone_user=$phone_user&phone_provider=$phone_provider&date_work=$date_work&count_field=$count_field&total_price=$total_price&map_lat_work=$map_lat_work&map_long_work=$map_long_work&type_service=$type_service");
+        "http://192.168.1.4/agriser_work/add_schedule_service.php?isAdd=true&id_service=$id_service&phone_user=$phone_user&phone_provider=$phone_provider&date_work=$date_work&count_field=$count_field&total_price=$total_price&map_lat_work=$map_lat_work&map_long_work=$map_long_work&type_service=$type_service");
 
     print(response.data);
     if (response.data == "true") {

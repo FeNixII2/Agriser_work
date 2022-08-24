@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:agriser_work/pages/provider/all_bottombar_provider.dart';
 import 'package:agriser_work/pages/provider/provider_service/select_provider_type.dart';
@@ -62,26 +63,107 @@ class _List_provider_service_carState extends State<List_provider_service_car> {
             MaterialPageRoute(builder: (context) => Select_provider_type()),
           ),
         ),
-        title: Text("ข้อมูลการให้บริการ"),
+        title: Text(
+          "ข้อมูลการให้บริการ",
+          style: GoogleFonts.mitr(fontSize: 18),
+        ),
         // centerTitle: true,
       ),
       body: ListView.builder(
           itemCount: search_service.length,
           itemBuilder: (context, index) {
+            Uint8List imgfromb64 =
+                base64Decode(search_service[index]['image1']);
             return Card(
-              child: ListTile(
-                leading: Container(
-                  height: 380,
-                  child: Image.network(
-                      width: 100,
-                      height: 100,
-                      "http://192.168.1.4/agriser_work/upload_image/${search_service[index]['image_car']}"),
-                ),
-                title: Text(search_service[index]["brand"]),
-                subtitle: Text(search_service[index]["prices"]),
-                trailing: RaisedButton(
-                  onPressed: () {},
-                  child: Text("แก้ไข"),
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                onTap: () async {
+                  // SharedPreferences preferences =
+                  //     await SharedPreferences.getInstance();
+                  // preferences.setString("id_presentwork",
+                  //     search_service[index]['id_presentwork']);
+
+                  // MaterialPageRoute route = MaterialPageRoute(
+                  //     builder: (context) => Edit_presentwork_car());
+                  // Navigator.push(context, route);
+                },
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: CircleAvatar(
+                              radius: 45,
+                              backgroundImage: MemoryImage(imgfromb64),
+                            )),
+                      ],
+                    ),
+                    Container(
+                      // color: Colors.amber,
+
+                      child: Row(
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("บริการ: ",
+                                        style: GoogleFonts.mitr(fontSize: 18)),
+                                    Text("${search_service[index]['type']}",
+                                        style: GoogleFonts.mitr(
+                                            fontSize: 18,
+                                            color: Colors.green.shade400)),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("ราคา: ",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                    Text("${search_service[index]['prices']}",
+                                        style: GoogleFonts.mitr(
+                                            fontSize: 16,
+                                            color: Colors.green.shade400)),
+                                    Text(" ต่อไร่",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("ยี่ห้อ: ",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                    Text("${search_service[index]['brand']}",
+                                        style: GoogleFonts.mitr(
+                                            fontSize: 16,
+                                            color: Colors.green.shade400)),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("รุ่น: ",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                    Text("${search_service[index]['model']}",
+                                        style: GoogleFonts.mitr(
+                                            fontSize: 16,
+                                            color: Colors.green.shade400)),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );
@@ -90,16 +172,9 @@ class _List_provider_service_carState extends State<List_provider_service_car> {
           backgroundColor: Colors.blue,
           child: Icon(Icons.edit),
           onPressed: () {
-            if (select_type_service == "car") {
-              MaterialPageRoute route = MaterialPageRoute(
-                  builder: (context) => Type_provider_service_car());
-              Navigator.push(context, route);
-            }
-            if (select_type_service == "labor") {
-              MaterialPageRoute route = MaterialPageRoute(
-                  builder: (context) => Type_provider_service_labor());
-              Navigator.push(context, route);
-            }
+            MaterialPageRoute route = MaterialPageRoute(
+                builder: (context) => Type_provider_service_car());
+            Navigator.push(context, route);
           }),
     );
   }
@@ -107,7 +182,7 @@ class _List_provider_service_carState extends State<List_provider_service_car> {
   Loadservice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_service.php?isAdd=true&phone_provider=$phone_provider");
+        "http://192.168.1.4/agriser_work/search_service_car.php?isAdd=true&phone_provider=$phone_provider");
     if (response.statusCode == 200) {
       setState(() {
         search_service = json.decode(response.data);

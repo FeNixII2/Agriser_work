@@ -28,7 +28,7 @@ class All_bottombar_provider extends StatefulWidget {
 
 class _All_bottombar_providerState extends State<All_bottombar_provider> {
   late String id_provider;
-  late String phone_provider = "";
+  late String phone_provider = "", phone_user;
   late String name_provider = "";
   late String email_provider = "",
       date_provider = "",
@@ -173,9 +173,11 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
       decoration: BoxDecoration(
         color: Colors.blue,
       ),
-      accountName: Text(name_provider == null ? 'Main User' : "$name_provider"),
-      accountEmail:
-          Text(phone_provider == null ? 'Main Tel' : "$phone_provider"),
+      accountName: Text(name_provider == null ? 'Main User' : "$name_provider",
+          style: GoogleFonts.mitr(fontSize: 18, color: Colors.white)),
+      accountEmail: Text(
+          phone_provider == null ? 'Main Tel' : "$phone_provider",
+          style: GoogleFonts.mitr(fontSize: 18, color: Colors.white)),
       currentAccountPicture: CircleAvatar(
         backgroundColor: Colors.white,
         backgroundImage: AssetImage('assets/images/user.png'),
@@ -185,7 +187,7 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
 
   ListTile Edit_user_data() => ListTile(
         leading: Icon(Icons.personal_injury),
-        title: Text("ข้อมูลส่วนตัว"),
+        title: Text("ข้อมูลส่วนตัว", style: GoogleFonts.mitr(fontSize: 18)),
         onTap: () {
           MaterialPageRoute route =
               MaterialPageRoute(builder: (value) => Edit_provider_data());
@@ -195,8 +197,12 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
 
   ListTile Chance_mode() => ListTile(
         leading: Icon(Icons.switch_account),
-        title: Text("ผู้ใช้ทั่วไป"),
-        onTap: () {
+        title: Text("ผู้ใช้ทั่วไป", style: GoogleFonts.mitr(fontSize: 18)),
+        onTap: () async {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          phone_user = preferences.getString('phone_provider')!;
+          preferences.setString("phone_user", phone_user);
+
           MaterialPageRoute route =
               MaterialPageRoute(builder: (value) => All_bottombar_user());
           Navigator.pushAndRemoveUntil(context, route, (route) => false);
@@ -205,7 +211,7 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
 
   ListTile Logout() => ListTile(
         leading: Icon(Icons.exit_to_app),
-        title: Text("ออกจากระบบ"),
+        title: Text("ออกจากระบบ", style: GoogleFonts.mitr(fontSize: 18)),
         onTap: () {
           Alertlogout();
         },
@@ -216,10 +222,9 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('ออกจากระบบ', style: GoogleFonts.mitr(fontSize: 22)),
-            content: Text(
-              'คุณต้องการออกจากระบบใช่หรือไม่',
-            ),
+            title: Text('ออกจากระบบ', style: GoogleFonts.mitr(fontSize: 20)),
+            content: Text('คุณต้องการออกจากระบบใช่หรือไม่',
+                style: GoogleFonts.mitr(fontSize: 18)),
             actions: <Widget>[cancelButton(), okButton_logout()],
           );
         });
@@ -234,7 +239,7 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
 
   Widget okButton_logout() {
     return FlatButton(
-      child: Text('ตกลง'),
+      child: Text('ตกลง', style: GoogleFonts.mitr(fontSize: 18)),
       onPressed: () {
         checklogout();
       },
@@ -243,7 +248,7 @@ class _All_bottombar_providerState extends State<All_bottombar_provider> {
 
   Widget cancelButton() {
     return FlatButton(
-      child: Text('ยกเลิก'),
+      child: Text('ยกเลิก', style: GoogleFonts.mitr(fontSize: 18)),
       onPressed: () {
         Navigator.of(context).pop();
       },

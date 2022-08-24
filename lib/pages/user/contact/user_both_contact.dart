@@ -5,6 +5,7 @@ import 'package:agriser_work/pages/user/request/user_schedule_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class User_both_contact extends StatefulWidget {
   const User_both_contact({Key? key}) : super(key: key);
@@ -33,9 +34,9 @@ class _User_both_contactState extends State<User_both_contact> {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
-            title: Text("ตารางงานที่ติอต่อ"),
+            title: Text("ตารางงานที่ติอต่อ",
+                style: GoogleFonts.mitr(fontSize: 18)),
             backgroundColor: Colors.green.shade400,
-            
           ),
           // body: _children[_currenIndex],
 
@@ -45,10 +46,12 @@ class _User_both_contactState extends State<User_both_contact> {
                 labelColor: Colors.black,
                 tabs: [
                   Tab(
-                    text: "งานรอดำเนินการ",
+                    child: Text("ดำเนินการ",
+                        style: GoogleFonts.mitr(fontSize: 18)),
                   ),
                   Tab(
-                    text: "ประวัติ",
+                    child:
+                        Text("ประวัติ", style: GoogleFonts.mitr(fontSize: 18)),
                   )
                 ],
               ),

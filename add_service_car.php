@@ -15,31 +15,63 @@ if (!$link) {
 if (!$link->set_charset("utf8")) {
     printf("Error loading character set utf8: %s\n", $link->error);
     exit();
-	}
-
-if (isset($_GET)) {
-	if ($_GET['isAdd'] == 'true') {
-				
-		$type = $_GET['type'];
-		$brand = $_GET['brand'];
-		$model = $_GET['model'];
-		$date_buy = $_GET['date_buy'];
-		$prices = $_GET['prices'];
-		$phone_provider = $_GET['phone_provider'];
+    }
 
 
-		$sql = "UPDATE tb_service_provider_car SET type = '$type' , brand = '$brand' , model = '$model', date_buy = '$date_buy', prices = '$prices' , status = '1'   WHERE phone_provider = '$phone_provider' and status = '0' ";
 
-		$result = mysqli_query($link, $sql);
+    
+    $phone_provider = $_POST["phone_provider"];
+    $type = $_POST["type"];
+    $brand = $_POST["brand"];
+    $model = $_POST["model"];
+    $date_buy = $_POST["date_buy"];
+    $prices = $_POST["prices"];
+    $image1 = $_POST["image1"];
+    $image2 = $_POST["image2"];
 
-		if ($result) {
-			echo "true";
-		} else {
-			echo "false";
-		}
 
-	} else echo "Welcome Master UNG";
-   
-}
-	mysqli_close($link);
+  
+
+    $nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+    $selectdatabooking = "SELECT * from tb_provider where id_provider = '" . $num . "' ";
+    $objselect = mysqli_query($link, $selectdatabooking);
+    $Resultselect = mysqli_fetch_array($objselect ,MYSQLI_ASSOC);
+    while (!is_null($Resultselect)) {
+    $nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+
+    }
+    $num = "c_".$nums."";
+
+     $link->query("INSERT INTO tb_service_provider_car( 
+            id_service,
+            phone_provider,
+            type,
+            brand,
+            model,
+            date_buy,
+            prices,
+            image1,
+            image2,
+            
+            status_work
+            )VALUES(
+            '$num',
+            '$phone_provider',
+            '$type',
+            '$brand',
+            '$model',
+            '$date_buy',
+            '$prices',
+            '$image1',
+            '$image2',
+            '0'
+
+            )
+            ");
+
+
+     
+
+  
+
 ?>

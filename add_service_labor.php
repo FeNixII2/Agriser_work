@@ -15,37 +15,80 @@ if (!$link) {
 if (!$link->set_charset("utf8")) {
     printf("Error loading character set utf8: %s\n", $link->error);
     exit();
-	}
-
-if (isset($_GET)) {
-	if ($_GET['isAdd'] == 'true') {
-				
-		$type = $_GET['type'];
-		$rice = $_GET['rice'];
-		$sweetcorn = $_GET['sweetcorn'];
-		$cassava = $_GET['cassava'];
-		$sugarcane = $_GET['sugarcane'];
-		$chili = $_GET['chili'];
-		$yam = $_GET['yam'];
-		$palm = $_GET['palm'];
-		$bean = $_GET['bean'];
-		$prices = $_GET['prices'];
-		$phone_provider = $_GET['phone_provider'];
+    }
 
 
-		$sql = "UPDATE tb_service_provider_labor SET type = '$type' , rice = '$rice' , sweetcorn = '$sweetcorn' ,cassava = '$cassava' ,sugarcane = '$sugarcane' ,chili = '$chili' ,yam = '$yam' ,palm = '$palm' ,bean = '$bean' ,prices = '$prices' , status = '1'   WHERE phone_provider = '$phone_provider' and status = '0' ";
 
-		$result = mysqli_query($link, $sql);
+    
+    $phone_provider = $_POST["phone_provider"];
+    $type = $_POST["type"];
+    $info_choice = $_POST["info_choice"];
+    $prices = $_POST["prices"];
+    $rice = $_POST["box1"];
+    $sweetcorn = $_POST["box2"];
+    $cassava = $_POST["box3"];
+    $sugarcane = $_POST["box4"];
+    $chili = $_POST["box5"];
+    $choice = $_POST["box6"];
+    $total_choice = $_POST["total_choice"];
+    $image1 = $_POST["image2"];
+    $image2 = $_POST["image2"];
 
 
-		if ($result) {
-			echo "true";
-		} else {
-			echo "false";
-		}
+  
 
-	} else echo "Welcome Master UNG";
-   
-}
-	mysqli_close($link);
+    $nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+    $selectdatabooking = "SELECT * from tb_provider where id_provider = '" . $num . "' ";
+    $objselect = mysqli_query($link, $selectdatabooking);
+    $Resultselect = mysqli_fetch_array($objselect ,MYSQLI_ASSOC);
+    while (!is_null($Resultselect)) {
+    $nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+
+    }
+    $num = "l_".$nums."";
+
+     $link->query("INSERT INTO tb_service_provider_labor( 
+            id_service,
+            phone_provider,
+            type,
+            info_choice,
+            prices,
+            rice,
+            sweetcorn,
+            cassava,
+            sugarcane,
+            chili,
+            choice,
+            total_choice,
+            image1,
+            image2,
+
+            
+            status_work
+            )VALUES(
+            '$num',
+            '$phone_provider',
+            '$type',
+            '$info_choice',
+            '$prices',
+            '$rice',
+            '$sweetcorn',
+            '$cassava',
+            '$sugarcane',
+            '$chili',
+            '$choice',
+            '$total_choice',
+            '$image1',
+            '$image2',
+
+            '0'
+
+            )
+            ");
+
+
+     
+
+  
+
 ?>

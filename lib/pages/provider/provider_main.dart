@@ -3,6 +3,7 @@ import 'package:agriser_work/pages/provider/provider_service/select_provider_typ
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Provider_main extends StatefulWidget {
@@ -27,7 +28,7 @@ class _Provider_mainState extends State<Provider_main> {
             },
             child: Text(
               "เพิ่มข้อมูลการให้บริการ",
-              style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+              style: GoogleFonts.mitr(fontSize: 18),
             ),
           ),
           alignment: Alignment.center,

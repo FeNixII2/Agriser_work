@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Select_presentwork_type extends StatefulWidget {
@@ -32,7 +33,12 @@ class _Select_presentwork_typeState extends State<Select_presentwork_type> {
               MaterialPageRoute(builder: (context) => All_bottombar_user()),
             ),
           ),
-          title: Text("เลือกประเภทประกาศจ้างงาน"),
+          title: Text(
+            "เลือกประเภทประกาศจ้างงาน",
+            style: GoogleFonts.mitr(
+              fontSize: 18,
+            ),
+          ),
         ),
         body: Column(
           children: [car(), labor()],
@@ -44,7 +50,7 @@ class _Select_presentwork_typeState extends State<Select_presentwork_type> {
         height: 320,
         width: 400,
         child: Material(
-          color: Color.fromARGB(226, 238, 238, 230),
+          color: Color.fromARGB(227, 255, 251, 177),
           elevation: 8,
           borderRadius: BorderRadius.circular(28),
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -70,7 +76,9 @@ class _Select_presentwork_typeState extends State<Select_presentwork_type> {
                 SizedBox(height: 6),
                 Text(
                   'รถทางการเกษตร',
-                  style: TextStyle(fontSize: 22, color: Colors.black),
+                  style: GoogleFonts.mitr(
+                    fontSize: 18,
+                  ),
                 ),
                 SizedBox(height: 6),
               ],
@@ -84,7 +92,7 @@ class _Select_presentwork_typeState extends State<Select_presentwork_type> {
         height: 320,
         width: 400,
         child: Material(
-          color: Color.fromARGB(225, 255, 255, 244),
+          color: Color.fromARGB(255, 184, 252, 186),
           elevation: 8,
           borderRadius: BorderRadius.circular(28),
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -114,7 +122,9 @@ class _Select_presentwork_typeState extends State<Select_presentwork_type> {
                 SizedBox(height: 6),
                 Text(
                   'แรงงานทางการเกษตร',
-                  style: TextStyle(fontSize: 22, color: Colors.black),
+                  style: GoogleFonts.mitr(
+                    fontSize: 18,
+                  ),
                 ),
                 SizedBox(height: 6),
               ],

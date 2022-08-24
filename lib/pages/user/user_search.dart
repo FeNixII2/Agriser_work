@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 // import 'package:agriser_work/pages/user/user_menu/list_service.dart';
-import 'package:agriser_work/pages/user/user_search/list_service.dart';
+import 'package:agriser_work/pages/user/user_search/list_service_car.dart';
+import 'package:agriser_work/pages/user/user_search/list_service_labor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../model/usermodel.dart';
@@ -28,10 +30,7 @@ class _User_searchState extends State<User_search> {
           child: Column(
             children: <Widget>[
               Allmethod().Space(),
-              Text(
-                "รถทางการเกษตร",
-                style: TextStyle(fontSize: 20),
-              ),
+              Text("รถทางการเกษตร", style: GoogleFonts.mitr(fontSize: 18)),
               Allmethod().Space(),
               Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -51,10 +50,7 @@ class _User_searchState extends State<User_search> {
                     ImageButton4(),
                   ]),
               Allmethod().Space(),
-              Text(
-                "แรงงานทางการเกษตร",
-                style: TextStyle(fontSize: 20),
-              ),
+              Text("แรงงานทางการเกษตร", style: GoogleFonts.mitr(fontSize: 18)),
               Allmethod().Space(),
               Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,7 +83,7 @@ class _User_searchState extends State<User_search> {
                   await SharedPreferences.getInstance();
               preferences.setString("function", "1");
               MaterialPageRoute route =
-                  MaterialPageRoute(builder: (context) => List_service());
+                  MaterialPageRoute(builder: (context) => List_service_car());
               Navigator.push(context, route);
             },
             child: Column(
@@ -101,10 +97,7 @@ class _User_searchState extends State<User_search> {
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 6),
-                Text(
-                  'รถเกี่ยวข้าว',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
+                Text('รถเกี่ยวข้าว', style: GoogleFonts.mitr(fontSize: 18)),
                 SizedBox(height: 6),
               ],
             ),
@@ -127,7 +120,7 @@ class _User_searchState extends State<User_search> {
                   await SharedPreferences.getInstance();
               preferences.setString("function", "2");
               MaterialPageRoute route =
-                  MaterialPageRoute(builder: (context) => List_service());
+                  MaterialPageRoute(builder: (context) => List_service_car());
               Navigator.push(context, route);
             },
             child: Column(
@@ -141,10 +134,7 @@ class _User_searchState extends State<User_search> {
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 6),
-                Text(
-                  'แทรกเตอร์',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
+                Text('แทรกเตอร์', style: GoogleFonts.mitr(fontSize: 18)),
                 SizedBox(height: 6),
               ],
             ),
@@ -167,7 +157,7 @@ class _User_searchState extends State<User_search> {
                   await SharedPreferences.getInstance();
               preferences.setString("function", "3");
               MaterialPageRoute route =
-                  MaterialPageRoute(builder: (context) => List_service());
+                  MaterialPageRoute(builder: (context) => List_service_car());
               Navigator.push(context, route);
             },
             child: Column(
@@ -181,10 +171,7 @@ class _User_searchState extends State<User_search> {
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 6),
-                Text(
-                  'รถดำนา',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
+                Text('รถดำนา', style: GoogleFonts.mitr(fontSize: 18)),
                 SizedBox(height: 6),
               ],
             ),
@@ -207,7 +194,7 @@ class _User_searchState extends State<User_search> {
                   await SharedPreferences.getInstance();
               preferences.setString("function", "4");
               MaterialPageRoute route =
-                  MaterialPageRoute(builder: (context) => List_service());
+                  MaterialPageRoute(builder: (context) => List_service_car());
               Navigator.push(context, route);
             },
             child: Column(
@@ -221,10 +208,7 @@ class _User_searchState extends State<User_search> {
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 6),
-                Text(
-                  'โดรน',
-                  style: TextStyle(fontSize: 20),
-                ),
+                Text('โดรน', style: GoogleFonts.mitr(fontSize: 18)),
                 SizedBox(height: 6),
               ],
             ),
@@ -247,7 +231,7 @@ class _User_searchState extends State<User_search> {
                   await SharedPreferences.getInstance();
               preferences.setString("function", "5");
               MaterialPageRoute route =
-                  MaterialPageRoute(builder: (context) => List_service());
+                  MaterialPageRoute(builder: (context) => List_service_labor());
               Navigator.push(context, route);
             },
             child: Column(
@@ -261,10 +245,7 @@ class _User_searchState extends State<User_search> {
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 6),
-                Text(
-                  'แรงงานเพาะปลูก',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
+                Text('แรงงานเพาะปลูก', style: GoogleFonts.mitr(fontSize: 18)),
                 SizedBox(height: 6),
               ],
             ),
@@ -287,7 +268,7 @@ class _User_searchState extends State<User_search> {
                   await SharedPreferences.getInstance();
               preferences.setString("function", "6");
               MaterialPageRoute route =
-                  MaterialPageRoute(builder: (context) => List_service());
+                  MaterialPageRoute(builder: (context) => List_service_labor());
               Navigator.push(context, route);
             },
             child: Column(
@@ -301,10 +282,7 @@ class _User_searchState extends State<User_search> {
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 6),
-                Text(
-                  'แรงงานเก็บเกี่ยว',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
+                Text('แรงงานเก็บเกี่ยว', style: GoogleFonts.mitr(fontSize: 18)),
                 SizedBox(height: 6),
               ],
             ),

@@ -20,9 +20,9 @@ if (!$link->set_charset("utf8")) {
 if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
 				
-		$phone_provider = $_GET['phone_provider'];
+		$id_presentwork = $_GET['id_presentwork'];
 
-		$result = mysqli_query($link, "SELECT * FROM tb_provider WHERE phone_provider = '$phone_provider'");
+		$result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_labor WHERE id_presentwork = '$id_presentwork'");
 
 		if ($result) {
 
@@ -35,8 +35,7 @@ if (isset($_GET)) {
 
 		} //if
 
-	}
-	 else echo "Welcome Master UNG";	// if2
+	} else echo "Welcome Master UNG";	// if2
    
 }	// if1
 

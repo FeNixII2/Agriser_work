@@ -1,35 +1,40 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'dart:io';
 
-import 'package:agriser_work/pages/provider/all_bottombar_provider.dart';
+import 'package:agriser_work/pages/user/user_presentwork/list_user_presentwork_car.dart';
 import 'package:agriser_work/utility/dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import '../all_bottombar_user.dart';
 
-class Confirm_presentwork extends StatefulWidget {
-  const Confirm_presentwork({Key? key}) : super(key: key);
+class Setmap_presentwork_car extends StatefulWidget {
+  const Setmap_presentwork_car({Key? key}) : super(key: key);
 
   @override
-  State<Confirm_presentwork> createState() => _Confirm_presentworkState();
+  State<Setmap_presentwork_car> createState() => _Setmap_presentwork_carState();
 }
 
-class _Confirm_presentworkState extends State<Confirm_presentwork> {
-  late int total_price;
-  late double map_lat_work = 0, map_long_work;
-  late String date_work,
-      phone_user,
-      phone_provider,
-      count_field,
-      prices,
-      id_service,
-      function,
-      type_service;
+class _Setmap_presentwork_carState extends State<Setmap_presentwork_car> {
+  late double map_lat_work, map_long_work;
+  String load = "0";
+
+  late String type, count, prices, date_work, details;
+  late String img1;
+  late String img2;
+
+  late String phone_user;
+  late String map_lat_user;
+  late String map_long_user;
+  TextEditingController dateinput = TextEditingController();
+  late String formattedDate = "";
   @override
   void initState() {
     super.initState();
@@ -40,14 +45,25 @@ class _Confirm_presentworkState extends State<Confirm_presentwork> {
   Future<Null> findData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      id_service = preferences.getString('id_service')!;
-      date_work = preferences.getString('date_work')!;
       phone_user = preferences.getString('phone_user')!;
-      phone_provider = preferences.getString('phone_provider')!;
-      count_field = preferences.getString('count_field')!;
+      type = preferences.getString('choose_type_service')!;
+      count = preferences.getString('count')!;
       prices = preferences.getString('prices')!;
-      function = preferences.getString('function')!;
-      total_price = int.parse(prices) * int.parse(count_field);
+      date_work = preferences.getString('date_work')!;
+      details = preferences.getString('details')!;
+
+      img1 = preferences.getString('img1')!;
+      img2 = preferences.getString('img2')!;
+
+      print("----------------GETALLDATA---------------------");
+      print(phone_user);
+      print(type);
+      print(count);
+      print(prices);
+      print(date_work);
+      print(details);
+      print(img1);
+      print(img2);
     });
   }
 
@@ -55,33 +71,41 @@ class _Confirm_presentworkState extends State<Confirm_presentwork> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.pop(context)),
-        title: Text("ยืนยันงาน"),
-        // centerTitle: true,
+        backgroundColor: Colors.green.shade400,
+        title: Text(
+          "เลือกจุดนัดพบ",
+          style: GoogleFonts.mitr(
+            fontSize: 18,
+          ),
+        ),
       ),
       body: Column(
         children: [
-          Text('งานเริ่มวันที่ $date_work'),
-          Text('ราคาทั้งหมด $total_price บาท'),
           Container(
             child: FutureBuilder(builder:
                 (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (map_lat_work != 0) {
+              if (load != "0") {
                 return showmap();
               }
               return Center(child: CircularProgressIndicator());
             }),
           ),
-          RaisedButton(
-            onPressed: () {
-              addschedule_user();
-            },
-            child: Text("ยืนยันรายการ"),
-          ),
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          height: 50,
+          child: RaisedButton(
+            color: Colors.green.shade400,
+            onPressed: () {
+              upload_presentwork_car();
+            },
+            child: Text(
+              "ยืนยัน",
+              style: GoogleFonts.mitr(fontSize: 18, color: Colors.white),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -93,6 +117,7 @@ class _Confirm_presentworkState extends State<Confirm_presentwork> {
     setState(() {
       map_lat_work = locationData!.latitude!;
       map_long_work = locationData.longitude!;
+      load = map_lat_work.toString();
       print("lat = $map_lat_work , long = $map_long_work");
     });
   }
@@ -111,7 +136,7 @@ class _Confirm_presentworkState extends State<Confirm_presentwork> {
     CameraPosition Location_user = CameraPosition(target: latLng, zoom: 17);
 
     return Container(
-      height: 450,
+      height: 610,
       // width: 300,
       child: GoogleMap(
         onTap: (LatLng laalongg) {
@@ -131,7 +156,7 @@ class _Confirm_presentworkState extends State<Confirm_presentwork> {
 
   Marker mylocation() {
     return Marker(
-      markerId: MarkerId("asdsadasdasd"),
+      markerId: MarkerId("mylocation"),
       position: LatLng(map_lat_work, map_long_work),
       icon: BitmapDescriptor.defaultMarkerWithHue(120),
     );
@@ -143,25 +168,30 @@ class _Confirm_presentworkState extends State<Confirm_presentwork> {
 
   //////////////////////////////////// END MAP ///////////////////////////////
 
-  void addschedule_user() async {
-    if (function == "5" || function == "6") {
-      type_service = "labor";
-    } else {
-      type_service = "car";
-    }
+  Future upload_presentwork_car() async {
+    final uri =
+        Uri.parse("http://192.168.1.4/agriser_work/add_presentwork_car.php");
+    var request = http.MultipartRequest("POST", uri);
+    request.fields["phone_user"] = phone_user;
+    request.fields["type"] = type;
+    request.fields["count"] = count;
+    request.fields["prices"] = prices;
+    request.fields["date_work"] = date_work;
+    request.fields["details"] = details;
+    request.fields["map_lat_work"] = map_lat_work.toString();
+    request.fields["map_long_work"] = map_long_work.toString();
+    request.fields["img1"] = img1;
+    request.fields["img2"] = img2;
 
-    var dio = Dio();
-    final response = await dio.get(
-        "http://192.168.1.4/agriser_work/add_schedule_service_car.php?isAdd=true&id_service=$id_service&phone_user=$phone_user&phone_provider=$phone_provider&date_work=$date_work&count_field=$count_field&total_price=$total_price&map_lat_work=$map_lat_work&map_long_work=$map_long_work&type_service=$type_service");
+    var response = await request.send();
 
-    print(response.data);
-    if (response.data == "true") {
+    if (response.statusCode == 200) {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_provider());
+          MaterialPageRoute(builder: (context) => List_user_presentwork_car());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
-      dialong(context, "ลงทะเบียนสำเร็จ");
+      print("UPLOAD");
     } else {
-      dialong(context, "ไม่สามารถสมัครได้ กรุณาลองใหม่");
+      print("UPLOAD FAIL");
     }
   }
 }

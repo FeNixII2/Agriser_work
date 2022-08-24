@@ -4,6 +4,7 @@ import 'package:agriser_work/utility/allmethod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class User_calenda extends StatefulWidget {
   const User_calenda({Key? key}) : super(key: key);
@@ -48,10 +49,7 @@ class _User_calendaState extends State<User_calenda> {
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 6),
-                Text(
-                  'ตารางงาน',
-                  style: TextStyle(fontSize: 22, color: Colors.black),
-                ),
+                Text('บริการ', style: GoogleFonts.mitr(fontSize: 18)),
                 SizedBox(height: 6),
               ],
             ),
@@ -85,10 +83,7 @@ class _User_calendaState extends State<User_calenda> {
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: 6),
-                Text(
-                  'ตารางงานประกาศ',
-                  style: TextStyle(fontSize: 22, color: Colors.black),
-                ),
+                Text('งานประกาศ', style: GoogleFonts.mitr(fontSize: 18)),
                 SizedBox(height: 6),
               ],
             ),
