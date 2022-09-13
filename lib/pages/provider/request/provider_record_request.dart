@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:agriser_work/pages/provider/request/data_schedule_request_car.dart';
 import 'package:agriser_work/pages/provider/request/record_schedule_request_car.dart';
 import 'package:agriser_work/pages/provider/request/record_schedule_request_labor.dart';
@@ -24,7 +25,7 @@ class _Provider_record_requestState extends State<Provider_record_request> {
   List search_service = [];
 
   late String phone_provider, id_service;
-  late String status = "", type = "";
+  late String status = "", type = "", show = "";
 
   @override
   void initState() {
@@ -48,12 +49,138 @@ class _Provider_record_requestState extends State<Provider_record_request> {
       body: ListView.builder(
           itemCount: search_service.length,
           itemBuilder: (context, index) {
+            Uint8List imgfromb64 =
+                base64Decode(search_service[index]['show_img']);
             if (search_service[index]["status"] == "2") {
               status = "งานเสร็จสิ้น";
             }
             if (search_service[index]["status"] == "3") {
               status = "งานถูกยกเลิก";
             }
+            if (search_service[index]["type_service"] == "car") {
+              show = "รถเกษตร";
+            }
+            if (search_service[index]["type_service"] == "labor") {
+              show = "แรงงานเกษตร";
+            }
+
+            return Card(
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                onTap: () async {
+                  SharedPreferences preferences =
+                      await SharedPreferences.getInstance();
+                  preferences.setString(
+                      "id_schedule", search_service[index]["id_schedule"]);
+                  preferences.setString(
+                      "id_service", search_service[index]["id_service"]);
+                  preferences.setString(
+                      "phone_user", search_service[index]["phone_user"]);
+
+                  preferences.setString(
+                      "status", search_service[index]["status"]);
+
+                  preferences.setString(
+                      "action", search_service[index]["action"]);
+
+                  if (search_service[index]["type_service"] == "car") {
+                    MaterialPageRoute route = MaterialPageRoute(
+                        builder: (context) => Record_schedule_request_car());
+                    Navigator.push(context, route);
+                  } else if (search_service[index]["type_service"] == "labor") {
+                    MaterialPageRoute route = MaterialPageRoute(
+                        builder: (context) => Record_schedule_request_labor());
+                    Navigator.push(context, route);
+                  }
+                },
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: CircleAvatar(
+                              radius: 45,
+                              backgroundImage: MemoryImage(imgfromb64),
+                            )),
+                      ],
+                    ),
+                    Container(
+                      child: Row(
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("บริการ: ",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                    Text(
+                                        "${search_service[index]['show_type']}",
+                                        style: GoogleFonts.mitr(
+                                          fontSize: 16,
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("ชื่อ: ",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                    Text(
+                                        "${search_service[index]['show_servicename']}",
+                                        style: GoogleFonts.mitr(
+                                          fontSize: 16,
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("จังหวัด: ",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                    Text(
+                                        "${search_service[index]['show_province']}",
+                                        style: GoogleFonts.mitr(
+                                          fontSize: 16,
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("นัดหมาย: ",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                    Text(
+                                        "${search_service[index]['date_work']}",
+                                        style: GoogleFonts.mitr(
+                                          fontSize: 16,
+                                        )),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        "$status",
+                        style: GoogleFonts.mitr(
+                            fontSize: 18,
+                            color: Color.fromARGB(255, 141, 142, 141)),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
 
             return Card(
               clipBehavior: Clip.antiAlias,
@@ -91,15 +218,19 @@ class _Provider_record_requestState extends State<Provider_record_request> {
                   child: Column(
                     children: [
                       ListTile(
-                        leading: Text(search_service[index]["id_service"],
-                            style: GoogleFonts.mitr(fontSize: 18)),
-                        title: Text(search_service[index]["type_service"],
-                            style: GoogleFonts.mitr(fontSize: 18)),
+                        leading:
+                            Text(show, style: GoogleFonts.mitr(fontSize: 18)),
+                        title: Text(search_service[index]["id_schedule"],
+                            style: GoogleFonts.mitr(fontSize: 16)),
                         trailing: Text("$status",
                             style: GoogleFonts.mitr(fontSize: 18)),
-                        subtitle: Text(search_service[index]["phone_user"],
-                            style: GoogleFonts.mitr(fontSize: 18)),
+                        subtitle: Text(search_service[index]["id_service"],
+                            style: GoogleFonts.mitr(fontSize: 16)),
                       ),
+                      Text(
+                          "เบอร์ผู้ติดต่อ: " +
+                              search_service[index]["phone_user"],
+                          style: GoogleFonts.mitr(fontSize: 16))
                     ],
                   ),
                 ),

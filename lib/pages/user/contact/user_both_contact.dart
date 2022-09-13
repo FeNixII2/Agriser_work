@@ -1,3 +1,4 @@
+import 'package:agriser_work/pages/user/all_bottombar_user.dart';
 import 'package:agriser_work/pages/user/contact/user_record_contact.dart';
 import 'package:agriser_work/pages/user/contact/user_schedule_contact.dart';
 import 'package:agriser_work/pages/user/request/user_record_request.dart';
@@ -34,6 +35,13 @@ class _User_both_contactState extends State<User_both_contact> {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => All_bottombar_user()),
+              ),
+            ),
             title: Text("ตารางงานที่ติอต่อ",
                 style: GoogleFonts.mitr(fontSize: 18)),
             backgroundColor: Colors.green.shade400,

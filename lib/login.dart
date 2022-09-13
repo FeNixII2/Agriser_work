@@ -41,34 +41,11 @@ class _LoginState extends State<Login> {
 
   // The response type can be text, json or jsonp
 
-  Future<Null> findLocation() async {
-    LocationData? locationData = await findLocationData();
-
-    setState(() async {
-      lat = locationData!.latitude!;
-      long = locationData.longitude!;
-      print("lat = $lat , long = $long");
-
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      preferences.setDouble("lat", lat);
-      preferences.setDouble("long", long);
-    });
-  }
-
-  Future<LocationData?> findLocationData() async {
-    Location location = Location();
-    try {
-      return location.getLocation();
-    } catch (e) {
-      return null;
-    }
-  }
-
   Future<Null> checklogin() async {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
-      phonelogin = preferences.getString("phone_user")!;
-      print("usernamelogin = $phonelogin");
+      phonelogin = preferences.getString("check_login")!;
+      print("check_login = $phonelogin");
       if (phonelogin == null) {
         print("not login ready");
       } else {
@@ -167,6 +144,7 @@ class _LoginState extends State<Login> {
 
         SharedPreferences preferences = await SharedPreferences.getInstance();
         preferences.setString("phone_user", datauser.phone_user);
+        preferences.setString("check_login", datauser.phone_user);
 
         // preferences.setString("name_user", datauser.name_user);
 
@@ -176,6 +154,7 @@ class _LoginState extends State<Login> {
               MaterialPageRoute(builder: (context) => All_bottombar_user());
           Navigator.pushAndRemoveUntil(context, route, (route) => false);
           print("เข้าสู่ระบบ");
+          dialong(context, "เบอร์ ${datauser.phone_user} เข้าสู่ระบบ");
         } else {
           dialong(context, "รหัสผ่านไม่ถูกต้อง");
         }
@@ -188,6 +167,8 @@ class _LoginState extends State<Login> {
         child: TextField(
           onChanged: (value) => phone_user = value.trim(),
           style: GoogleFonts.mitr(fontSize: 18),
+          keyboardType: TextInputType.number,
+          maxLength: 10,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.account_box),
             labelStyle:

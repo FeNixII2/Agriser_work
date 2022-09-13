@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Allmethod {
-  Color dartcolor = Colors.orange.shade200;
+  Color dartcolor = Colors.green.shade400;
 
   Widget ShowProgress() {
     return Center(
@@ -18,7 +18,7 @@ class Allmethod {
         title,
         style: TextStyle(
           fontSize: 22,
-          color: Colors.orange.shade200,
+          color: Colors.green.shade400,
           fontWeight: FontWeight.bold,
         ),
       );

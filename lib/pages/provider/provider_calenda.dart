@@ -52,7 +52,7 @@ class _Provider_calendaState extends State<Provider_calenda> {
                 ),
                 SizedBox(height: 6),
                 Text(
-                  'ตารางงานที่ส่งมา',
+                  'ตารางงานบริการ',
                   style: GoogleFonts.mitr(fontSize: 18),
                 ),
                 SizedBox(height: 6),
@@ -89,7 +89,7 @@ class _Provider_calendaState extends State<Provider_calenda> {
                 ),
                 SizedBox(height: 6),
                 Text(
-                  'ตารางงานที่ร้องขอ',
+                  'ตารางงานงานประกาศ',
                   style: GoogleFonts.mitr(fontSize: 18),
                 ),
                 SizedBox(height: 6),

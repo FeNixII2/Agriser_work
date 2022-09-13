@@ -55,6 +55,7 @@ class _Data_presentwork_laborState extends State<Data_presentwork_labor> {
       p_district,
       p_map_lat,
       p_map_long;
+  late String pro_name, pro_province;
 
   late double lat = 0, long = 0;
   late Uint8List imgfromb64;
@@ -110,6 +111,7 @@ class _Data_presentwork_laborState extends State<Data_presentwork_labor> {
           long = double.parse(map_long_work);
 
           LoadData_user();
+          LoadData_provider();
         });
       }
     }
@@ -148,6 +150,23 @@ class _Data_presentwork_laborState extends State<Data_presentwork_labor> {
           print("--- Get p_map_long State :     " + p_map_long);
 
           Loadampure();
+        });
+      }
+    }
+  }
+
+  Future LoadData_provider() async {
+    var url =
+        "http://192.168.1.4/agriser_work/getProviderWhereProvider.php?isAdd=true&phone_provider=$phone_provider";
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      for (var map in jsonData) {
+        Modelprovider datauser = Modelprovider.fromJson(map);
+        setState(() {
+          pro_name = datauser.name;
+          pro_province = datauser.province;
+          Loadprovince2();
         });
       }
     }
@@ -193,7 +212,7 @@ class _Data_presentwork_laborState extends State<Data_presentwork_labor> {
       print(response.body);
       if (response.body == "false") {
         print("ไม่มีข้อมูลในระบบ");
-        addschedule_presentwork();
+        Alertconfirm();
       } else {
         dialong(context, "คุณได้ติดต่องานประกาศนี้ไปแล้ว");
         print("มีข้อมูลในระบบแล้ว");
@@ -212,7 +231,7 @@ class _Data_presentwork_laborState extends State<Data_presentwork_labor> {
       // width: 300,
       child: GoogleMap(
         initialCameraPosition: Location_user,
-        mapType: MapType.normal,
+        mapType: MapType.hybrid,
         onMapCreated: (controller) {},
         markers: marker(),
       ),
@@ -350,7 +369,8 @@ class _Data_presentwork_laborState extends State<Data_presentwork_labor> {
                         style: GoogleFonts.mitr(fontSize: 16))),
                 Allmethod().Space(),
                 Text("$p_name",
-                    style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                    style: GoogleFonts.mitr(
+                        fontSize: 18, color: Colors.green.shade400)),
               ],
             ),
             Row(
@@ -362,7 +382,8 @@ class _Data_presentwork_laborState extends State<Data_presentwork_labor> {
                 ),
                 Allmethod().Space(),
                 Text("$p_phone",
-                    style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                    style: GoogleFonts.mitr(
+                        fontSize: 18, color: Colors.green.shade400)),
               ],
             ),
             Row(
@@ -374,7 +395,8 @@ class _Data_presentwork_laborState extends State<Data_presentwork_labor> {
                 ),
                 Allmethod().Space(),
                 Text("$p_email",
-                    style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                    style: GoogleFonts.mitr(
+                        fontSize: 18, color: Colors.green.shade400)),
               ],
             ),
             Row(
@@ -385,7 +407,8 @@ class _Data_presentwork_laborState extends State<Data_presentwork_labor> {
                         style: GoogleFonts.mitr(fontSize: 16))),
                 Allmethod().Space(),
                 Text("$p_address",
-                    style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                    style: GoogleFonts.mitr(
+                        fontSize: 18, color: Colors.green.shade400)),
               ],
             ),
             Row(
@@ -396,7 +419,8 @@ class _Data_presentwork_laborState extends State<Data_presentwork_labor> {
                         style: GoogleFonts.mitr(fontSize: 16))),
                 Allmethod().Space(),
                 Text("$p_district",
-                    style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                    style: GoogleFonts.mitr(
+                        fontSize: 18, color: Colors.green.shade400)),
               ],
             ),
             Row(
@@ -407,7 +431,8 @@ class _Data_presentwork_laborState extends State<Data_presentwork_labor> {
                         style: GoogleFonts.mitr(fontSize: 16))),
                 Allmethod().Space(),
                 Text("$p_province",
-                    style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                    style: GoogleFonts.mitr(
+                        fontSize: 18, color: Colors.green.shade400)),
               ],
             ),
             Container(
@@ -453,6 +478,53 @@ class _Data_presentwork_laborState extends State<Data_presentwork_labor> {
     }
   }
 
+  Loadprovince2() async {
+    var dio = Dio();
+    final response = await dio.get(
+        "http://192.168.1.4/agriser_work/showprovince.php?isAdd=true&id_province=$pro_province");
+    if (response.statusCode == 200) {
+      List search_service = json.decode(response.data);
+      print(search_service[0]["name_th"]);
+      setState(() {
+        pro_province = search_service[0]["name_th"];
+
+        load = "1";
+      });
+    }
+  }
+
+  void Alertconfirm() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title:
+                Text('ติดต่องานประกาศ', style: GoogleFonts.mitr(fontSize: 22)),
+            content: Text('คุณต้องการติดต่องานประกาศนี้ใช่หรือไม่',
+                style: GoogleFonts.mitr(fontSize: 18)),
+            actions: <Widget>[cancelButton(), okButton_logout()],
+          );
+        });
+  }
+
+  Widget okButton_logout() {
+    return FlatButton(
+      child: Text('ตกลง', style: GoogleFonts.mitr(fontSize: 18)),
+      onPressed: () {
+        addschedule_presentwork();
+      },
+    );
+  }
+
+  Widget cancelButton() {
+    return FlatButton(
+      child: Text('ยกเลิก', style: GoogleFonts.mitr(fontSize: 18)),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+  }
+
   Future addschedule_presentwork() async {
     if (function == "5" || function == "6") {
       checktype = "labor";
@@ -471,6 +543,13 @@ class _Data_presentwork_laborState extends State<Data_presentwork_labor> {
     request.fields["type_presentwork"] = checktype;
     request.fields["phone_user"] = phone_user;
     request.fields["phone_provider"] = phone_provider;
+    request.fields["show_img"] = img_field1;
+    request.fields["show_type"] = type_presentwork;
+    request.fields["show_servicename"] = p_name;
+    request.fields["show_province"] = p_province;
+    request.fields["show_servicename_pro"] = pro_name;
+    request.fields["show_province_pro"] = pro_province;
+    request.fields["show_datework"] = date_work;
 
     var response = await request.send();
 
@@ -479,6 +558,7 @@ class _Data_presentwork_laborState extends State<Data_presentwork_labor> {
           MaterialPageRoute(builder: (context) => All_bottombar_provider());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       print("สำเร็จ");
+      dialong(context, "ติดต่องานประกาศสำเร็จ");
     } else {
       print("ไม่สำเร็จ");
     }

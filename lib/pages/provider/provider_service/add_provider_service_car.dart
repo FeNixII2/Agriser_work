@@ -31,12 +31,12 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
   bool check2 = false;
   late String phone_provider,
       type,
-      brand,
-      model,
-      date_buy,
-      prices,
-      image1,
-      image2,
+      brand = "",
+      model = "",
+      date_buy = "",
+      prices = "",
+      image1 = "",
+      image2 = "",
       status_work;
 
   late Uint8List imgfromb64;
@@ -158,7 +158,7 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
                 children: [
                   Container(
                       width: 150,
-                      child: Text("รูปรถด้านหน้า :",
+                      child: Text("รูปประกอบที่1 :",
                           style: GoogleFonts.mitr(fontSize: 18))),
                   display1(),
                 ],
@@ -167,7 +167,7 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
                 children: [
                   Container(
                       width: 150,
-                      child: Text("รูปรถด้านข้าง :",
+                      child: Text("รูปประกอบที่2 :",
                           style: GoogleFonts.mitr(fontSize: 18))),
                   display2(),
                 ],
@@ -182,7 +182,16 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
           child: RaisedButton(
               color: Colors.blue,
               onPressed: () async {
-                upload_service_car();
+                if (brand == "" ||
+                    prices == "" ||
+                    date_buy == "" ||
+                    model == "" ||
+                    image1 == "" ||
+                    image2 == "") {
+                  dialong(context, "กรุณากรอกข้อมูลและแนปรูปภาพ");
+                } else {
+                  Alertconfirm();
+                }
               },
               child: Text(
                 "ยืนยัน",
@@ -201,11 +210,12 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
       width: 200,
       child: TextField(
         readOnly: true,
+        style: GoogleFonts.mitr(fontSize: 18),
         onChanged: (value) => type = value.trim(),
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
-            hintStyle: TextStyle(color: Colors.grey[800]),
+            hintStyle: GoogleFonts.mitr(fontSize: 18),
             hintText: type,
             fillColor: Colors.white70),
       ));
@@ -214,9 +224,11 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
         height: 60,
         width: 200,
         child: TextField(
+          style: GoogleFonts.mitr(fontSize: 18),
           onChanged: (value) => brand = value.trim(),
           decoration: InputDecoration(
             hintText: "ตัวอย่าง คูโบต้า",
+            hintStyle: GoogleFonts.mitr(fontSize: 18),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -227,9 +239,11 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
         height: 60,
         width: 200,
         child: TextField(
+          style: GoogleFonts.mitr(fontSize: 18),
           onChanged: (value) => model = value.trim(),
           decoration: InputDecoration(
             hintText: "ตัวอย่าง K15G4",
+            hintStyle: GoogleFonts.mitr(fontSize: 18),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -240,10 +254,12 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
         height: 60,
         width: 200,
         child: TextField(
+          style: GoogleFonts.mitr(fontSize: 18),
           keyboardType: TextInputType.number,
           onChanged: (value) => date_buy = value.trim(),
           decoration: InputDecoration(
             hintText: "ตัวอย่าง 2560",
+            hintStyle: GoogleFonts.mitr(fontSize: 18),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -254,10 +270,12 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
         height: 60,
         width: 200,
         child: TextField(
+          style: GoogleFonts.mitr(fontSize: 18),
           keyboardType: TextInputType.number,
           onChanged: (value) => prices = value.trim(),
           decoration: InputDecoration(
             hintText: "ตัวอย่าง 800",
+            hintStyle: GoogleFonts.mitr(fontSize: 18),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -267,7 +285,7 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
   Widget display1() => Container(
         child: check1 == false
             ? IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage1();
                 },
@@ -275,7 +293,7 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
                 icon: Image.asset("assets/images/gallery.png"),
               )
             : IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage1();
                 },
@@ -289,7 +307,7 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
   Widget display2() => Container(
         child: check2 == false
             ? IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage2();
                 },
@@ -297,7 +315,7 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
                 icon: Image.asset("assets/images/gallery.png"),
               )
             : IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage2();
                 },
@@ -307,6 +325,38 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
                 ),
               ),
       );
+
+  void Alertconfirm() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title:
+                Text('ลงทะเบียนบริการ', style: GoogleFonts.mitr(fontSize: 22)),
+            content: Text('คุณต้องการให้บริการนี้ใช่หรือไม่',
+                style: GoogleFonts.mitr(fontSize: 18)),
+            actions: <Widget>[cancelButton(), okButton_logout()],
+          );
+        });
+  }
+
+  Widget okButton_logout() {
+    return FlatButton(
+      child: Text('ตกลง', style: GoogleFonts.mitr(fontSize: 18)),
+      onPressed: () {
+        upload_service_car();
+      },
+    );
+  }
+
+  Widget cancelButton() {
+    return FlatButton(
+      child: Text('ยกเลิก', style: GoogleFonts.mitr(fontSize: 18)),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+  }
 
   Future upload_service_car() async {
     final uri =
@@ -330,6 +380,7 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
           MaterialPageRoute(builder: (context) => List_provider_service_car());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       print("UPLOAD");
+      dialong(context, "ลงทะเบียนบริการสำเร็จ");
     } else {
       print("UPLOAD FAIL");
     }

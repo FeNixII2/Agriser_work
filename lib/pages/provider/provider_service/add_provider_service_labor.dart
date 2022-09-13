@@ -35,9 +35,9 @@ class _Add_provider_service_laborState
   late String phone_provider,
       type,
       info_choice = "ไม่มี",
-      prices,
-      image1,
-      image2,
+      prices = "",
+      image1 = "",
+      image2 = "",
       rice,
       sweetcorn,
       cassava,
@@ -195,27 +195,19 @@ class _Add_provider_service_laborState
           child: RaisedButton(
               color: Colors.blue,
               onPressed: () async {
-                if (isChecked_box1 == true) {
-                  total_choice.add("พริก");
+                if (prices == "" ||
+                    image1 == "" ||
+                    image2 == "" ||
+                    (isChecked_box1 == false &&
+                        isChecked_box2 == false &&
+                        isChecked_box3 == false &&
+                        isChecked_box4 == false &&
+                        isChecked_box5 == false &&
+                        isChecked_box6 == false)) {
+                  dialong(context, "กรุณากรอกข้อมูลและแนปรูปภาพ");
+                } else {
+                  Alertconfirm();
                 }
-                if (isChecked_box2 == true) {
-                  total_choice.add("ข้าวโพด");
-                }
-                if (isChecked_box3 == true) {
-                  total_choice.add("มันสำปะหลัง");
-                }
-                if (isChecked_box4 == true) {
-                  total_choice.add("อ้อย");
-                }
-                if (isChecked_box5 == true) {
-                  total_choice.add("พริก");
-                }
-
-                if (isChecked_box6 == true) {
-                  total_choice.add("อื่นๆ");
-                }
-
-                upload_service_labor();
               },
               child: Text(
                 "ยืนยัน",
@@ -232,7 +224,7 @@ class _Add_provider_service_laborState
   Widget display1() => Container(
         child: check1 == false
             ? IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage1();
                 },
@@ -240,7 +232,7 @@ class _Add_provider_service_laborState
                 icon: Image.asset("assets/images/gallery.png"),
               )
             : IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage1();
                 },
@@ -254,7 +246,7 @@ class _Add_provider_service_laborState
   Widget display2() => Container(
         child: check2 == false
             ? IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage2();
                 },
@@ -262,7 +254,7 @@ class _Add_provider_service_laborState
                 icon: Image.asset("assets/images/gallery.png"),
               )
             : IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage2();
                 },
@@ -421,6 +413,57 @@ class _Add_provider_service_laborState
         ),
       );
 
+  void Alertconfirm() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title:
+                Text('ลงทะเบียนบริการ', style: GoogleFonts.mitr(fontSize: 22)),
+            content: Text('คุณต้องการให้บริการนี้ใช่หรือไม่',
+                style: GoogleFonts.mitr(fontSize: 18)),
+            actions: <Widget>[cancelButton(), okButton_logout()],
+          );
+        });
+  }
+
+  Widget okButton_logout() {
+    return FlatButton(
+      child: Text('ตกลง', style: GoogleFonts.mitr(fontSize: 18)),
+      onPressed: () {
+        if (isChecked_box1 == true) {
+          total_choice.add("ข้าว");
+        }
+        if (isChecked_box2 == true) {
+          total_choice.add("ข้าวโพด");
+        }
+        if (isChecked_box3 == true) {
+          total_choice.add("มันสำปะหลัง");
+        }
+        if (isChecked_box4 == true) {
+          total_choice.add("อ้อย");
+        }
+        if (isChecked_box5 == true) {
+          total_choice.add("พริก");
+        }
+
+        if (isChecked_box6 == true) {
+          total_choice.add("อื่นๆ");
+        }
+        upload_service_labor();
+      },
+    );
+  }
+
+  Widget cancelButton() {
+    return FlatButton(
+      child: Text('ยกเลิก', style: GoogleFonts.mitr(fontSize: 18)),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+  }
+
   Future upload_service_labor() async {
     final uri =
         Uri.parse("http://192.168.1.4/agriser_work/add_service_labor.php");
@@ -446,6 +489,7 @@ class _Add_provider_service_laborState
           builder: (context) => List_provider_service_labor());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       print("UPLOAD");
+      dialong(context, "ลงทะเบียนบริการสำเร็จ");
     } else {
       print("UPLOAD FAIL");
     }

@@ -44,6 +44,8 @@ class _Edit_presentwork_carState extends State<Edit_presentwork_car> {
   String image1 = "";
   String image2 = "";
 
+  List search_service = [];
+
   late Uint8List imgfromb64, imgfromb642;
 
   late String name_user;
@@ -190,7 +192,7 @@ class _Edit_presentwork_carState extends State<Edit_presentwork_car> {
                 children: [
                   Container(
                       width: 150,
-                      child: Text("รายละเอียดเพิ่มเติม :",
+                      child: Text("รายละเอียด :",
                           style: GoogleFonts.mitr(fontSize: 18))),
                   box_moreinfo(),
                 ],
@@ -299,7 +301,7 @@ class _Edit_presentwork_carState extends State<Edit_presentwork_car> {
   Widget display1() => Container(
         child: check1 == false
             ? IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   // chooseImage1();
                 },
@@ -307,7 +309,7 @@ class _Edit_presentwork_carState extends State<Edit_presentwork_car> {
                 icon: Image.memory(imgfromb64),
               )
             : IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage1();
                 },
@@ -318,7 +320,7 @@ class _Edit_presentwork_carState extends State<Edit_presentwork_car> {
   Widget display2() => Container(
         child: check2 == false
             ? IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   // chooseImage2();
                 },
@@ -326,7 +328,7 @@ class _Edit_presentwork_carState extends State<Edit_presentwork_car> {
                 icon: Image.memory(imgfromb642),
               )
             : IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage2();
                 },
@@ -388,7 +390,6 @@ class _Edit_presentwork_carState extends State<Edit_presentwork_car> {
           print(
               "-----------------------------------------------------------------");
 
-          id_presentwork;
           phone_user = datauser.phone_user;
           type = datauser.type_presentwork;
           count_field = datauser.count_field;
@@ -435,6 +436,19 @@ class _Edit_presentwork_carState extends State<Edit_presentwork_car> {
         delete_presentwork();
       },
     );
+  }
+
+  Load_psk() async {
+    var dio = Dio();
+    final response = await dio.get(
+        "http://192.168.1.4/agriser_work/search_schedule_presentwork_pru.php?isAdd=true&phone_user=$phone_user&id_presentwork=$id_presentwork");
+    if (response.statusCode == 200) {
+      setState(() {
+        search_service = json.decode(response.data);
+      });
+      print(search_service);
+      return search_service;
+    }
   }
 
   Widget cancelButton() {

@@ -22,22 +22,17 @@ if (isset($_GET)) {
 
 
 				
-		$phone_provider = $_GET['phone_provider'];
+		$phone_user = $_GET['phone_user'];
+		$id_presentwork = $_GET['id_presentwork'];
 		
 
-		$result = mysqli_query($link, "SELECT * FROM tb_schedule_service where phone_provider = '$phone_provider' and (status = '0' or status = '1' or status = '4' or status = '5') and action = 'urp' ");
-
-
-// 			$result = mysqli_query($link, "SELECT *
-
-// 			FROM tb_schedule_service AS d1
-// LEFT JOIN tb_service_provider_car AS d2 ON ( d1.id_service = d2.id_service) 
-// LEFT JOIN tb_service_provider_labor AS d3 ON (d1.id_service = d3.id_service )
-// WHERE  d1.phone_provider = '0931549549' and (status = '0' or status = '1' or status = '4' or status = '5') and action = 'urp' ");
+		// $result = mysqli_query($link, "SELECT * FROM tb_schedule_presentwork where phone_user = '$phone_user' and (status = '0' or status = '1' or status = '4' or status = '5') and action = 'pru'  ");
 
 
 
-		
+		$result = mysqli_query($link, "SELECT * 
+FROM tb_schedule_presentwork 
+INNER join tb_presentwork_user_car ON tb_presentwork_user_car.id_presentwork = tb_schedule_presentwork.id_presentwork where  tb_schedule_presentwork.phone_user = '$phone_user' and tb_schedule_presentwork.id_presentwork = '$id_presentwork' and (status = '1' or status = '4' or status = '5') and action = 'pru'  ");
 
 		
 

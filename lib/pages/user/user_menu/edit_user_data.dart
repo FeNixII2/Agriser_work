@@ -85,21 +85,24 @@ class _Edit_user_dataState extends State<Edit_user_data> {
                 Row(
                   children: [
                     Container(
-                      width: 175,
-                      height: 175,
+                      width: 202,
+                      height: 202,
                       child: Image.asset('assets/images/user.png'),
                     )
                   ],
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("ชื่อ-นามสกุล: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child: Text("$name",
                             style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -107,12 +110,12 @@ class _Edit_user_dataState extends State<Edit_user_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("เบอร์โทรศัพท์: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child: Text("$phone_user",
                             style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -120,12 +123,12 @@ class _Edit_user_dataState extends State<Edit_user_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("อีเมลล์: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child: Text("$email",
                             style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -133,12 +136,12 @@ class _Edit_user_dataState extends State<Edit_user_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("ข้อมูลที่อยู่: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child: Text("$address",
                             style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -146,12 +149,12 @@ class _Edit_user_dataState extends State<Edit_user_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("อำเภอ: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child: Text("$district",
                             style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -159,12 +162,12 @@ class _Edit_user_dataState extends State<Edit_user_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("จังหวัด: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child: Text("$province",
                             style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -172,12 +175,12 @@ class _Edit_user_dataState extends State<Edit_user_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("เพศ: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child:
                             Text("$sex", style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -185,16 +188,18 @@ class _Edit_user_dataState extends State<Edit_user_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("วันเกิด: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child: Text("$date",
                             style: GoogleFonts.mitr(fontSize: 18)))
                   ],
                 ),
+                Allmethod().Space(),
+                Text("ข้อมูลที่อยู่", style: GoogleFonts.mitr(fontSize: 18)),
                 Allmethod().Space(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -292,10 +297,10 @@ class _Edit_user_dataState extends State<Edit_user_data> {
 
     return Container(
       height: 200,
-      width: 300,
+      width: 350,
       child: GoogleMap(
         initialCameraPosition: Location_user,
-        mapType: MapType.normal,
+        mapType: MapType.hybrid,
         onMapCreated: (controller) {},
         markers: marker(),
       ),

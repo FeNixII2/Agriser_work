@@ -10,10 +10,13 @@ Future<void> dialong(BuildContext context, String message) async {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  FlatButton(
-                      onPressed: () => Navigator.pop(context),
-                      child:
-                          Text("ตกลง", style: GoogleFonts.mitr(fontSize: 18))),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                    child: FlatButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("ตกลง",
+                            style: GoogleFonts.mitr(fontSize: 18))),
+                  ),
                 ],
               )
             ],

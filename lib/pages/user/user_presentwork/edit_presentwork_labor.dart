@@ -247,7 +247,7 @@ class _Edit_presentwork_laborState extends State<Edit_presentwork_labor> {
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
-            hintStyle: TextStyle(color: Colors.grey[800]),
+            hintStyle: GoogleFonts.mitr(fontSize: 18),
             hintText: type_presentwork,
             fillColor: Colors.white70),
       ));
@@ -322,7 +322,7 @@ class _Edit_presentwork_laborState extends State<Edit_presentwork_labor> {
   Widget display1() => Container(
         child: check1 == false
             ? IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   // chooseImage1();
                 },
@@ -330,7 +330,7 @@ class _Edit_presentwork_laborState extends State<Edit_presentwork_labor> {
                 icon: Image.memory(imgfromb64),
               )
             : IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage1();
                 },
@@ -341,7 +341,7 @@ class _Edit_presentwork_laborState extends State<Edit_presentwork_labor> {
   Widget display2() => Container(
         child: check2 == false
             ? IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   // chooseImage2();
                 },
@@ -349,7 +349,7 @@ class _Edit_presentwork_laborState extends State<Edit_presentwork_labor> {
                 icon: Image.memory(imgfromb642),
               )
             : IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage2();
                 },

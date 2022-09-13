@@ -151,7 +151,7 @@ class _Add_user_presentwork_carState extends State<Add_user_presentwork_car> {
                 children: [
                   Container(
                       width: 150,
-                      child: Text("รายละเอียดเพิ่มเติม :",
+                      child: Text("รายละเอียด :",
                           style: GoogleFonts.mitr(fontSize: 18))),
                   box_moreinfo(),
                 ],
@@ -195,19 +195,27 @@ class _Add_user_presentwork_carState extends State<Add_user_presentwork_car> {
           child: RaisedButton(
               color: Colors.green.shade400,
               onPressed: () async {
-                SharedPreferences preferences =
-                    await SharedPreferences.getInstance();
-                preferences.setString("count", count_field);
-                preferences.setString("prices", prices);
-                preferences.setString("date_work", formattedDate);
-                preferences.setString("details", more_details);
+                if (count_field == "" ||
+                    prices == "" ||
+                    formattedDate == "" ||
+                    image1 == "" ||
+                    image2 == "") {
+                  dialong(context, "กรุณากรอกข้อมูลและแนปรูปภาพ");
+                } else {
+                  SharedPreferences preferences =
+                      await SharedPreferences.getInstance();
+                  preferences.setString("count", count_field);
+                  preferences.setString("prices", prices);
+                  preferences.setString("date_work", formattedDate);
+                  preferences.setString("details", more_details);
 
-                preferences.setString("img1", image1);
-                preferences.setString("img2", image2);
+                  preferences.setString("img1", image1);
+                  preferences.setString("img2", image2);
 
-                MaterialPageRoute route = MaterialPageRoute(
-                    builder: (context) => Setmap_presentwork_car());
-                Navigator.push(context, route);
+                  MaterialPageRoute route = MaterialPageRoute(
+                      builder: (context) => Setmap_presentwork_car());
+                  Navigator.push(context, route);
+                }
               },
               child: Text(
                 "ถัดไป",
@@ -230,7 +238,9 @@ class _Add_user_presentwork_carState extends State<Add_user_presentwork_car> {
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
-            hintStyle: TextStyle(color: Colors.grey[800]),
+            hintStyle: GoogleFonts.mitr(
+              fontSize: 18,
+            ),
             hintText: type,
             fillColor: Colors.white70),
       ));
@@ -243,6 +253,9 @@ class _Add_user_presentwork_carState extends State<Add_user_presentwork_car> {
           onChanged: (value) => count_field = value.trim(),
           decoration: InputDecoration(
             hintText: "จำนวนไร่",
+            hintStyle: GoogleFonts.mitr(
+              fontSize: 18,
+            ),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -257,6 +270,9 @@ class _Add_user_presentwork_carState extends State<Add_user_presentwork_car> {
           onChanged: (value) => prices = value.trim(),
           decoration: InputDecoration(
             hintText: "ราคา",
+            hintStyle: GoogleFonts.mitr(
+              fontSize: 18,
+            ),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -270,6 +286,9 @@ class _Add_user_presentwork_carState extends State<Add_user_presentwork_car> {
           onChanged: (value) => more_details = value.trim(),
           decoration: InputDecoration(
             hintText: "รายละเอียดเพิ่มเติม",
+            hintStyle: GoogleFonts.mitr(
+              fontSize: 18,
+            ),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -281,7 +300,7 @@ class _Add_user_presentwork_carState extends State<Add_user_presentwork_car> {
   Widget display1() => Container(
         child: check1 == false
             ? IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage1();
                 },
@@ -289,7 +308,7 @@ class _Add_user_presentwork_carState extends State<Add_user_presentwork_car> {
                 icon: Image.asset("assets/images/gallery.png"),
               )
             : IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage1();
                 },
@@ -300,7 +319,7 @@ class _Add_user_presentwork_carState extends State<Add_user_presentwork_car> {
   Widget display2() => Container(
         child: check2 == false
             ? IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage2();
                 },
@@ -308,7 +327,7 @@ class _Add_user_presentwork_carState extends State<Add_user_presentwork_car> {
                 icon: Image.asset("assets/images/gallery.png"),
               )
             : IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage2();
                 },
@@ -323,9 +342,12 @@ class _Add_user_presentwork_carState extends State<Add_user_presentwork_car> {
         child: TextField(
           controller: dateinput, //editing controller of this TextField
           decoration: InputDecoration(
-              icon: Icon(Icons.calendar_today), //icon of text field
-              labelText: "เลือกวันที่เริ่มงาน" //label text of field
-              ),
+            icon: Icon(Icons.calendar_today), //icon of text field
+            labelText: "เลือกวันที่เริ่มงาน", //label text of field
+            labelStyle: GoogleFonts.mitr(
+              fontSize: 18,
+            ),
+          ),
           readOnly: true, //set it true, so that user will not able to edit text
           onTap: () async {
             var dateTime = DateTime.now();
@@ -334,7 +356,7 @@ class _Add_user_presentwork_carState extends State<Add_user_presentwork_car> {
                 initialDate: dateTime,
                 firstDate: DateTime(
                     1950), //DateTime.now() - not to allow to choose before today.
-                lastDate: DateTime.utc(dateTime.year, dateTime.month + 1,
+                lastDate: DateTime.utc(dateTime.year, dateTime.month + 2,
                     dateTime.day, dateTime.hour, dateTime.minute));
 
             if (pickedDate != null) {

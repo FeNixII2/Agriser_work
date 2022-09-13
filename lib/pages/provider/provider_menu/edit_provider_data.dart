@@ -94,12 +94,12 @@ class _Edit_provider_dataState extends State<Edit_provider_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("ชื่อ-นามสกุล: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child: Text("$name",
                             style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -107,12 +107,12 @@ class _Edit_provider_dataState extends State<Edit_provider_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("เบอร์โทรศัพท์: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child: Text("$phone_provider",
                             style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -120,12 +120,12 @@ class _Edit_provider_dataState extends State<Edit_provider_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("อีเมลล์: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child: Text("$email",
                             style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -133,12 +133,12 @@ class _Edit_provider_dataState extends State<Edit_provider_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("ข้อมูลที่อยู่: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child: Text("$address",
                             style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -146,12 +146,12 @@ class _Edit_provider_dataState extends State<Edit_provider_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("อำเภอ: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child: Text("$district",
                             style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -159,12 +159,12 @@ class _Edit_provider_dataState extends State<Edit_provider_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("จังหวัด: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child: Text("$province",
                             style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -172,12 +172,12 @@ class _Edit_provider_dataState extends State<Edit_provider_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("เพศ: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child:
                             Text("$sex", style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -185,12 +185,12 @@ class _Edit_provider_dataState extends State<Edit_provider_data> {
                 Row(
                   children: [
                     Container(
-                        width: 150,
+                        width: 130,
                         child: Text("วันเกิด: ",
                             style: GoogleFonts.mitr(fontSize: 18))),
                     Allmethod().Space(),
                     Container(
-                        width: 175,
+                        width: 202,
                         child: Text("$date",
                             style: GoogleFonts.mitr(fontSize: 18)))
                   ],
@@ -292,10 +292,10 @@ class _Edit_provider_dataState extends State<Edit_provider_data> {
 
     return Container(
       height: 200,
-      width: 300,
+      width: 350,
       child: GoogleMap(
         initialCameraPosition: Location_user,
-        mapType: MapType.normal,
+        mapType: MapType.hybrid,
         onMapCreated: (controller) {},
         markers: marker(),
       ),

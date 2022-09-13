@@ -19,18 +19,24 @@ if (!$link->set_charset("utf8")) {
 
 	
 
-if (isset($_GET)) {
-	if ($_GET['isAdd'] == 'true') {
+// if (isset($_GET)) {
+// 	if ($_GET['isAdd'] == 'true') {
 		
-		$id_service = $_GET['id_service'];
-		$phone_user = $_GET['phone_user'];
-		$phone_provider = $_GET['phone_provider'];
-		$date_work = $_GET['date_work'];
-		$count_field = $_GET['count_field'];
-		$total_price = $_GET['total_price'];
-		$map_lat_work = $_GET['map_lat_work'];
-		$map_long_work = $_GET['map_long_work'];
-		$type_service = $_GET['type_service'];
+		$id_service = $_POST['id_service'];
+		$phone_user = $_POST['phone_user'];
+		$phone_provider = $_POST['phone_provider'];
+		$date_work = $_POST['date_work'];
+		$count_field = $_POST['count_field'];
+		$total_price = $_POST['total_price'];
+		$map_lat_work = $_POST['map_lat_work'];
+		$map_long_work = $_POST['map_long_work'];
+		$type_service = $_POST['type_service'];
+		$show_img = $_POST['show_img'];
+		$show_type = $_POST['show_type'];
+		$show_servicename = $_POST['show_servicename'];
+		$show_province = $_POST['show_province'];
+		$show_servicename_pro = $_POST['show_servicename_pro'];
+		$show_province_pro = $_POST['show_province_pro'];
 		
 
 	$nums = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
@@ -43,9 +49,9 @@ if (isset($_GET)) {
     }
     $num = "sc_".$nums."";
 							
-		$sql = "INSERT INTO `tb_schedule_service`( `id_schedule`, `id_service`, `phone_user`, `phone_provider`, `date_work`, `count_field`, `total_price`, `map_lat_work`, `map_long_work`, `status` ,`action` ,`type_service` ) VALUES ('$num','$id_service','$phone_user','$phone_provider','$date_work','$count_field','$total_price','$map_lat_work','$map_long_work','0','ucp' ,'$type_service' )";
+		$sql = "INSERT INTO `tb_schedule_service`( `id_schedule`, `id_service`, `phone_user`, `phone_provider`, `date_work`, `count_field`, `total_price`, `map_lat_work`, `map_long_work`, `status` ,`action` ,`type_service` ,`show_img` ,`show_type` ,`show_servicename` ,`show_province`,`show_servicename_pro` ,`show_province_pro` ) VALUES ('$num','$id_service','$phone_user','$phone_provider','$date_work','$count_field','$total_price','$map_lat_work','$map_long_work','0','ucp' ,'$type_service' ,'$show_img' ,'$show_type' ,'$show_servicename' ,'$show_province' ,'$show_servicename_pro' ,'$show_province_pro' )";
 
-		$sql2 = "INSERT INTO `tb_schedule_service`( `id_schedule`, `id_service`, `phone_user`, `phone_provider`, `date_work`, `count_field`, `total_price`, `map_lat_work`, `map_long_work`, `status` ,`action`,`type_service` ) VALUES ('$num','$id_service','$phone_user','$phone_provider','$date_work','$count_field','$total_price','$map_lat_work','$map_long_work','0','urp','$type_service' )";
+		$sql2 = "INSERT INTO `tb_schedule_service`( `id_schedule`, `id_service`, `phone_user`, `phone_provider`, `date_work`, `count_field`, `total_price`, `map_lat_work`, `map_long_work`, `status` ,`action`,`type_service` ,`show_img` ,`show_type` ,`show_servicename` ,`show_province`,`show_servicename_pro` ,`show_province_pro` ) VALUES ('$num','$id_service','$phone_user','$phone_provider','$date_work','$count_field','$total_price','$map_lat_work','$map_long_work','0','urp','$type_service' ,'$show_img' ,'$show_type' ,'$show_servicename' ,'$show_province','$show_servicename_pro' ,'$show_province_pro' )";
 
 		
 
@@ -64,7 +70,7 @@ if (isset($_GET)) {
 		}
 
 		
-	} else echo "Welcome Master UNG";
+// 	} else echo "Welcome Master UNG";
    
-}
+// }
 	mysqli_close($link);

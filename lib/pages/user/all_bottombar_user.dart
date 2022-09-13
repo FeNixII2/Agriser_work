@@ -56,6 +56,7 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
     setState(() {
       // name_user = preferences.getString('name_user')!;
       phone_user = preferences.getString('phone_user')!;
+      
       // name_provider = preferences.getString('name_user')!;
 
       // preferences.setString("phone_provider", phone_provider);
@@ -273,8 +274,6 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
     }
   }
 
- 
-
   void Alert_regis_provider() {
     showDialog(
         context: context,
@@ -302,7 +301,7 @@ class _All_bottombar_userState extends State<All_bottombar_user> {
     );
   }
 
-   void Alertlogout() {
+  void Alertlogout() {
     showDialog(
         context: context,
         builder: (BuildContext context) {

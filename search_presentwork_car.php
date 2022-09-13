@@ -24,7 +24,7 @@ if (isset($_GET)) {
 				
 		$phone_user = $_GET['phone_user'];
 		
-		$result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_car where phone_user = '$phone_user' and status_work ='0' ");
+		$result = mysqli_query($link, "SELECT * FROM tb_presentwork_user_car where phone_user = '$phone_user' and (status_work ='0' ) ");
 
 		
 

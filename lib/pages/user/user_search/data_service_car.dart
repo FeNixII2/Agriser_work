@@ -3,8 +3,10 @@ import 'dart:typed_data';
 
 import 'package:agriser_work/pages/user/user_search/confirm_service_car.dart';
 import 'package:agriser_work/utility/allmethod.dart';
+import 'package:agriser_work/utility/dialog.dart';
 import 'package:agriser_work/utility/model_service_provider_car.dart';
 import 'package:agriser_work/utility/modelprovider.dart';
+import 'package:agriser_work/utility/modeluser.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,11 +48,16 @@ class _Data_service_carState extends State<Data_service_car> {
       p_district,
       p_map_lat,
       p_map_long;
+  late String use_name, use_province, phone_user, use_district;
 
   late double lat = 0, long = 0;
-  late String count_file, total_price;
+  late String count_file = "", total_price = "";
   late String formattedDate = "", load = "0";
   late Uint8List imgfromb64;
+  List Allrating = [];
+  List<int> allrate = [];
+  late double showrating = 0;
+  late int c = 0;
 
   @override
   void initState() {
@@ -64,12 +71,14 @@ class _Data_service_carState extends State<Data_service_car> {
     setState(() {
       id_service = preferences.getString('id_service')!;
       phone_provider = preferences.getString('phone_provider')!;
+      phone_user = preferences.getString('phone_user')!;
 
       print("------------ Data - Mode ------------");
       print("--- Get id_service State :     " + id_service);
       print("--- Get phone_provider State :     " + phone_provider);
     });
     LoadData_service();
+    Loadrating();
   }
 
   Future LoadData_service() async {
@@ -92,9 +101,43 @@ class _Data_service_carState extends State<Data_service_car> {
           imgfromb64 = base64Decode(image1);
 
           LoadData_provider();
+          LoadData_user();
         });
       }
     }
+  }
+
+  Future Loadrating() async {
+    var dio = Dio();
+    final response = await dio.get(
+        "http://192.168.1.4/agriser_work/search_rating_provider.php?isAdd=true&phone_provider=$phone_provider");
+    if (response.statusCode == 200) {
+      setState(() {
+        Allrating = json.decode(response.data);
+      });
+      print("-------------------------------------------------------");
+      print(Allrating);
+      sumrating();
+      return Allrating;
+    }
+  }
+
+  sumrating() {
+    int a;
+    for (var i = 0; i < Allrating.length; i++) {
+      print(Allrating[i]['rating']);
+      a = int.parse(Allrating[i]['rating']);
+      allrate.add(a);
+    }
+    for (var i = 0; i < allrate.length; i++) {
+      showrating += allrate[i];
+    }
+    setState(() {
+      showrating = showrating / allrate.length;
+
+      // c = showrating.toInt();
+    });
+    print("showrating : ${showrating}");
   }
 
   Future LoadData_provider() async {
@@ -126,6 +169,23 @@ class _Data_service_carState extends State<Data_service_car> {
     }
   }
 
+  Future LoadData_user() async {
+    var url =
+        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user";
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      for (var map in jsonData) {
+        Modeluser datauser = Modeluser.fromJson(map);
+        setState(() {
+          use_name = datauser.name;
+          use_province = datauser.province;
+          Loadprovince2();
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,18 +209,28 @@ class _Data_service_carState extends State<Data_service_car> {
           child: RaisedButton(
             color: Colors.green.shade400,
             onPressed: () async {
-              int a = int.parse(count_file) * int.parse(prices);
-              total_price = a.toString();
+              if (count_file == "" || formattedDate == "") {
+                dialong(context, "โปรดเลือกจำนวนไร่และวันที่ต้องการนัดหมาย");
+              } else {
+                int a = int.parse(count_file) * int.parse(prices);
+                total_price = a.toString();
 
-              SharedPreferences preferences =
-                  await SharedPreferences.getInstance();
-              preferences.setString("count_field", count_file);
-              preferences.setString("date_work", formattedDate);
-              preferences.setString("total_price", total_price);
+                SharedPreferences preferences =
+                    await SharedPreferences.getInstance();
+                preferences.setString("count_field", count_file);
+                preferences.setString("date_work", formattedDate);
+                preferences.setString("total_price", total_price);
+                preferences.setString("show_img", image1);
+                preferences.setString("show_type", type);
+                preferences.setString("show_servicename", use_name);
+                preferences.setString("show_province", use_province);
+                preferences.setString("show_servicename_pro", p_name);
+                preferences.setString("show_province_pro", p_province);
 
-              MaterialPageRoute route = MaterialPageRoute(
-                  builder: (context) => Confirm_service_car());
-              Navigator.push(context, route);
+                MaterialPageRoute route = MaterialPageRoute(
+                    builder: (context) => Confirm_service_car());
+                Navigator.push(context, route);
+              }
             },
             child: Text("ยืนยัน",
                 style: GoogleFonts.mitr(fontSize: 18, color: Colors.white)),
@@ -185,7 +255,7 @@ class _Data_service_carState extends State<Data_service_car> {
       // width: 300,
       child: GoogleMap(
         initialCameraPosition: Location_user,
-        mapType: MapType.normal,
+        mapType: MapType.hybrid,
         onMapCreated: (controller) {},
         markers: marker(),
       ),
@@ -196,7 +266,7 @@ class _Data_service_carState extends State<Data_service_car> {
     return Marker(
       markerId: MarkerId("asdsadasdasd"),
       position: LatLng(lat, long),
-      icon: BitmapDescriptor.defaultMarkerWithHue(1),
+      icon: BitmapDescriptor.defaultMarkerWithHue(220),
     );
   }
 
@@ -228,7 +298,9 @@ class _Data_service_carState extends State<Data_service_car> {
         height: 100,
         width: 200,
         child: TextField(
-          controller: dateinput, //editing controller of this TextField
+          controller: dateinput,
+          style: GoogleFonts.mitr(
+              fontSize: 18), //editing controller of this TextField
           decoration: InputDecoration(
               icon: Icon(Icons.calendar_today), //icon of text field
               labelText: "เลือกวันที่เริ่มงาน",
@@ -343,6 +415,18 @@ class _Data_service_carState extends State<Data_service_car> {
               children: [
                 Container(
                     padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
+                    child: Text("คะแนนการให้บริการ   :  ",
+                        style: GoogleFonts.mitr(fontSize: 16))),
+                Allmethod().Space(),
+                Text("${showrating.toStringAsFixed(1)}",
+                    style: GoogleFonts.mitr(
+                        fontSize: 18, color: Color.fromARGB(255, 4, 136, 11))),
+              ],
+            ),
+            Row(
+              children: [
+                Container(
+                    padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
                     child: Text("จำนวนไร่  :  ",
                         style: GoogleFonts.mitr(fontSize: 16))),
                 Allmethod().Space(),
@@ -378,7 +462,8 @@ class _Data_service_carState extends State<Data_service_car> {
                         style: GoogleFonts.mitr(fontSize: 16))),
                 Allmethod().Space(),
                 Text("$p_name",
-                    style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                    style: GoogleFonts.mitr(
+                        fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
               ],
             ),
             Row(
@@ -390,7 +475,8 @@ class _Data_service_carState extends State<Data_service_car> {
                 ),
                 Allmethod().Space(),
                 Text("$p_phone",
-                    style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                    style: GoogleFonts.mitr(
+                        fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
               ],
             ),
             Row(
@@ -402,7 +488,8 @@ class _Data_service_carState extends State<Data_service_car> {
                 ),
                 Allmethod().Space(),
                 Text("$p_email",
-                    style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                    style: GoogleFonts.mitr(
+                        fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
               ],
             ),
             Row(
@@ -413,7 +500,8 @@ class _Data_service_carState extends State<Data_service_car> {
                         style: GoogleFonts.mitr(fontSize: 16))),
                 Allmethod().Space(),
                 Text("$p_address",
-                    style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                    style: GoogleFonts.mitr(
+                        fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
               ],
             ),
             Row(
@@ -424,7 +512,8 @@ class _Data_service_carState extends State<Data_service_car> {
                         style: GoogleFonts.mitr(fontSize: 16))),
                 Allmethod().Space(),
                 Text("$p_district",
-                    style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                    style: GoogleFonts.mitr(
+                        fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
               ],
             ),
             Row(
@@ -435,12 +524,13 @@ class _Data_service_carState extends State<Data_service_car> {
                         style: GoogleFonts.mitr(fontSize: 16))),
                 Allmethod().Space(),
                 Text("$p_province",
-                    style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                    style: GoogleFonts.mitr(
+                        fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
               ],
             ),
             Text("- ที่อยู่ -", style: GoogleFonts.mitr(fontSize: 18)),
-            Allmethod().Space(),
             Container(
+              padding: EdgeInsets.all(10),
               child: FutureBuilder(builder:
                   (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (lat != 0) {
@@ -476,6 +566,20 @@ class _Data_service_carState extends State<Data_service_car> {
       print(search_service[0]["name_th"]);
       setState(() {
         p_province = search_service[0]["name_th"];
+        load = "1";
+      });
+    }
+  }
+
+  Loadprovince2() async {
+    var dio = Dio();
+    final response = await dio.get(
+        "http://192.168.1.4/agriser_work/showprovince.php?isAdd=true&id_province=$use_province");
+    if (response.statusCode == 200) {
+      List search_service = json.decode(response.data);
+      print(search_service[0]["name_th"]);
+      setState(() {
+        use_province = search_service[0]["name_th"];
         load = "1";
       });
     }

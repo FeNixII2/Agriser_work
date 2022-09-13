@@ -259,7 +259,8 @@ class _Data_schedule_contact_laborState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("รายละเอียดการนัดหมาย"),
+        title:
+            Text("รายละเอียดการนัดหมาย", style: GoogleFonts.mitr(fontSize: 18)),
         backgroundColor: Colors.green.shade400,
       ),
       body: SingleChildScrollView(
@@ -285,7 +286,7 @@ class _Data_schedule_contact_laborState
       // width: 300,
       child: GoogleMap(
         initialCameraPosition: Location_user,
-        mapType: MapType.normal,
+        mapType: MapType.hybrid,
         onMapCreated: (controller) {},
         markers: marker(),
       ),
@@ -296,7 +297,7 @@ class _Data_schedule_contact_laborState
     return Marker(
       markerId: MarkerId("asdsadasdasd"),
       position: LatLng(lat, long),
-      icon: BitmapDescriptor.defaultMarkerWithHue(120),
+      icon: BitmapDescriptor.defaultMarkerWithHue(1),
     );
   }
 
@@ -320,7 +321,7 @@ class _Data_schedule_contact_laborState
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_user());
+          MaterialPageRoute(builder: (context) => User_both_contact());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       dialong(context, "รอคอนเฟิร์มงานสำเร็จ");
     } else {}
@@ -334,7 +335,7 @@ class _Data_schedule_contact_laborState
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_user());
+          MaterialPageRoute(builder: (context) => User_both_contact());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       dialong(context, "รอคอนเฟิร์มยกเลิก");
     } else {}
@@ -348,7 +349,7 @@ class _Data_schedule_contact_laborState
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_user());
+          MaterialPageRoute(builder: (context) => User_both_contact());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       dialong(context, "งานถูกยกเลิก");
     } else {}
@@ -362,7 +363,7 @@ class _Data_schedule_contact_laborState
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_user());
+          MaterialPageRoute(builder: (context) => User_both_contact());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       dialong(context, "งานสำเร็จ");
     } else {}
@@ -376,7 +377,7 @@ class _Data_schedule_contact_laborState
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_user());
+          MaterialPageRoute(builder: (context) => User_both_contact());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       dialong(context, "กำลังดำเนินงาน");
     } else {}
@@ -442,10 +443,10 @@ class _Data_schedule_contact_laborState
             children: [
               Container(
                   padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
-                  child: Text("ราคาต่อวัน :  ",
+                  child: Text("ราคารวม :  ",
                       style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
-              Text("$prices",
+              Text("$total_price",
                   style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
             ],
           ),
@@ -490,7 +491,8 @@ class _Data_schedule_contact_laborState
                       Text("ชื่อ  :  ", style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_name",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -502,7 +504,8 @@ class _Data_schedule_contact_laborState
               ),
               Allmethod().Space(),
               Text("$p_phone",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -514,7 +517,8 @@ class _Data_schedule_contact_laborState
               ),
               Allmethod().Space(),
               Text("$p_email",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -525,7 +529,8 @@ class _Data_schedule_contact_laborState
                       style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_address",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -536,7 +541,8 @@ class _Data_schedule_contact_laborState
                       style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_district",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -547,11 +553,13 @@ class _Data_schedule_contact_laborState
                       style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_province",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Text("- จุดนัดพบ -", style: GoogleFonts.mitr(fontSize: 18)),
           Container(
+            padding: EdgeInsets.all(10),
             child: FutureBuilder(builder:
                 (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (lat != 0) {
@@ -565,11 +573,11 @@ class _Data_schedule_contact_laborState
             alignment: MainAxisAlignment.center,
             children: [
               RaisedButton(
-                child: Text("เสร็จสิ้น"),
+                child: Text("ยืนยัน", style: GoogleFonts.mitr(fontSize: 18)),
                 onPressed: _isButtonDisabled_1 ? null : _incrementCounter_1,
               ),
               RaisedButton(
-                child: Text("ยกเลิก"),
+                child: Text("ยกเลิก", style: GoogleFonts.mitr(fontSize: 18)),
                 onPressed: _isButtonDisabled_2 ? null : _incrementCounter_2,
               ),
             ],

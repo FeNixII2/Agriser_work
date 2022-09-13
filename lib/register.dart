@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:agriser_work/regis_setmap.dart';
 import 'package:agriser_work/utility/allmethod.dart';
 import 'package:agriser_work/utility/dialog.dart';
 import 'package:dio/dio.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'login.dart';
 import 'package:intl/intl.dart';
@@ -30,7 +32,6 @@ class _RegisterState extends State<Register> {
   void initState() {
     super.initState();
     getAllprovince();
-    findLocation();
   }
 
   late String name_user = "";
@@ -148,13 +149,6 @@ class _RegisterState extends State<Register> {
                 ]),
             Dateform(),
             Allmethod().Space(),
-            FutureBuilder(builder:
-                (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (load != "0") {
-                return showmap();
-              }
-              return Center(child: CircularProgressIndicator());
-            }),
           ],
         ),
       ),
@@ -186,7 +180,15 @@ class _RegisterState extends State<Register> {
                   print("กรอกข้อมูลไม่ครบ");
                 } else {
                   if (password_user == password_user_a) {
-                    checktel();
+                    if (phone_user.length != 10) {
+                      dialong(context, "กรุณากรอกเบอร์โทรให้ครบ");
+                    } else {
+                      if (password_user.length < 6) {
+                        dialong(context, "กรุณากรอกรหัสผ่านอย่างน้อย 6 ตัว");
+                      } else {
+                        checktel();
+                      }
+                    }
                   } else {
                     dialong(context,
                         "รหัสผ่านของคุณไม่ตรงกัน กรุณาลองใหม่อีกครั้ง");
@@ -250,28 +252,22 @@ class _RegisterState extends State<Register> {
     print(response.data);
     // print('check ^^^^');
     if (response.data == "null") {
-      registhread();
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setString("phone_user", phone_user);
+      preferences.setString("password_user", password_user);
+      preferences.setString("name_user", name_user);
+      preferences.setString("email_user", email_user);
+      preferences.setString("date_user", formattedDate);
+      preferences.setString("sex_user", sex_user);
+      preferences.setString("address_user", address_user);
+      preferences.setString("amphures", selectAmphure);
+      preferences.setString("province", selectProvince);
+
+      MaterialPageRoute route =
+          MaterialPageRoute(builder: (context) => Regis_setmap());
+      Navigator.push(context, route);
     } else {
       dialong(context, "เบอร์ $phone_user ถูกใช้งานแล้ว กรุณาลองใหม่");
-    }
-  }
-
-  void registhread() async {
-    if (email_user == null || email_user.isEmpty) {
-      email_user = '-';
-    }
-    var dio = Dio();
-    final response = await dio.get(
-        "http://192.168.1.4/agriser_work/addUser.php?isAdd=true&tel=$phone_user&pass=$password_user&name=$name_user&date=$formattedDate&sex=$sex_user&address=$address_user&province=$selectProvince&amphures=$selectAmphure&email=$email_user&map_lat_user=$lat&map_long_user=$long");
-
-    print(response.data);
-    if (response.data == "true") {
-      MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => Login());
-      Navigator.pushAndRemoveUntil(context, route, (route) => false);
-      dialong(context, "ลงทะเบียนสำเร็จ");
-    } else {
-      dialong(context, "ไม่สามารถสมัครได้ กรุณาลองใหม่");
     }
   }
 
@@ -296,6 +292,7 @@ class _RegisterState extends State<Register> {
         width: 300.0,
         child: TextField(
           keyboardType: TextInputType.number,
+          maxLength: 10,
           textInputAction: TextInputAction.go,
           onChanged: (value) => phone_user = value.trim(),
           decoration: InputDecoration(
@@ -369,7 +366,9 @@ class _RegisterState extends State<Register> {
       height: 100,
       width: 300.0,
       child: TextField(
-        controller: dateinput, //editing controller of this TextField
+        controller: dateinput,
+        style: GoogleFonts.mitr(
+            fontSize: 18), //editing controller of this TextField
         decoration: InputDecoration(
           icon: Icon(Icons.calendar_today), //icon of text field
           labelText: "เลือกวันเกิด",

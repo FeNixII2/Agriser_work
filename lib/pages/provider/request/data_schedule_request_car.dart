@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:agriser_work/pages/provider/all_bottombar_provider.dart';
+import 'package:agriser_work/pages/provider/request/provider_both_request.dart';
 import 'package:agriser_work/pages/user/all_bottombar_user.dart';
 import 'package:agriser_work/pages/user/user_search/confirm_service_car.dart';
 import 'package:agriser_work/utility/allmethod.dart';
@@ -261,7 +262,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
       // width: 300,
       child: GoogleMap(
         initialCameraPosition: Location_user,
-        mapType: MapType.normal,
+        mapType: MapType.hybrid,
         onMapCreated: (controller) {},
         markers: marker(),
       ),
@@ -272,7 +273,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
     return Marker(
       markerId: MarkerId("asdsadasdasd"),
       position: LatLng(lat, long),
-      icon: BitmapDescriptor.defaultMarkerWithHue(120),
+      icon: BitmapDescriptor.defaultMarkerWithHue(1),
     );
   }
 
@@ -296,7 +297,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_provider());
+          MaterialPageRoute(builder: (context) => Provider_both_request());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       dialong(context, "รอคอนเฟิร์มงานสำเร็จ");
     } else {}
@@ -310,7 +311,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_provider());
+          MaterialPageRoute(builder: (context) => Provider_both_request());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       dialong(context, "รอคอนเฟิร์มยกเลิก");
     } else {}
@@ -324,7 +325,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_provider());
+          MaterialPageRoute(builder: (context) => Provider_both_request());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       dialong(context, "งานถูกยกเลิก");
     } else {}
@@ -338,7 +339,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_provider());
+          MaterialPageRoute(builder: (context) => Provider_both_request());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       dialong(context, "งานสำเร็จ");
     } else {}
@@ -352,7 +353,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_provider());
+          MaterialPageRoute(builder: (context) => Provider_both_request());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       dialong(context, "กำลังดำเนินงาน");
     } else {}
@@ -477,7 +478,8 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
                       Text("ชื่อ  :  ", style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_name",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Colors.green.shade400)),
             ],
           ),
           Row(
@@ -489,7 +491,8 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
               ),
               Allmethod().Space(),
               Text("$p_phone",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Colors.green.shade400)),
             ],
           ),
           Row(
@@ -501,7 +504,8 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
               ),
               Allmethod().Space(),
               Text("$p_email",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Colors.green.shade400)),
             ],
           ),
           Row(
@@ -512,7 +516,8 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
                       style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_address",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Colors.green.shade400)),
             ],
           ),
           Row(
@@ -523,7 +528,8 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
                       style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_district",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Colors.green.shade400)),
             ],
           ),
           Row(
@@ -534,7 +540,8 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
                       style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_province",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Colors.green.shade400)),
             ],
           ),
           Text("- จุดนัดพบ -", style: GoogleFonts.mitr(fontSize: 18)),
@@ -552,11 +559,11 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
             alignment: MainAxisAlignment.center,
             children: [
               RaisedButton(
-                child: Text("เสร็จสิ้น"),
+                child: Text("ยืนยัน", style: GoogleFonts.mitr(fontSize: 18)),
                 onPressed: _isButtonDisabled_1 ? null : _incrementCounter_1,
               ),
               RaisedButton(
-                child: Text("ยกเลิก"),
+                child: Text("ยกเลิก", style: GoogleFonts.mitr(fontSize: 18)),
                 onPressed: _isButtonDisabled_2 ? null : _incrementCounter_2,
               ),
             ],

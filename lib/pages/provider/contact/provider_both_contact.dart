@@ -1,3 +1,4 @@
+import 'package:agriser_work/pages/provider/all_bottombar_provider.dart';
 import 'package:agriser_work/pages/provider/contact/provider_record_contact.dart';
 import 'package:agriser_work/pages/provider/contact/provider_schedule_contact.dart';
 import 'package:agriser_work/pages/user/contact/user_record_contact.dart';
@@ -36,9 +37,16 @@ class _Provider_both_contactState extends State<Provider_both_contact> {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
-            title: Text("ตารางงานที่ติอต่อ",
-                style: GoogleFonts.mitr(fontSize: 18)),
-          ),
+              title: Text("ตารางงานที่ติอต่อ",
+                  style: GoogleFonts.mitr(fontSize: 18)),
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => All_bottombar_provider()),
+                ),
+              )),
           // body: _children[_currenIndex],
 
           body: Column(

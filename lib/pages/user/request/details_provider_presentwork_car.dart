@@ -3,6 +3,8 @@ import 'dart:typed_data';
 
 import 'package:agriser_work/pages/provider/all_bottombar_provider.dart';
 import 'package:agriser_work/pages/user/all_bottombar_user.dart';
+import 'package:agriser_work/pages/user/contact/user_both_contact.dart';
+import 'package:agriser_work/pages/user/request/user_both_request.dart';
 import 'package:agriser_work/pages/user/user_search/confirm_service_car.dart';
 import 'package:agriser_work/utility/allmethod.dart';
 import 'package:agriser_work/utility/dialog.dart';
@@ -78,11 +80,9 @@ class _Details_provider_presentwork_carState
   void _incrementCounter_1() {
     if (status == "0") {
       change_status_service_1();
-      dialong(context, "กำลังดำเนินงาน");
     }
     if (status == "4") {
       change_status_service_3();
-      dialong(context, "ยกเลิกงาน");
     }
     if (status == "5") {
       push_rating();
@@ -92,19 +92,15 @@ class _Details_provider_presentwork_carState
   void _incrementCounter_2() {
     if (status == "0") {
       change_status_service_3();
-      dialong(context, "ยกเลิกงาน");
     }
     if (status == "1") {
       change_status_service_4();
-      dialong(context, "รอคอนเฟิร์มยกเลิกงาน");
     }
     if (status == "4") {
       change_status_service_1();
-      dialong(context, "กำลังดำเนินงาน");
     }
     if (status == "5") {
       change_status_service_1();
-      dialong(context, "กำลังดำเนินงาน");
     }
   }
 
@@ -289,7 +285,7 @@ class _Details_provider_presentwork_carState
       // width: 300,
       child: GoogleMap(
         initialCameraPosition: Location_user,
-        mapType: MapType.normal,
+        mapType: MapType.hybrid,
         onMapCreated: (controller) {},
         markers: marker(),
       ),
@@ -300,7 +296,7 @@ class _Details_provider_presentwork_carState
     return Marker(
       markerId: MarkerId("asdsadasdasd"),
       position: LatLng(lat, long),
-      icon: BitmapDescriptor.defaultMarkerWithHue(120),
+      icon: BitmapDescriptor.defaultMarkerWithHue(1),
     );
   }
 
@@ -324,8 +320,9 @@ class _Details_provider_presentwork_carState
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_user());
+          MaterialPageRoute(builder: (context) => User_both_request());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
+      dialong(context, "รอคอนเฟิร์มเสร็จสิ้นงาน");
     } else {}
   }
 
@@ -337,8 +334,9 @@ class _Details_provider_presentwork_carState
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_user());
+          MaterialPageRoute(builder: (context) => User_both_request());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
+      dialong(context, "รอคอนเฟิร์มยกเลิกงาน");
     } else {}
   }
 
@@ -350,8 +348,9 @@ class _Details_provider_presentwork_carState
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_user());
+          MaterialPageRoute(builder: (context) => User_both_request());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
+      dialong(context, "ยกเลิกงาน");
     } else {}
   }
 
@@ -363,7 +362,7 @@ class _Details_provider_presentwork_carState
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_user());
+          MaterialPageRoute(builder: (context) => User_both_request());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       dialong(context, "เสร็จสิ้นงาน");
     } else {}
@@ -377,8 +376,9 @@ class _Details_provider_presentwork_carState
     print(response.data);
     if (response.data == "true") {
       MaterialPageRoute route =
-          MaterialPageRoute(builder: (context) => All_bottombar_user());
+          MaterialPageRoute(builder: (context) => User_both_request());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
+      dialong(context, "กำลังดำเนินงาน");
     } else {}
   }
 
@@ -477,7 +477,8 @@ class _Details_provider_presentwork_carState
                       Text("ชื่อ  :  ", style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_name",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -489,7 +490,8 @@ class _Details_provider_presentwork_carState
               ),
               Allmethod().Space(),
               Text("$p_phone",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -501,7 +503,8 @@ class _Details_provider_presentwork_carState
               ),
               Allmethod().Space(),
               Text("$p_email",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -512,7 +515,8 @@ class _Details_provider_presentwork_carState
                       style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_address",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -523,7 +527,8 @@ class _Details_provider_presentwork_carState
                       style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_district",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -534,11 +539,13 @@ class _Details_provider_presentwork_carState
                       style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_province",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Text("จุดนัดพบ", style: GoogleFonts.mitr(fontSize: 18)),
           Container(
+            padding: EdgeInsets.all(10),
             child: FutureBuilder(builder:
                 (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (lat != 0) {
@@ -552,11 +559,11 @@ class _Details_provider_presentwork_carState
             alignment: MainAxisAlignment.center,
             children: [
               RaisedButton(
-                child: Text("เสร็จสิ้น"),
+                child: Text("ยืนยัน", style: GoogleFonts.mitr(fontSize: 18)),
                 onPressed: _isButtonDisabled_1 ? null : _incrementCounter_1,
               ),
               RaisedButton(
-                child: Text("ยกเลิก"),
+                child: Text("ยกเลิก", style: GoogleFonts.mitr(fontSize: 18)),
                 onPressed: _isButtonDisabled_2 ? null : _incrementCounter_2,
               ),
             ],

@@ -21,29 +21,13 @@ if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
 
 
-				
-		$phone_provider = $_GET['phone_provider'];
-		
+        $phone_provider = $_GET['phone_provider'];
 
-		$result = mysqli_query($link, "SELECT * FROM tb_schedule_service where phone_provider = '$phone_provider' and (status = '0' or status = '1' or status = '4' or status = '5') and action = 'urp' ");
-
-
-// 			$result = mysqli_query($link, "SELECT *
-
-// 			FROM tb_schedule_service AS d1
-// LEFT JOIN tb_service_provider_car AS d2 ON ( d1.id_service = d2.id_service) 
-// LEFT JOIN tb_service_provider_labor AS d3 ON (d1.id_service = d3.id_service )
-// WHERE  d1.phone_provider = '0931549549' and (status = '0' or status = '1' or status = '4' or status = '5') and action = 'urp' ");
-
-
-
-		
-
-		
-
-
-		// WHERE phone_user = '$phone_user'
-
+        
+		    $result = mysqli_query($link, "SELECT * FROM tb_rating_provider where  phone_provider = '$phone_provider'  ");
+        
+        
+        
 		if ($result) {
 
 			while($row=mysqli_fetch_assoc($result)){
@@ -53,9 +37,7 @@ if (isset($_GET)) {
 
 			echo json_encode($output);
 
-		} 
-
-		
+		} //if
 
 	} else echo "Welcome Master UNG";	// if2
    
@@ -63,4 +45,3 @@ if (isset($_GET)) {
 
 
 	mysqli_close($link);
-?>

@@ -256,7 +256,7 @@ class _Record_provider_presentwork_carState
       // width: 300,
       child: GoogleMap(
         initialCameraPosition: Location_user,
-        mapType: MapType.normal,
+        mapType: MapType.hybrid,
         onMapCreated: (controller) {},
         markers: marker(),
       ),
@@ -267,7 +267,7 @@ class _Record_provider_presentwork_carState
     return Marker(
       markerId: MarkerId("asdsadasdasd"),
       position: LatLng(lat, long),
-      icon: BitmapDescriptor.defaultMarkerWithHue(120),
+      icon: BitmapDescriptor.defaultMarkerWithHue(1),
     );
   }
 
@@ -443,7 +443,8 @@ class _Record_provider_presentwork_carState
                       Text("ชื่อ  :  ", style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_name",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -455,7 +456,8 @@ class _Record_provider_presentwork_carState
               ),
               Allmethod().Space(),
               Text("$p_phone",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -467,7 +469,8 @@ class _Record_provider_presentwork_carState
               ),
               Allmethod().Space(),
               Text("$p_email",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -478,7 +481,8 @@ class _Record_provider_presentwork_carState
                       style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_address",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -489,7 +493,8 @@ class _Record_provider_presentwork_carState
                       style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_district",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Row(
@@ -500,11 +505,13 @@ class _Record_provider_presentwork_carState
                       style: GoogleFonts.mitr(fontSize: 16))),
               Allmethod().Space(),
               Text("$p_province",
-                  style: GoogleFonts.mitr(fontSize: 18, color: Colors.red)),
+                  style: GoogleFonts.mitr(
+                      fontSize: 18, color: Color.fromARGB(255, 43, 65, 234))),
             ],
           ),
           Text("จุดนัดพบ", style: GoogleFonts.mitr(fontSize: 18)),
           Container(
+            padding: EdgeInsets.all(10),
             child: FutureBuilder(builder:
                 (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (lat != 0) {

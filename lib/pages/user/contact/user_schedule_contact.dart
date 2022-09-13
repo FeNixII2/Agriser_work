@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:agriser_work/pages/user/contact/data_schedule_contact_car.dart';
 import 'package:agriser_work/pages/user/contact/data_schedule_contact_labor.dart';
 import 'package:agriser_work/utility/model_service_provider_car.dart';
@@ -45,6 +46,9 @@ class _User_schedule_contactState extends State<User_schedule_contact> {
       body: ListView.builder(
           itemCount: search_service.length,
           itemBuilder: (context, index) {
+            Uint8List imgfromb64 =
+                base64Decode(search_service[index]['show_img']);
+
             if (search_service[index]["status"] == "0") {
               status = "รอการตอบรับ";
             }
@@ -60,8 +64,125 @@ class _User_schedule_contactState extends State<User_schedule_contact> {
 
             return Card(
               clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                onTap: () async {
+                  SharedPreferences preferences =
+                      await SharedPreferences.getInstance();
+                  preferences.setString(
+                      "id_schedule", search_service[index]["id_schedule"]);
+                  preferences.setString(
+                      "id_service", search_service[index]["id_service"]);
+                  preferences.setString("phone_provider",
+                      search_service[index]["phone_provider"]);
+
+                  preferences.setString(
+                      "status", search_service[index]["status"]);
+
+                  preferences.setString(
+                      "action", search_service[index]["action"]);
+
+                  if (search_service[index]["type_service"] == "car") {
+                    MaterialPageRoute route = MaterialPageRoute(
+                        builder: (context) => Data_schedule_contact_car());
+                    Navigator.push(context, route);
+                  } else if (search_service[index]["type_service"] == "labor") {
+                    MaterialPageRoute route = MaterialPageRoute(
+                        builder: (context) => Data_schedule_contact_labor());
+                    Navigator.push(context, route);
+                  }
+                },
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: CircleAvatar(
+                              radius: 45,
+                              backgroundImage: MemoryImage(imgfromb64),
+                            )),
+                      ],
+                    ),
+                    Container(
+                      child: Row(
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("บริการ: ",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                    Text(
+                                        "${search_service[index]['show_type']}",
+                                        style: GoogleFonts.mitr(
+                                          fontSize: 16,
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("ชื่อ: ",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                    Text(
+                                        "${search_service[index]['show_servicename_pro']}",
+                                        style: GoogleFonts.mitr(
+                                          fontSize: 16,
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("จังหวัด: ",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                    Text(
+                                        "${search_service[index]['show_province_pro']}",
+                                        style: GoogleFonts.mitr(
+                                          fontSize: 16,
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    Text("นัดหมาย: ",
+                                        style: GoogleFonts.mitr(fontSize: 16)),
+                                    Text(
+                                        "${search_service[index]['date_work']}",
+                                        style: GoogleFonts.mitr(
+                                          fontSize: 16,
+                                        )),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        "$status",
+                        style: GoogleFonts.mitr(
+                            fontSize: 18, color: Colors.green.shade400),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+
+            return Card(
+              clipBehavior: Clip.antiAlias,
               child: Container(
-                height: 100,
+                height: 110,
                 child: InkWell(
                   onTap: () async {
                     SharedPreferences preferences =
@@ -93,15 +214,23 @@ class _User_schedule_contactState extends State<User_schedule_contact> {
                   child: Column(
                     children: [
                       ListTile(
-                        leading: Text(search_service[index]["id_service"],
-                            style: GoogleFonts.mitr(fontSize: 18)),
-                        title: Text(search_service[index]["type_service"],
+                        tileColor: Colors.amber,
+                        leading: CircleAvatar(
+                          radius: 45,
+                          backgroundImage: MemoryImage(imgfromb64),
+                        ),
+                        title: Text(search_service[index]["show_type"],
                             style: GoogleFonts.mitr(fontSize: 18)),
                         trailing: Text("$status",
                             style: GoogleFonts.mitr(fontSize: 18)),
-                        subtitle: Text(search_service[index]["phone_provider"],
-                            style: GoogleFonts.mitr(fontSize: 18)),
+                        subtitle: Text(
+                            "ID: " + search_service[index]["show_servicename"],
+                            style: GoogleFonts.mitr(fontSize: 14)),
                       ),
+                      Text(
+                          "วันที่นัดหมาย: " +
+                              search_service[index]["date_work"],
+                          style: GoogleFonts.mitr(fontSize: 14))
                     ],
                   ),
                 ),

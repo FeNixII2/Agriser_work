@@ -18,17 +18,16 @@ class _User_mainState extends State<User_main> {
     return Scaffold(
       body: Center(
         child: Container(
-          child: Container(
-            child: RaisedButton(
-              onPressed: () async {
-                print("คลิกเพิ่มประกาศจ้างงาน");
-                MaterialPageRoute route = MaterialPageRoute(
-                    builder: (value) => Select_presentwork_type());
-                Navigator.push(context, route);
-              },
-              child: Text("เพิ่มประกาศจ้างงาน",
-                  style: GoogleFonts.mitr(fontSize: 18)),
-            ),
+          child: RaisedButton(
+            // color: Color.fromARGB(255, 184, 252, 186),
+            onPressed: () async {
+              print("คลิกเพิ่มประกาศจ้างงาน");
+              MaterialPageRoute route = MaterialPageRoute(
+                  builder: (value) => Select_presentwork_type());
+              Navigator.push(context, route);
+            },
+            child: Text("เพิ่มประกาศจ้างงาน",
+                style: GoogleFonts.mitr(fontSize: 18)),
           ),
           alignment: Alignment.center,
         ),

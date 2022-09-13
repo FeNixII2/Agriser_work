@@ -113,6 +113,105 @@ class _List_presentworkState extends State<List_presentwork> {
                   fix_img = search_service[index]['img_field1'];
                 }
 
+                return Card(
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: () async {
+                      phone_user =
+                          search_service[index]["phone_user"].toString();
+
+                      all_data(search_service[index]["id_presentwork"]);
+                    },
+                    child: Row(
+                      children: [
+                        Column(
+                          children: [
+                            Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: CircleAvatar(
+                                  radius: 45,
+                                  backgroundImage: MemoryImage(imgfromb64),
+                                )),
+                          ],
+                        ),
+                        Container(
+                          // color: Colors.amber,
+
+                          child: Row(
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Text("ต้องการบริการ: ",
+                                            style:
+                                                GoogleFonts.mitr(fontSize: 18)),
+                                        Text(
+                                            "${search_service[index]['type_presentwork']}",
+                                            style: GoogleFonts.mitr(
+                                                fontSize: 18,
+                                                color: Colors.green.shade400)),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Text("ราคาจ้าง: ",
+                                            style:
+                                                GoogleFonts.mitr(fontSize: 16)),
+                                        Text(
+                                            "${search_service[index]['prices']}",
+                                            style: GoogleFonts.mitr(
+                                                fontSize: 16,
+                                                color: Colors.green.shade400)),
+                                        Text(" บาท",
+                                            style:
+                                                GoogleFonts.mitr(fontSize: 16)),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Text("วันที่นัดหมาย: ",
+                                            style:
+                                                GoogleFonts.mitr(fontSize: 16)),
+                                        Text(
+                                            "${search_service[index]['date_work']}",
+                                            style: GoogleFonts.mitr(
+                                                fontSize: 16,
+                                                color: Colors.green.shade400)),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        Text("จำนวนไร่: ",
+                                            style:
+                                                GoogleFonts.mitr(fontSize: 16)),
+                                        Text(
+                                            "${search_service[index]['count_field']}",
+                                            style: GoogleFonts.mitr(
+                                                fontSize: 16,
+                                                color: Colors.green.shade400)),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+
                 return Container(
                   height: 100,
                   child: InkWell(

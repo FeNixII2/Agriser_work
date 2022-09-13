@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../utility/allmethod.dart';
+import '../../../utility/dialog.dart';
 import '../../provider/all_bottombar_provider.dart';
 // import '../../provider/provider_service/type_provider_service.dart';
 import '../user_search.dart';
@@ -36,10 +37,16 @@ class _List_service_laborState extends State<List_service_labor> {
   double sum = 0;
   int c = 0;
 
+  late String price = "";
+  // List lat_user = [];
+  // List long_user = [];
+  var select_Province;
+  var select_Amphure;
+
   @override
   void initState() {
     super.initState();
-
+    getAllprovince();
     findUser();
   }
 
@@ -68,6 +75,58 @@ class _List_service_laborState extends State<List_service_labor> {
       ),
       body: Column(
         children: [
+          Row(
+            children: [
+              Container(
+                // color: Colors.green.shade100,
+                width: 320,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      provincE(),
+                      districT(),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                // color: Colors.amber.shade200,
+                width: 50,
+                height: 50,
+                child: RaisedButton(
+                  onPressed: () {
+                    if (select_Province == null && select_Amphure == null) {
+                      if (price == "") {
+                        Loadservice();
+                      } else {
+                        print("price: " + price);
+                        Loadservice_sortprice();
+                      }
+                    } else if (select_Amphure == null) {
+                      if (price == "") {
+                        Loadserviceprovince();
+                      } else {
+                        print("price: " + price);
+                        Loadserviceprovince_sortprice();
+                      }
+                    } else {
+                      if (price == "") {
+                        check_address_provider();
+                      } else {
+                        check_address_provider2();
+                      }
+                    }
+                  },
+                  child: Icon(
+                    Icons.search,
+                    size: 25,
+                  ),
+                ),
+              ),
+            ],
+          ),
           rate(),
           Data_Provider(),
         ],
@@ -86,6 +145,25 @@ class _List_service_laborState extends State<List_service_labor> {
       print(search_service);
       checksum();
       return search_service;
+    }
+  }
+
+  Loadservice_sortprice() async {
+    var dio = Dio();
+    final response = await dio.get(
+        "http://192.168.1.4/agriser_work/search_by_user_sortprice.php?isAdd=true&function=$function&phone_user=$phone_user&price=$price");
+    if (response.statusCode == 200) {
+      if (response.data == "null") {
+        dialong(context, "ไม่มีราคานี้");
+      } else {
+        setState(() {
+          search_service = json.decode(response.data);
+        });
+        // print(search_service);
+        // loadalllatlonguser();
+
+        return search_service;
+      }
     }
   }
 
@@ -169,10 +247,11 @@ class _List_service_laborState extends State<List_service_labor> {
                                             style:
                                                 GoogleFonts.mitr(fontSize: 16)),
                                         Text(
-                                            "${search_service[index]['total_choice']}",
-                                            style: GoogleFonts.mitr(
-                                                fontSize: 16,
-                                                color: Colors.green.shade400)),
+                                          "${search_service[index]['total_choice']}",
+                                          style: GoogleFonts.mitr(
+                                              fontSize: 16,
+                                              color: Colors.green.shade400),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -210,15 +289,17 @@ class _List_service_laborState extends State<List_service_labor> {
         mainAxisAlignment: MainAxisAlignment.center,
         // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text("ค่าเฉี่ยราคาต่อวันอยู่ที่  ",
+          Text("ค่าเฉี่ยต่อวันอยู่ที่  ",
               style: GoogleFonts.mitr(
                 fontSize: 16,
               )),
           Text("$c", style: GoogleFonts.mitr(fontSize: 25, color: Colors.red)),
-          Text("  บาท",
+          Text("  บาท ",
               style: GoogleFonts.mitr(
                 fontSize: 16,
-              ))
+              )),
+          Sort_price(),
+          Text(" ค้นหา", style: GoogleFonts.mitr(fontSize: 18)),
         ],
       ),
     );
@@ -242,5 +323,184 @@ class _List_service_laborState extends State<List_service_labor> {
     });
 
     print("Sum : $sum");
+  }
+
+  Future getAllprovince() async {
+    // print("เข้าแล้วเน้อ");
+
+    var url = "http://192.168.1.4/Agriser_work/getProvince.php?isAdd=true";
+
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      setState(() {
+        dataProvince = jsonData;
+
+        // data = jsonData;
+      });
+      // print(dataProvince);
+      // return dataProvince;
+    }
+  }
+
+  Future getSelectAmphures() async {
+    // print("มาอำเภอ");
+    var url =
+        "http://192.168.1.4/Agriser_work/getSelectAmphures.php?isAdd=true&&idprovince=$select_Province";
+
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      // print("+++++++++++++++>     $jsonData");
+      setState(() {
+        dataAmphure = jsonData;
+
+        // data = jsonData;
+      });
+
+      // print(dataAmphure);
+      // return dataAmphure;
+    }
+  }
+
+  Widget provincE() => Container(
+        width: 300,
+        child: DropdownButton(
+            hint: Text("เลือกจังหวัด", style: GoogleFonts.mitr(fontSize: 18)),
+            value: select_Province,
+            items: dataProvince.map((provinces) {
+              return DropdownMenuItem(
+                  value: provinces['id'],
+                  child: Text(provinces['name_th'],
+                      style: GoogleFonts.mitr(fontSize: 18)));
+            }).toList(),
+            onChanged: (value) {
+              if (select_Amphure == null) {
+                setState(() {
+                  select_Province = value.toString();
+                  // print(select_Province);
+                });
+              } else {
+                select_Amphure = null;
+                setState(() {
+                  select_Province = value.toString();
+                  // print(select_Province);
+                });
+              }
+
+              getSelectAmphures();
+            }),
+      );
+
+  Widget Sort_price() => Container(
+        height: 60,
+        width: 100,
+        child: TextField(
+          keyboardType: TextInputType.number,
+          style: GoogleFonts.mitr(fontSize: 18),
+          onChanged: (value) => price = value.trim(),
+          decoration: InputDecoration(
+            // prefixIcon: Icon(Icons.account_box),
+            labelStyle: TextStyle(color: Colors.black),
+            hintText: "ราคา", hintStyle: GoogleFonts.mitr(fontSize: 18),
+            enabledBorder: OutlineInputBorder(),
+            focusedBorder: OutlineInputBorder(),
+          ),
+        ),
+      );
+
+  Widget districT() => Container(
+        width: 300,
+        child: DropdownButton(
+            hint: Text("เลือกอำเภอ", style: GoogleFonts.mitr(fontSize: 18)),
+            value: select_Amphure,
+            items: dataAmphure.map((amphures) {
+              return DropdownMenuItem(
+                  value: amphures['id'],
+                  child: Text(amphures['name_th'],
+                      style: GoogleFonts.mitr(fontSize: 18)));
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                select_Amphure = value.toString();
+                print(select_Amphure);
+              });
+            }),
+      );
+
+  check_address_provider() async {
+    var dio = Dio();
+    final response = await dio.get(
+        "http://192.168.1.4/agriser_work/getprovider_search.php?isAdd=true&phone_provider=$phone_user&province_provider=$select_Province&district_provider=$select_Amphure&function=$function");
+    if (response.statusCode == 200) {
+      if (response.data == "null") {
+        dialong(context, "ไม่มีข้อมูล");
+      } else {
+        setState(() {
+          search_service = json.decode(response.data);
+        });
+        print(search_service);
+
+        // get_allservice();
+        return search_service;
+      }
+    }
+  }
+
+  check_address_provider2() async {
+    var dio = Dio();
+    final response = await dio.get(
+        "http://192.168.1.4/agriser_work/getprovider_search2.php?isAdd=true&phone_provider=$phone_user&province_provider=$select_Province&district_provider=$select_Amphure&function=$function&price=$price");
+    if (response.statusCode == 200) {
+      if (response.data == "null") {
+        dialong(context, "ไม่มีข้อมูล");
+      } else {
+        setState(() {
+          search_service = json.decode(response.data);
+        });
+        print(search_service);
+
+        // get_allservice();
+        return search_service;
+      }
+    }
+  }
+
+  Loadserviceprovince() async {
+    var dio = Dio();
+    final response = await dio.get(
+        "http://192.168.1.4/agriser_work/getserviceprovince.php?isAdd=true&phone_provider=$phone_user&province_provider=$select_Province&function=$function");
+    if (response.statusCode == 200) {
+      if (response.data == "null") {
+        dialong(context, "ไม่มีข้อมูล");
+      } else {
+        setState(() {
+          search_service = json.decode(response.data);
+        });
+        print(search_service);
+
+        // get_allservice();
+        return search_service;
+      }
+    }
+  }
+
+  Loadserviceprovince_sortprice() async {
+    var dio = Dio();
+    final response = await dio.get(
+        "http://192.168.1.4/agriser_work/getserviceprovince_sortprice.php?isAdd=true&phone_provider=$phone_user&province_provider=$select_Province&function=$function&price=$price");
+    if (response.statusCode == 200) {
+      if (response.data == "null") {
+        dialong(context, "ไม่มีข้อมูล");
+      } else {
+        setState(() {
+          search_service = json.decode(response.data);
+        });
+        print(search_service);
+
+        // get_allservice();
+        return search_service;
+      }
+    }
   }
 }

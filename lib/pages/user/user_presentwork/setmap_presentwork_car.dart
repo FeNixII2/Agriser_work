@@ -51,6 +51,9 @@ class _Setmap_presentwork_carState extends State<Setmap_presentwork_car> {
       prices = preferences.getString('prices')!;
       date_work = preferences.getString('date_work')!;
       details = preferences.getString('details')!;
+      if (details == "") {
+        details = "ไม่มี";
+      }
 
       img1 = preferences.getString('img1')!;
       img2 = preferences.getString('img2')!;
@@ -98,7 +101,7 @@ class _Setmap_presentwork_carState extends State<Setmap_presentwork_car> {
           child: RaisedButton(
             color: Colors.green.shade400,
             onPressed: () {
-              upload_presentwork_car();
+              Alertconfirm();
             },
             child: Text(
               "ยืนยัน",
@@ -107,6 +110,37 @@ class _Setmap_presentwork_carState extends State<Setmap_presentwork_car> {
           ),
         ),
       ),
+    );
+  }
+
+  void Alertconfirm() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('ประกาศงาน', style: GoogleFonts.mitr(fontSize: 22)),
+            content: Text('คุณต้องการประกาศงานนี้ใช่หรือไม่',
+                style: GoogleFonts.mitr(fontSize: 18)),
+            actions: <Widget>[cancelButton(), okButton_logout()],
+          );
+        });
+  }
+
+  Widget okButton_logout() {
+    return FlatButton(
+      child: Text('ตกลง', style: GoogleFonts.mitr(fontSize: 18)),
+      onPressed: () {
+        upload_presentwork_car();
+      },
+    );
+  }
+
+  Widget cancelButton() {
+    return FlatButton(
+      child: Text('ยกเลิก', style: GoogleFonts.mitr(fontSize: 18)),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
     );
   }
 
@@ -147,7 +181,7 @@ class _Setmap_presentwork_carState extends State<Setmap_presentwork_car> {
           });
         },
         initialCameraPosition: Location_user,
-        mapType: MapType.normal,
+        mapType: MapType.hybrid,
         onMapCreated: (controller) {},
         markers: marker(),
       ),
@@ -158,7 +192,7 @@ class _Setmap_presentwork_carState extends State<Setmap_presentwork_car> {
     return Marker(
       markerId: MarkerId("mylocation"),
       position: LatLng(map_lat_work, map_long_work),
-      icon: BitmapDescriptor.defaultMarkerWithHue(120),
+      icon: BitmapDescriptor.defaultMarkerWithHue(1),
     );
   }
 
@@ -190,6 +224,7 @@ class _Setmap_presentwork_carState extends State<Setmap_presentwork_car> {
           MaterialPageRoute(builder: (context) => List_user_presentwork_car());
       Navigator.pushAndRemoveUntil(context, route, (route) => false);
       print("UPLOAD");
+      dialong(context, "ประกาศงานสำเร็จ");
     } else {
       print("UPLOAD FAIL");
     }

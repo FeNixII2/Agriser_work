@@ -36,18 +36,18 @@ class _Add_user_presentwork_laborState
   bool check_choice = true;
   final fieldText = TextEditingController();
   late Uint8List imgfromb64;
-  late String image1, image2;
+  late String image1 = "", image2 = "";
   List total_choice = [];
 
   late String phone_user,
       type_presentwork,
-      count_field,
-      img_field1,
-      img_field2,
-      date_work,
-      details = "ไม่มี",
-      prices,
-      info_choice = "ไม่มี";
+      count_field = "",
+      img_field1 = "",
+      img_field2 = "",
+      date_work = "",
+      details = "",
+      prices = "",
+      info_choice = "";
 
   bool isChecked_box1 = false;
   bool isChecked_box2 = false;
@@ -224,47 +224,61 @@ class _Add_user_presentwork_laborState
           child: RaisedButton(
             color: Colors.green.shade400,
             onPressed: () async {
-              if (isChecked_box1 == true) {
-                total_choice.add("พริก");
-              }
-              if (isChecked_box2 == true) {
-                total_choice.add("ข้าวโพด");
-              }
-              if (isChecked_box3 == true) {
-                total_choice.add("มันสำปะหลัง");
-              }
-              if (isChecked_box4 == true) {
-                total_choice.add("อ้อย");
-              }
-              if (isChecked_box5 == true) {
-                total_choice.add("พริก");
-              }
+              if (count_field == "" ||
+                  prices == "" ||
+                  formattedDate == "" ||
+                  image1 == "" ||
+                  image2 == "" ||
+                  (isChecked_box1 == false &&
+                      isChecked_box2 == false &&
+                      isChecked_box3 == false &&
+                      isChecked_box4 == false &&
+                      isChecked_box5 == false &&
+                      isChecked_box6 == false)) {
+                dialong(context, "กรุณากรอกข้อมูลและแนปรูปภาพ");
+              } else {
+                if (isChecked_box1 == true) {
+                  total_choice.add("พริก");
+                }
+                if (isChecked_box2 == true) {
+                  total_choice.add("ข้าวโพด");
+                }
+                if (isChecked_box3 == true) {
+                  total_choice.add("มันสำปะหลัง");
+                }
+                if (isChecked_box4 == true) {
+                  total_choice.add("อ้อย");
+                }
+                if (isChecked_box5 == true) {
+                  total_choice.add("พริก");
+                }
 
-              if (isChecked_box6 == true) {
-                total_choice.add("อื่นๆ");
+                if (isChecked_box6 == true) {
+                  total_choice.add("อื่นๆ");
+                }
+
+                SharedPreferences preferences =
+                    await SharedPreferences.getInstance();
+
+                preferences.setString("count_field", count_field);
+                preferences.setString("prices", prices);
+                preferences.setString("info_choice", info_choice);
+                preferences.setString("date_work", formattedDate);
+                preferences.setString("details", details);
+                preferences.setString("img1", image1);
+                preferences.setString("img2", image2);
+                preferences.setString("box1", isChecked_box1.toString());
+                preferences.setString("box2", isChecked_box2.toString());
+                preferences.setString("box3", isChecked_box3.toString());
+                preferences.setString("box4", isChecked_box4.toString());
+                preferences.setString("box5", isChecked_box5.toString());
+                preferences.setString("box6", isChecked_box6.toString());
+                preferences.setString("total_choice", total_choice.toString());
+
+                MaterialPageRoute route = MaterialPageRoute(
+                    builder: (context) => Setmap_presentwork_labor());
+                Navigator.push(context, route);
               }
-
-              SharedPreferences preferences =
-                  await SharedPreferences.getInstance();
-
-              preferences.setString("count_field", count_field);
-              preferences.setString("prices", prices);
-              preferences.setString("info_choice", info_choice);
-              preferences.setString("date_work", formattedDate);
-              preferences.setString("details", details);
-              preferences.setString("img1", image1);
-              preferences.setString("img2", image2);
-              preferences.setString("box1", isChecked_box1.toString());
-              preferences.setString("box2", isChecked_box2.toString());
-              preferences.setString("box3", isChecked_box3.toString());
-              preferences.setString("box4", isChecked_box4.toString());
-              preferences.setString("box5", isChecked_box5.toString());
-              preferences.setString("box6", isChecked_box6.toString());
-              preferences.setString("total_choice", total_choice.toString());
-
-              MaterialPageRoute route = MaterialPageRoute(
-                  builder: (context) => Setmap_presentwork_labor());
-              Navigator.push(context, route);
             },
             child: Text("ถัดไป",
                 style: GoogleFonts.mitr(fontSize: 18, color: Colors.white)),
@@ -283,7 +297,7 @@ class _Add_user_presentwork_laborState
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
-            hintStyle: TextStyle(color: Colors.grey[800]),
+            hintStyle: GoogleFonts.mitr(fontSize: 18),
             hintText: type_presentwork,
             fillColor: Colors.white70),
       ));
@@ -295,6 +309,7 @@ class _Add_user_presentwork_laborState
           onChanged: (value) => count_field = value.trim(),
           decoration: InputDecoration(
             hintText: "จำนวนไร่",
+            hintStyle: GoogleFonts.mitr(fontSize: 18),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -309,6 +324,7 @@ class _Add_user_presentwork_laborState
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
             hintText: "ราคา",
+            hintStyle: GoogleFonts.mitr(fontSize: 18),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -321,7 +337,8 @@ class _Add_user_presentwork_laborState
         child: TextField(
           onChanged: (value) => details = value.trim(),
           decoration: InputDecoration(
-            hintText: "รายละเอียดเพิ่มเติม",
+            hintText: "รายละเอียด",
+            hintStyle: GoogleFonts.mitr(fontSize: 18),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -339,6 +356,7 @@ class _Add_user_presentwork_laborState
           onChanged: (value) => info_choice = value.trim(),
           decoration: InputDecoration(
             hintText: "เพิ่มข้อมูลอื่นๆ",
+            hintStyle: GoogleFonts.mitr(fontSize: 18),
             enabledBorder: OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(),
           ),
@@ -350,7 +368,7 @@ class _Add_user_presentwork_laborState
   Widget display1() => Container(
         child: check1 == false
             ? IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage1();
                 },
@@ -358,7 +376,7 @@ class _Add_user_presentwork_laborState
                 icon: Image.asset("assets/images/gallery.png"),
               )
             : IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage1();
                 },
@@ -369,7 +387,7 @@ class _Add_user_presentwork_laborState
   Widget display2() => Container(
         child: check2 == false
             ? IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage2();
                 },
@@ -377,7 +395,7 @@ class _Add_user_presentwork_laborState
                 icon: Image.asset("assets/images/gallery.png"),
               )
             : IconButton(
-                iconSize: 160,
+                iconSize: 180,
                 onPressed: () {
                   chooseImage2();
                 },
@@ -492,9 +510,10 @@ class _Add_user_presentwork_laborState
         child: TextField(
           controller: dateinput, //editing controller of this TextField
           decoration: InputDecoration(
-              icon: Icon(Icons.calendar_today), //icon of text field
-              labelText: "เลือกวันที่เริ่มงาน" //label text of field
-              ),
+            icon: Icon(Icons.calendar_today), //icon of text field
+            labelText: "เลือกวันที่เริ่มงาน",
+            labelStyle: GoogleFonts.mitr(fontSize: 18), //label text of field
+          ),
           readOnly: true, //set it true, so that user will not able to edit text
           onTap: () async {
             var dateTime = DateTime.now();

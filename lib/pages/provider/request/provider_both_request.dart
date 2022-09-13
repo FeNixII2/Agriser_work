@@ -1,3 +1,4 @@
+import 'package:agriser_work/pages/provider/all_bottombar_provider.dart';
 import 'package:agriser_work/pages/provider/request/provider_record_request.dart';
 import 'package:agriser_work/pages/provider/request/provider_schedule_request.dart';
 import 'package:agriser_work/pages/user/request/user_record_request.dart';
@@ -34,11 +35,18 @@ class _Provider_both_requestState extends State<Provider_both_request> {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
-            title: Text(
-              "ตารางงานที่ร้องขอเข้ามา",
-              style: GoogleFonts.mitr(fontSize: 18),
-            ),
-          ),
+              title: Text(
+                "ตารางงานที่ร้องขอเข้ามา",
+                style: GoogleFonts.mitr(fontSize: 18),
+              ),
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => All_bottombar_provider()),
+                ),
+              )),
           // body: _children[_currenIndex],
 
           body: Column(

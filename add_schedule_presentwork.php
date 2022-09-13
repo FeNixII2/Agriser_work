@@ -22,6 +22,15 @@ if (!$link->set_charset("utf8")) {
     $phone_user = $_POST["phone_user"];
     $phone_provider = $_POST["phone_provider"];
     $type_presentwork = $_POST["type_presentwork"];
+    $show_img = $_POST["show_img"];
+    $show_type = $_POST["show_type"];
+    $show_servicename = $_POST["show_servicename"];
+    $show_province = $_POST["show_province"];
+    $show_datework = $_POST["show_datework"];
+    $show_servicename_pro = $_POST["show_servicename_pro"];
+    $show_province_pro = $_POST["show_province_pro"];
+   
+
 
     
 		
@@ -38,9 +47,40 @@ if (!$link->set_charset("utf8")) {
     $num = "sc_".$nums."";
 
 
-		$sql = "INSERT INTO `tb_schedule_presentwork`( `id_schedule`, `id_presentwork`, `phone_user`, `phone_provider`, `status` ,`action` ,`type_presentwork` ) VALUES ('$num','$id_presentwork','$phone_user','$phone_provider','0','pcu' ,'$type_presentwork'  )";
+		$sql = "INSERT INTO `tb_schedule_presentwork`( 
+			`id_schedule`,
+		 	`id_presentwork`,
+		 	`phone_user`, 
+		 	`phone_provider`, 
+		 	`status` ,
+		 	`action` ,
+		 	`type_presentwork`,
+		 	`show_img`,
+		 	`show_type`,
+		 	`show_servicename`,
+		 	`show_province`,
+		 	`show_datework`,
+		 	`show_servicename_pro`,
+		 	`show_province_pro` ) 
+			VALUES ('$num','$id_presentwork','$phone_user','$phone_provider','0','pcu' ,'$type_presentwork' ,'$show_img','$show_type','$show_servicename','$show_province','$show_datework','$show_servicename_pro','$show_province_pro' )";
 
-		$sql2 = "INSERT INTO `tb_schedule_presentwork`( `id_schedule`, `id_presentwork`, `phone_user`, `phone_provider`, `status` ,`action` ,`type_presentwork`  ) VALUES ('$num','$id_presentwork','$phone_user','$phone_provider','0','pru' ,'$type_presentwork'  )";
+
+		$sql2 = "INSERT INTO `tb_schedule_presentwork`( 
+			`id_schedule`, 
+			`id_presentwork`, 
+			`phone_user`, 
+			`phone_provider`, 
+			`status` ,
+			`action` ,
+			`type_presentwork`,
+			`show_img`,
+		 	`show_type`,
+		 	`show_servicename`,
+		 	`show_province`,
+		 	`show_datework`,
+		 	`show_servicename_pro`,
+		 	`show_province_pro`  ) 
+			VALUES ('$num','$id_presentwork','$phone_user','$phone_provider','0','pru' ,'$type_presentwork' ,'$show_img','$show_type','$show_servicename','$show_province','$show_datework','$show_servicename_pro','$show_province_pro'  )";
 
 
 		// if ($type_presentwork == 'car') {
