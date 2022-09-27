@@ -85,7 +85,7 @@ class _Data_service_laborState extends State<Data_service_labor> {
 
   Future LoadData_service() async {
     var url =
-        "http://192.168.1.4/agriser_work/get_service_labor.php?isAdd=true&id_service=$id_service";
+        "http://103.212.181.47/agriser_work/get_service_labor.php?isAdd=true&id_service=$id_service";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -111,7 +111,7 @@ class _Data_service_laborState extends State<Data_service_labor> {
   Future Loadrating() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_rating_provider.php?isAdd=true&phone_provider=$phone_provider");
+        "http://103.212.181.47/agriser_work/search_rating_provider.php?isAdd=true&phone_provider=$phone_provider");
     if (response.statusCode == 200) {
       setState(() {
         Allrating = json.decode(response.data);
@@ -143,7 +143,7 @@ class _Data_service_laborState extends State<Data_service_labor> {
 
   Future LoadData_provider() async {
     var url =
-        "http://192.168.1.4/agriser_work/getProviderWhereProvider.php?isAdd=true&phone_provider=$phone_provider";
+        "http://103.212.181.47/agriser_work/getProviderWhereProvider.php?isAdd=true&phone_provider=$phone_provider";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -172,7 +172,7 @@ class _Data_service_laborState extends State<Data_service_labor> {
 
   Future LoadData_user() async {
     var url =
-        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user";
+        "http://103.212.181.47/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -530,7 +530,7 @@ class _Data_service_laborState extends State<Data_service_labor> {
   Loadampure() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/showamphure.php?isAdd=true&id_district=$p_district");
+        "http://103.212.181.47/agriser_work/showamphure.php?isAdd=true&id_district=$p_district");
     if (response.statusCode == 200) {
       List search_service = json.decode(response.data);
       print(search_service[0]["name_th"]);
@@ -544,7 +544,7 @@ class _Data_service_laborState extends State<Data_service_labor> {
   Loadprovince() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/showprovince.php?isAdd=true&id_province=$p_province");
+        "http://103.212.181.47/agriser_work/showprovince.php?isAdd=true&id_province=$p_province");
     if (response.statusCode == 200) {
       List search_service = json.decode(response.data);
       print(search_service[0]["name_th"]);
@@ -558,7 +558,7 @@ class _Data_service_laborState extends State<Data_service_labor> {
   Loadprovince2() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/showprovince.php?isAdd=true&id_province=$use_province");
+        "http://103.212.181.47/agriser_work/showprovince.php?isAdd=true&id_province=$use_province");
     if (response.statusCode == 200) {
       List search_service = json.decode(response.data);
       print(search_service[0]["name_th"]);

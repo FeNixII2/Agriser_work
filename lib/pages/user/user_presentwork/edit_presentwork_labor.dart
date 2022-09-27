@@ -502,7 +502,7 @@ class _Edit_presentwork_laborState extends State<Edit_presentwork_labor> {
 
   Future LoadData_presentwork_labor() async {
     var url =
-        "http://192.168.1.4/agriser_work/get_presentwork_labor.php?isAdd=true&id_presentwork=$id_presentwork";
+        "http://103.212.181.47/agriser_work/get_presentwork_labor.php?isAdd=true&id_presentwork=$id_presentwork";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -603,7 +603,7 @@ class _Edit_presentwork_laborState extends State<Edit_presentwork_labor> {
   delete_presentwork() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/delete_presentwork_labor.php?isAdd=true&id_presentwork=$id_presentwork");
+        "http://103.212.181.47/agriser_work/delete_presentwork_labor.php?isAdd=true&id_presentwork=$id_presentwork");
 
     print(response.data);
     if (response.data == "true") {

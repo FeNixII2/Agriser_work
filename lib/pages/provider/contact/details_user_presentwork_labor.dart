@@ -160,7 +160,7 @@ class _Details_user_presentwork_laborState
 
   Future LoadDetails_user_presentwork_labor() async {
     var url =
-        "http://192.168.1.4/agriser_work/get_presentwork_labor.php?isAdd=true&id_presentwork=$id_presentwork";
+        "http://103.212.181.47/agriser_work/get_presentwork_labor.php?isAdd=true&id_presentwork=$id_presentwork";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -194,7 +194,7 @@ class _Details_user_presentwork_laborState
 
   Future LoadData_user() async {
     var url =
-        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user";
+        "http://103.212.181.47/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -310,7 +310,7 @@ class _Details_user_presentwork_laborState
   void change_status_service_5() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/change_status_presentwork.php?isAdd=true&status=5&id_schedule=$id_schedule&id_presentwork=$id_presentwork");
+        "http://103.212.181.47/agriser_work/change_status_presentwork.php?isAdd=true&status=5&id_schedule=$id_schedule&id_presentwork=$id_presentwork");
 
     print(response.data);
     if (response.data == "true") {
@@ -324,7 +324,7 @@ class _Details_user_presentwork_laborState
   void change_status_service_4() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/change_status_presentwork.php?isAdd=true&status=4&id_schedule=$id_schedule&id_presentwork=$id_presentwork");
+        "http://103.212.181.47/agriser_work/change_status_presentwork.php?isAdd=true&status=4&id_schedule=$id_schedule&id_presentwork=$id_presentwork");
 
     print(response.data);
     if (response.data == "true") {
@@ -338,7 +338,7 @@ class _Details_user_presentwork_laborState
   void change_status_service_3() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/change_status_presentwork.php?isAdd=true&status=3&id_schedule=$id_schedule&id_presentwork=$id_presentwork");
+        "http://103.212.181.47/agriser_work/change_status_presentwork.php?isAdd=true&status=3&id_schedule=$id_schedule&id_presentwork=$id_presentwork");
 
     print(response.data);
     if (response.data == "true") {
@@ -352,7 +352,7 @@ class _Details_user_presentwork_laborState
   void change_status_service_2() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/change_status_presentwork.php?isAdd=true&status=2&id_schedule=$id_schedule&id_presentwork=$id_presentwork");
+        "http://103.212.181.47/agriser_work/change_status_presentwork.php?isAdd=true&status=2&id_schedule=$id_schedule&id_presentwork=$id_presentwork");
 
     print(response.data);
     if (response.data == "true") {
@@ -365,7 +365,7 @@ class _Details_user_presentwork_laborState
   void change_status_service_1() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/change_status_presentwork.php?isAdd=true&status=1&id_schedule=$id_schedule&id_presentwork=$id_presentwork");
+        "http://103.212.181.47/agriser_work/change_status_presentwork.php?isAdd=true&status=1&id_schedule=$id_schedule&id_presentwork=$id_presentwork");
 
     print(response.data);
     if (response.data == "true") {
@@ -592,7 +592,7 @@ class _Details_user_presentwork_laborState
   Loadampure() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/showamphure.php?isAdd=true&id_district=$p_district");
+        "http://103.212.181.47/agriser_work/showamphure.php?isAdd=true&id_district=$p_district");
     if (response.statusCode == 200) {
       List search_service = json.decode(response.data);
       print(search_service[0]["name_th"]);
@@ -606,7 +606,7 @@ class _Details_user_presentwork_laborState
   Loadprovince() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/showprovince.php?isAdd=true&id_province=$p_province");
+        "http://103.212.181.47/agriser_work/showprovince.php?isAdd=true&id_province=$p_province");
     if (response.statusCode == 200) {
       List search_service = json.decode(response.data);
       print(search_service[0]["name_th"]);

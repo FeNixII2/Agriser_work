@@ -225,7 +225,7 @@ class _Edit_user_dataState extends State<Edit_user_data> {
 
   Future LoadData_user() async {
     var url =
-        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user";
+        "http://103.212.181.47/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -263,7 +263,7 @@ class _Edit_user_dataState extends State<Edit_user_data> {
     print("2");
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/showamphure.php?isAdd=true&id_district=$district");
+        "http://103.212.181.47/agriser_work/showamphure.php?isAdd=true&id_district=$district");
     if (response.statusCode == 200) {
       List search_service = json.decode(response.data);
       print(search_service[0]["name_th"]);
@@ -278,7 +278,7 @@ class _Edit_user_dataState extends State<Edit_user_data> {
     print("2");
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/showprovince.php?isAdd=true&id_province=$province");
+        "http://103.212.181.47/agriser_work/showprovince.php?isAdd=true&id_province=$province");
     if (response.statusCode == 200) {
       List search_service = json.decode(response.data);
       print(search_service[0]["name_th"]);

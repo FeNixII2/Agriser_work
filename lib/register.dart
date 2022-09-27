@@ -60,7 +60,7 @@ class _RegisterState extends State<Register> {
   Future getAllprovince() async {
     // print("เข้าแล้วเน้อ");
 
-    var url = "http://192.168.1.4/Agriser_work/getProvince.php?isAdd=true";
+    var url = "http://103.212.181.47/agriser_work/getProvince.php?isAdd=true";
 
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -77,7 +77,7 @@ class _RegisterState extends State<Register> {
   Future getSelectAmphures() async {
     // print("มาอำเภอ");
     var url =
-        "http://192.168.1.4/Agriser_work/getSelectAmphures.php?isAdd=true&&idprovince=$selectProvince";
+        "http://103.212.181.47/agriser_work/getSelectAmphures.php?isAdd=true&&idprovince=$selectProvince";
 
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -247,7 +247,7 @@ class _RegisterState extends State<Register> {
   void checktel() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user");
+        "http://103.212.181.47/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user");
 
     print(response.data);
     // print('check ^^^^');

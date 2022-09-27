@@ -172,8 +172,8 @@ class _Confirm_service_carState extends State<Confirm_service_car> {
       type_service = "car";
     }
 
-    final uri =
-        Uri.parse("http://192.168.1.4/agriser_work/add_schedule_service.php");
+    final uri = Uri.parse(
+        "http://103.212.181.47/agriser_work/add_schedule_service.php");
     var request = http.MultipartRequest("POST", uri);
     request.fields["id_service"] = id_service;
     request.fields["phone_user"] = phone_user;
@@ -212,7 +212,7 @@ class _Confirm_service_carState extends State<Confirm_service_car> {
 
   //   var dio = Dio();
   //   final response = await dio.get(
-  //       "http://192.168.1.4/agriser_work/add_schedule_service.php?isAdd=true&id_service=$id_service&phone_user=$phone_user&phone_provider=$phone_provider&date_work=$date_work&count_field=$count_field&total_price=$total_price&map_lat_work=$map_lat_work&map_long_work=$map_long_work&type_service=$type_service&show_type=$show_type&show_servicename=$show_servicename&show_province=$show_province");
+  //       "http://103.212.181.47/agriser_work/add_schedule_service.php?isAdd=true&id_service=$id_service&phone_user=$phone_user&phone_provider=$phone_provider&date_work=$date_work&count_field=$count_field&total_price=$total_price&map_lat_work=$map_lat_work&map_long_work=$map_long_work&type_service=$type_service&show_type=$show_type&show_servicename=$show_servicename&show_province=$show_province");
 
   //   print(response.data);
   //   if (response.data == "true") {

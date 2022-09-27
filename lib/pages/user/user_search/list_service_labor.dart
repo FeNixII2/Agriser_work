@@ -137,7 +137,7 @@ class _List_service_laborState extends State<List_service_labor> {
   Loadservice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_by_user.php?isAdd=true&function=$function&phone_user=$phone_user");
+        "http://103.212.181.47/agriser_work/search_by_user.php?isAdd=true&function=$function&phone_user=$phone_user");
     if (response.statusCode == 200) {
       setState(() {
         search_service = json.decode(response.data);
@@ -151,7 +151,7 @@ class _List_service_laborState extends State<List_service_labor> {
   Loadservice_sortprice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_by_user_sortprice.php?isAdd=true&function=$function&phone_user=$phone_user&price=$price");
+        "http://103.212.181.47/agriser_work/search_by_user_sortprice.php?isAdd=true&function=$function&phone_user=$phone_user&price=$price");
     if (response.statusCode == 200) {
       if (response.data == "null") {
         dialong(context, "ไม่มีราคานี้");
@@ -328,7 +328,7 @@ class _List_service_laborState extends State<List_service_labor> {
   Future getAllprovince() async {
     // print("เข้าแล้วเน้อ");
 
-    var url = "http://192.168.1.4/Agriser_work/getProvince.php?isAdd=true";
+    var url = "http://103.212.181.47/agriser_work/getProvince.php?isAdd=true";
 
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -346,7 +346,7 @@ class _List_service_laborState extends State<List_service_labor> {
   Future getSelectAmphures() async {
     // print("มาอำเภอ");
     var url =
-        "http://192.168.1.4/Agriser_work/getSelectAmphures.php?isAdd=true&&idprovince=$select_Province";
+        "http://103.212.181.47/agriser_work/getSelectAmphures.php?isAdd=true&&idprovince=$select_Province";
 
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -431,7 +431,7 @@ class _List_service_laborState extends State<List_service_labor> {
   check_address_provider() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/getprovider_search.php?isAdd=true&phone_provider=$phone_user&province_provider=$select_Province&district_provider=$select_Amphure&function=$function");
+        "http://103.212.181.47/agriser_work/getprovider_search.php?isAdd=true&phone_provider=$phone_user&province_provider=$select_Province&district_provider=$select_Amphure&function=$function");
     if (response.statusCode == 200) {
       if (response.data == "null") {
         dialong(context, "ไม่มีข้อมูล");
@@ -450,7 +450,7 @@ class _List_service_laborState extends State<List_service_labor> {
   check_address_provider2() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/getprovider_search2.php?isAdd=true&phone_provider=$phone_user&province_provider=$select_Province&district_provider=$select_Amphure&function=$function&price=$price");
+        "http://103.212.181.47/agriser_work/getprovider_search2.php?isAdd=true&phone_provider=$phone_user&province_provider=$select_Province&district_provider=$select_Amphure&function=$function&price=$price");
     if (response.statusCode == 200) {
       if (response.data == "null") {
         dialong(context, "ไม่มีข้อมูล");
@@ -469,7 +469,7 @@ class _List_service_laborState extends State<List_service_labor> {
   Loadserviceprovince() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/getserviceprovince.php?isAdd=true&phone_provider=$phone_user&province_provider=$select_Province&function=$function");
+        "http://103.212.181.47/agriser_work/getserviceprovince.php?isAdd=true&phone_provider=$phone_user&province_provider=$select_Province&function=$function");
     if (response.statusCode == 200) {
       if (response.data == "null") {
         dialong(context, "ไม่มีข้อมูล");
@@ -488,7 +488,7 @@ class _List_service_laborState extends State<List_service_labor> {
   Loadserviceprovince_sortprice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/getserviceprovince_sortprice.php?isAdd=true&phone_provider=$phone_user&province_provider=$select_Province&function=$function&price=$price");
+        "http://103.212.181.47/agriser_work/getserviceprovince_sortprice.php?isAdd=true&phone_provider=$phone_user&province_provider=$select_Province&function=$function&price=$price");
     if (response.statusCode == 200) {
       if (response.data == "null") {
         dialong(context, "ไม่มีข้อมูล");

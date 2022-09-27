@@ -17,16 +17,19 @@ class _User_calendaState extends State<User_calenda> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [tractor(), user()],
+        body: Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [tractor(), user()],
+      ),
     ));
   }
 
   Widget tractor() => Container(
         padding: EdgeInsets.fromLTRB(10, 10, 0, 5),
         height: 580,
-        width: 190,
+        width: 170,
         child: Material(
           color: Color.fromARGB(227, 255, 251, 177),
           elevation: 8,
@@ -60,7 +63,7 @@ class _User_calendaState extends State<User_calenda> {
   Widget user() => Container(
         padding: EdgeInsets.fromLTRB(0, 10, 10, 5),
         height: 580,
-        width: 190,
+        width: 170,
         child: Material(
           color: Color.fromARGB(255, 184, 252, 186),
           elevation: 8,

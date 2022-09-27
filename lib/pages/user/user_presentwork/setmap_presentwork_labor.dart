@@ -244,8 +244,8 @@ class _Setmap_presentwork_laborState extends State<Setmap_presentwork_labor> {
     print(box5);
     print(box6);
 
-    final uri =
-        Uri.parse("http://192.168.1.4/agriser_work/add_presentwork_labor.php");
+    final uri = Uri.parse(
+        "http://103.212.181.47/agriser_work/add_presentwork_labor.php");
     var request = http.MultipartRequest("POST", uri);
     request.fields["phone_user"] = phone_user;
     request.fields["type_presentwork"] = type_presentwork;

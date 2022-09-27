@@ -47,7 +47,7 @@ class _List_provider_service_carState extends State<List_provider_service_car> {
   }
 
   Future getinfo_service() async {
-    var url = "http://192.168.1.4/agriser_work/get_img.php";
+    var url = "http://103.212.181.47/agriser_work/get_img.php";
     var response = await http.get(Uri.parse(url));
     return json.decode(response.body);
   }
@@ -182,7 +182,7 @@ class _List_provider_service_carState extends State<List_provider_service_car> {
   Loadservice() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_service_car.php?isAdd=true&phone_provider=$phone_provider");
+        "http://103.212.181.47/agriser_work/search_service_car.php?isAdd=true&phone_provider=$phone_provider");
     if (response.statusCode == 200) {
       setState(() {
         search_service = json.decode(response.data);

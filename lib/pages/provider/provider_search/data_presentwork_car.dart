@@ -83,7 +83,7 @@ class _Data_presentwork_carState extends State<Data_presentwork_car> {
 
   Future LoadData_presentwork() async {
     var url =
-        "http://192.168.1.4/agriser_work/get_presentwork_car.php?isAdd=true&id_presentwork=$id_presentwork";
+        "http://103.212.181.47/agriser_work/get_presentwork_car.php?isAdd=true&id_presentwork=$id_presentwork";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -121,7 +121,7 @@ class _Data_presentwork_carState extends State<Data_presentwork_car> {
 
   Future LoadData_user() async {
     var url =
-        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user";
+        "http://103.212.181.47/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -147,7 +147,7 @@ class _Data_presentwork_carState extends State<Data_presentwork_car> {
 
   Future LoadData_provider() async {
     var url =
-        "http://192.168.1.4/agriser_work/getProviderWhereProvider.php?isAdd=true&phone_provider=$phone_provider";
+        "http://103.212.181.47/agriser_work/getProviderWhereProvider.php?isAdd=true&phone_provider=$phone_provider";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -196,7 +196,7 @@ class _Data_presentwork_carState extends State<Data_presentwork_car> {
 
   Future check_idpresentwork_haved() async {
     var url =
-        "http://192.168.1.4/agriser_work/check_schedule_presentwork.php?isAdd=true&id_presentwork=$id_presentwork&phone_provider=$phone_provider";
+        "http://103.212.181.47/agriser_work/check_schedule_presentwork.php?isAdd=true&id_presentwork=$id_presentwork&phone_provider=$phone_provider";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       print(response.body);
@@ -463,7 +463,7 @@ class _Data_presentwork_carState extends State<Data_presentwork_car> {
     print("phone_provider:  $phone_provider");
 
     final uri = Uri.parse(
-        "http://192.168.1.4/agriser_work/add_schedule_presentwork.php");
+        "http://103.212.181.47/agriser_work/add_schedule_presentwork.php");
     var request = http.MultipartRequest("POST", uri);
     request.fields["id_presentwork"] = id_presentwork;
     request.fields["type_presentwork"] = checktype;
@@ -493,7 +493,7 @@ class _Data_presentwork_carState extends State<Data_presentwork_car> {
   Loadampure() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/showamphure.php?isAdd=true&id_district=$p_district");
+        "http://103.212.181.47/agriser_work/showamphure.php?isAdd=true&id_district=$p_district");
     if (response.statusCode == 200) {
       List search_service = json.decode(response.data);
       print(search_service[0]["name_th"]);
@@ -507,7 +507,7 @@ class _Data_presentwork_carState extends State<Data_presentwork_car> {
   Loadprovince() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/showprovince.php?isAdd=true&id_province=$p_province");
+        "http://103.212.181.47/agriser_work/showprovince.php?isAdd=true&id_province=$p_province");
     if (response.statusCode == 200) {
       List search_service = json.decode(response.data);
       print(search_service[0]["name_th"]);
@@ -521,7 +521,7 @@ class _Data_presentwork_carState extends State<Data_presentwork_car> {
   Loadprovince2() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/showprovince.php?isAdd=true&id_province=$pro_province");
+        "http://103.212.181.47/agriser_work/showprovince.php?isAdd=true&id_province=$pro_province");
     if (response.statusCode == 200) {
       List search_service = json.decode(response.data);
       print(search_service[0]["name_th"]);

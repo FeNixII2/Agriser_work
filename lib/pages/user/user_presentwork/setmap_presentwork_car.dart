@@ -204,7 +204,7 @@ class _Setmap_presentwork_carState extends State<Setmap_presentwork_car> {
 
   Future upload_presentwork_car() async {
     final uri =
-        Uri.parse("http://192.168.1.4/agriser_work/add_presentwork_car.php");
+        Uri.parse("http://103.212.181.47/agriser_work/add_presentwork_car.php");
     var request = http.MultipartRequest("POST", uri);
     request.fields["phone_user"] = phone_user;
     request.fields["type"] = type;

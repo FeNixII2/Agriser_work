@@ -101,7 +101,7 @@ class _Regis_setmapState extends State<Regis_setmap> {
     }
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/addUser.php?isAdd=true&tel=$phone_user&pass=$password_user&name=$name_user&date=$date_user&sex=$sex_user&address=$address_user&province=$province&amphures=$amphures&email=$email_user&map_lat_user=$lat&map_long_user=$long");
+        "http://103.212.181.47/agriser_work/addUser.php?isAdd=true&tel=$phone_user&pass=$password_user&name=$name_user&date=$date_user&sex=$sex_user&address=$address_user&province=$province&amphures=$amphures&email=$email_user&map_lat_user=$lat&map_long_user=$long");
 
     print(response.data);
     if (response.data == "true") {

@@ -380,7 +380,7 @@ class _Edit_presentwork_carState extends State<Edit_presentwork_car> {
 
   Future LoadData_presentwork() async {
     var url =
-        "http://192.168.1.4/agriser_work/get_presentwork_car.php?isAdd=true&id_presentwork=$id_presentwork";
+        "http://103.212.181.47/agriser_work/get_presentwork_car.php?isAdd=true&id_presentwork=$id_presentwork";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -441,7 +441,7 @@ class _Edit_presentwork_carState extends State<Edit_presentwork_car> {
   Load_psk() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/search_schedule_presentwork_pru.php?isAdd=true&phone_user=$phone_user&id_presentwork=$id_presentwork");
+        "http://103.212.181.47/agriser_work/search_schedule_presentwork_pru.php?isAdd=true&phone_user=$phone_user&id_presentwork=$id_presentwork");
     if (response.statusCode == 200) {
       setState(() {
         search_service = json.decode(response.data);
@@ -463,7 +463,7 @@ class _Edit_presentwork_carState extends State<Edit_presentwork_car> {
   delete_presentwork() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/delete_presentwork_car.php?isAdd=true&id_presentwork=$id_presentwork");
+        "http://103.212.181.47/agriser_work/delete_presentwork_car.php?isAdd=true&id_presentwork=$id_presentwork");
 
     print(response.data);
     if (response.data == "true") {

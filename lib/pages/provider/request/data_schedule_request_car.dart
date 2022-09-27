@@ -156,7 +156,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
 
   Future LoadData_service() async {
     var url =
-        "http://192.168.1.4/agriser_work/get_service_car.php?isAdd=true&id_service=$id_service";
+        "http://103.212.181.47/agriser_work/get_service_car.php?isAdd=true&id_service=$id_service";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -182,7 +182,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
 
   Future LoadData_user() async {
     var url =
-        "http://192.168.1.4/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user";
+        "http://103.212.181.47/agriser_work/getUserWhereUser.php?isAdd=true&phone_user=$phone_user";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -208,7 +208,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
 
   Future tb_schedule_service() async {
     var url =
-        "http://192.168.1.4/agriser_work/get_schedule_service.php?isAdd=true&id_schedule=$id_schedule";
+        "http://103.212.181.47/agriser_work/get_schedule_service.php?isAdd=true&id_schedule=$id_schedule";
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -292,7 +292,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
   void change_status_service_5() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/change_status_service.php?isAdd=true&status=5&id_schedule=$id_schedule");
+        "http://103.212.181.47/agriser_work/change_status_service.php?isAdd=true&status=5&id_schedule=$id_schedule");
 
     print(response.data);
     if (response.data == "true") {
@@ -306,7 +306,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
   void change_status_service_4() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/change_status_service.php?isAdd=true&status=4&id_schedule=$id_schedule");
+        "http://103.212.181.47/agriser_work/change_status_service.php?isAdd=true&status=4&id_schedule=$id_schedule");
 
     print(response.data);
     if (response.data == "true") {
@@ -320,7 +320,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
   void change_status_service_3() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/change_status_service.php?isAdd=true&status=3&id_schedule=$id_schedule");
+        "http://103.212.181.47/agriser_work/change_status_service.php?isAdd=true&status=3&id_schedule=$id_schedule");
 
     print(response.data);
     if (response.data == "true") {
@@ -334,7 +334,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
   void change_status_service_2() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/change_status_service.php?isAdd=true&status=2&id_schedule=$id_schedule");
+        "http://103.212.181.47/agriser_work/change_status_service.php?isAdd=true&status=2&id_schedule=$id_schedule");
 
     print(response.data);
     if (response.data == "true") {
@@ -348,7 +348,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
   void change_status_service_1() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/change_status_service.php?isAdd=true&status=1&id_schedule=$id_schedule");
+        "http://103.212.181.47/agriser_work/change_status_service.php?isAdd=true&status=1&id_schedule=$id_schedule");
 
     print(response.data);
     if (response.data == "true") {
@@ -574,7 +574,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
   Loadampure() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/showamphure.php?isAdd=true&id_district=$p_district");
+        "http://103.212.181.47/agriser_work/showamphure.php?isAdd=true&id_district=$p_district");
     if (response.statusCode == 200) {
       List search_service = json.decode(response.data);
       print(search_service[0]["name_th"]);
@@ -588,7 +588,7 @@ class _Data_schedule_request_carState extends State<Data_schedule_request_car> {
   Loadprovince() async {
     var dio = Dio();
     final response = await dio.get(
-        "http://192.168.1.4/agriser_work/showprovince.php?isAdd=true&id_province=$p_province");
+        "http://103.212.181.47/agriser_work/showprovince.php?isAdd=true&id_province=$p_province");
     if (response.statusCode == 200) {
       List search_service = json.decode(response.data);
       print(search_service[0]["name_th"]);

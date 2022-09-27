@@ -360,7 +360,7 @@ class _Add_provider_service_carState extends State<Add_provider_service_car> {
 
   Future upload_service_car() async {
     final uri =
-        Uri.parse("http://192.168.1.4/agriser_work/add_service_car.php");
+        Uri.parse("http://103.212.181.47/agriser_work/add_service_car.php");
     var request = http.MultipartRequest("POST", uri);
     request.fields["phone_provider"] = phone_provider;
     request.fields["type"] = type;
